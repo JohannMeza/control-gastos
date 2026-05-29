@@ -135,4 +135,28 @@ public class PresupuestoDAO {
 
         return "No se recibió respuesta";
     }
+    
+    public int obtenerTotalPresupuesto(int idUsuario) {
+        String sql = "{CALL CG_ObtenerTotalPresupuestoXUsuario_SP(?)}";
+        int result = 0;
+        try (
+            Connection conn = ConexionDB.getConnection();
+            PreparedStatement stmt = conn.prepareCall(sql)
+        ) {
+
+            stmt.setInt(1, idUsuario);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+               result = rs.getInt("cMsje");
+               return result;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }
