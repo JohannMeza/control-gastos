@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class ConexionDB {
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=ControlGastos;encrypt=false";
     private static final String USER = "admin";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "admin";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
