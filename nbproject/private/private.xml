@@ -5,15 +5,15 @@
         <group>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/service/PresupuestoService.java</file>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/dao/PresupuestoDAO.java</file>
-            <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/view/PresupuestoView.java</file>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/service/GastoService.java</file>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/controller/PresupuestoController.java</file>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/view/SystemView.java</file>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/dao/ConexionDB.java</file>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/dao/GastoDAO.java</file>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/model/Gasto.java</file>
+            <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/service/SqsService.java</file>
             <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/controller/GastoController.java</file>
-            <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/model/Presupuesto.java</file>
+            <file>file:/D:/Estudios/Superiores/Universidad%20UTP/Ciclo%207/Algoritmos%20y%20Estructura%20de%20Datos/Semana%205/ControlGastos/src/dao/UsuarioDAO.java</file>
         </group>
     </open-files>
 </project-private>

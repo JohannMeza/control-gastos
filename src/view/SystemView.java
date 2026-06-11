@@ -4,6 +4,8 @@ import controller.GastoController;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import model.ComboItem;
+import model.Session;
+import model.Usuario;
 import java.util.Calendar;
 
 public class SystemView extends javax.swing.JFrame {
@@ -17,6 +19,14 @@ public class SystemView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.repaint();
         
+        // Obtener datos del usuario logueado en la sesión
+        Usuario usuarioActivo = Session.getInstance().getUsuarioActivo();
+        if (usuarioActivo != null) {
+            System.out.println("====== DATOS DEL USUARIO LOGUEADO ======");
+            System.out.println("ID: " + usuarioActivo.getId() + " | Nombre: " + usuarioActivo.getNombre() + 
+                               " | Correo: " + usuarioActivo.getEmail() + " | Rol: " + usuarioActivo.getRol());
+        }
+
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -1015,6 +1025,8 @@ public class SystemView extends javax.swing.JFrame {
         } else {
             actualizarGasto();
         }
+
+        controller.registrarGastoSQS();
 
         controller.listarGastos();
         limpiarFormularioGasto();

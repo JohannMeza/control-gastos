@@ -9,10 +9,13 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.ComboItem;
 import model.Gasto;
+import model.Session;
+import model.Usuario;
 import service.GastoService;
 import view.SystemView;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import service.SqsService;
 
 /**
  *
@@ -21,10 +24,12 @@ import javax.swing.JOptionPane;
 public final class GastoController {
     private SystemView view;
     private GastoService service;
+    private SqsService serviceSQS;
     
     public GastoController(SystemView view) {
         this.view = view;
         this.service = new GastoService();
+        this.serviceSQS = new SqsService();
         
         //listarGastos();
         listarCategorias();
@@ -49,7 +54,11 @@ public final class GastoController {
             gasto.setIdCategoria(categoria.getValue());
             gasto.setIdTipoGasto(tipo.getValue());
             gasto.setDescripcion(view.txtDescripcion.getText());
-            gasto.setFechaGasto(view.dateFechaNuevo.getDate());
+            
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            String fechaFormateada = sdf.format(view.dateFechaNuevo.getDate());
+            gasto.setFechaGastoFormat(fechaFormateada);
+            gasto.setFechaGasto(java.sql.Date.valueOf(fechaFormateada));
             
             service.guardar(gasto);
             
@@ -70,7 +79,11 @@ public final class GastoController {
             gasto.setIdCategoria(categoria.getValue());
             gasto.setIdTipoGasto(tipo.getValue());
             gasto.setDescripcion(view.txtDescripcion.getText());
-            gasto.setFechaGasto(view.dateFechaNuevo.getDate());
+
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            String fechaFormateada = sdf.format(view.dateFechaNuevo.getDate());
+            gasto.setFechaGastoFormat(fechaFormateada);
+            gasto.setFechaGasto(java.sql.Date.valueOf(fechaFormateada));
 
             String mensaje = service.actualizar(gasto);
 
@@ -246,6 +259,24 @@ public final class GastoController {
                 "Error",
                 JOptionPane.ERROR_MESSAGE
             );
+        }
+    }
+
+    public void registrarGastoSQS() {
+        if (serviceSQS != null) {
+            try {
+                int expenseId = view.idGastoSeleccionado;
+                double amount = Double.parseDouble(view.txtMonto.getText());
+                ComboItem categoria = (ComboItem) view.cbCategoria.getSelectedItem();
+                String categoryName = categoria != null ? categoria.toString() : "Sin Categoría";
+                Usuario usuarioActivo = Session.getInstance().getUsuarioActivo();
+                
+                serviceSQS.enviarEventoGasto(expenseId, amount, categoryName, usuarioActivo);
+            } catch (Exception e) {
+                System.err.println("Error al preparar datos dinámicos para SQS: " + e.getMessage());
+            }
+        } else {
+            System.err.println("SQS service no está inicializado. No se puede enviar el evento.");
         }
     }
 }

@@ -117,6 +117,13 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        // Simulación: Obtenemos al usuario con id = 1 después de verificar credenciales
+        service.UsuarioService usuarioService = new service.UsuarioService();
+        model.Usuario usuarioLogueado = usuarioService.obtenerUsuario(1);
+        
+        // Guardamos el usuario a nivel global en la Sesión
+        model.Session.getInstance().setUsuarioActivo(usuarioLogueado);
+
         SystemView viewSystem = new SystemView();
         viewSystem.setVisible(true);
         dispose();
