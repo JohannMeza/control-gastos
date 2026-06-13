@@ -133,6 +133,12 @@ public class SystemView extends javax.swing.JFrame {
         Sidebar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(234, 241, 255)));
 
         jPanelProducts.setBackground(new java.awt.Color(248, 250, 252));
+        jPanelProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelProductsMouseClicked(evt);
+            }
+        });
         jPanelProducts.setForeground(new java.awt.Color(71, 85, 105));
 
         jLabelProducts.setBackground(new java.awt.Color(255, 255, 255));
@@ -207,6 +213,12 @@ public class SystemView extends javax.swing.JFrame {
 
         jPanelEmployes.setBackground(new java.awt.Color(248, 250, 252));
         jPanelEmployes.setForeground(new java.awt.Color(71, 85, 105));
+        jPanelEmployes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelEmployes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelEmployesMouseClicked(evt);
+            }
+        });
 
         jLabelEmployes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelEmployes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ahorros.png"))); // NOI18N
@@ -228,6 +240,12 @@ public class SystemView extends javax.swing.JFrame {
 
         jPanelSupplimers.setBackground(new java.awt.Color(248, 250, 252));
         jPanelSupplimers.setForeground(new java.awt.Color(71, 85, 105));
+        jPanelSupplimers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelSupplimers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelSupplimersMouseClicked(evt);
+            }
+        });
 
         jLabelSupplimers.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelSupplimers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/deudas.png"))); // NOI18N
@@ -249,6 +267,12 @@ public class SystemView extends javax.swing.JFrame {
 
         jPanelCategories.setBackground(new java.awt.Color(248, 250, 252));
         jPanelCategories.setForeground(new java.awt.Color(71, 85, 105));
+        jPanelCategories.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelCategories.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelCategoriesMouseClicked(evt);
+            }
+        });
 
         jLabelCategories.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelCategories.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/usuario.png"))); // NOI18N
@@ -272,18 +296,12 @@ public class SystemView extends javax.swing.JFrame {
         Sidebar.setLayout(SidebarLayout);
         SidebarLayout.setHorizontalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanelCategories, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelSupplimers, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelEmployes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlPresupuesto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jPanelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlPresupuesto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelEmployes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelSupplimers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelCategories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,7 +318,7 @@ public class SystemView extends javax.swing.JFrame {
                 .addComponent(jPanelSupplimers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jPanelCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(255, 255, 255))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         getContentPane().add(Sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 200, 600));
@@ -311,7 +329,7 @@ public class SystemView extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel2.setText("GASTOS");
+        jLabel2.setText("Gastos");
         Header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, -1, 39));
 
         getContentPane().add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 40));
@@ -1038,6 +1056,18 @@ public class SystemView extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_pnlPresupuestoMouseClicked
 
+    private void jPanelProductsMouseClicked(java.awt.event.MouseEvent evt) {
+        DashboardView viewDashboard = new DashboardView();
+        viewDashboard.setVisible(true);
+        dispose();
+    }
+
+    private void jPanelEmployesMouseClicked(java.awt.event.MouseEvent evt) {
+        AhorrosView viewAhorros = new AhorrosView();
+        viewAhorros.setVisible(true);
+        dispose();
+    }
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1053,6 +1083,18 @@ public class SystemView extends javax.swing.JFrame {
         dateFechaNuevo.setDate(new Date());
         
         txtDescripcion.setText("");
+    }
+
+        private void jPanelSupplimersMouseClicked(java.awt.event.MouseEvent evt) {
+        DeudasView viewDeudas = new DeudasView();
+        viewDeudas.setVisible(true);
+        this.dispose();
+    }
+
+        private void jPanelCategoriesMouseClicked(java.awt.event.MouseEvent evt) {
+        UsuariosView viewUsuarios = new UsuariosView();
+        viewUsuarios.setVisible(true);
+        this.dispose();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

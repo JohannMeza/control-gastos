@@ -120,6 +120,12 @@ public class PresupuestoView extends javax.swing.JFrame {
 
         jPanelProducts.setBackground(new java.awt.Color(248, 250, 252));
         jPanelProducts.setForeground(new java.awt.Color(71, 85, 105));
+        jPanelProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelProductsMouseClicked(evt);
+            }
+        });
 
         jLabelProducts.setBackground(new java.awt.Color(255, 255, 255));
         jLabelProducts.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -195,6 +201,12 @@ public class PresupuestoView extends javax.swing.JFrame {
 
         jPanelEmployes.setBackground(new java.awt.Color(248, 250, 252));
         jPanelEmployes.setForeground(new java.awt.Color(71, 85, 105));
+        jPanelEmployes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelEmployes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelEmployesMouseClicked(evt);
+            }
+        });
 
         jLabelEmployes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelEmployes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ahorros.png"))); // NOI18N
@@ -215,6 +227,12 @@ public class PresupuestoView extends javax.swing.JFrame {
         );
 
         jPanelSupplimers.setBackground(new java.awt.Color(248, 250, 252));
+        jPanelSupplimers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelSupplimers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelSupplimersMouseClicked(evt);
+            }
+        });
         jPanelSupplimers.setForeground(new java.awt.Color(71, 85, 105));
 
         jLabelSupplimers.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -236,6 +254,12 @@ public class PresupuestoView extends javax.swing.JFrame {
         );
 
         jPanelCategories.setBackground(new java.awt.Color(248, 250, 252));
+        jPanelCategories.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelCategories.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelCategoriesMouseClicked(evt);
+            }
+        });
         jPanelCategories.setForeground(new java.awt.Color(71, 85, 105));
 
         jLabelCategories.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -260,18 +284,12 @@ public class PresupuestoView extends javax.swing.JFrame {
         Sidebar.setLayout(SidebarLayout);
         SidebarLayout.setHorizontalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanelCategories, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelSupplimers, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelEmployes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanelCustomers, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jPanelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelCustomers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelEmployes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelSupplimers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelCategories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,7 +306,7 @@ public class PresupuestoView extends javax.swing.JFrame {
                 .addComponent(jPanelSupplimers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jPanelCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(255, 255, 255))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         getContentPane().add(Sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 200, 600));
@@ -788,6 +806,18 @@ public class PresupuestoView extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_pnlGastoMouseClicked
 
+    private void jPanelProductsMouseClicked(java.awt.event.MouseEvent evt) {
+        DashboardView viewDashboard = new DashboardView();
+        viewDashboard.setVisible(true);
+        dispose();
+    }
+
+    private void jPanelEmployesMouseClicked(java.awt.event.MouseEvent evt) {
+        AhorrosView viewAhorros = new AhorrosView();
+        viewAhorros.setVisible(true);
+        dispose();
+    }
+
     private void txtPresupuestoMensualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPresupuestoMensualKeyTyped
 
     }//GEN-LAST:event_txtPresupuestoMensualKeyTyped
@@ -889,6 +919,18 @@ public class PresupuestoView extends javax.swing.JFrame {
                 new PresupuestoView().setVisible(true);
             }
         });
+    }
+
+        private void jPanelSupplimersMouseClicked(java.awt.event.MouseEvent evt) {
+        DeudasView viewDeudas = new DeudasView();
+        viewDeudas.setVisible(true);
+        this.dispose();
+    }
+
+        private void jPanelCategoriesMouseClicked(java.awt.event.MouseEvent evt) {
+        UsuariosView viewUsuarios = new UsuariosView();
+        viewUsuarios.setVisible(true);
+        this.dispose();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

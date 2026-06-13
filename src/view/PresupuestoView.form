@@ -1,86 +1,75 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
+<?xml version='1.0' encoding='UTF-8'?>
 <Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="3" />
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1" />
+    <SyntheticProperty name="generateCenter" type="boolean" value="false" />
   </SyntheticProperties>
   <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
-    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
-    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
-    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
-    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-77,0,0,4,-69"/>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0" />
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false" />
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true" />
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false" />
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false" />
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1" />
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0" />
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false" />
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2" />
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-77,0,0,4,-69" />
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-    <Property name="useNullLayout" type="boolean" value="false"/>
+    <Property name="useNullLayout" type="boolean" value="false" />
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="Sidebar">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="fc" green="fa" red="f8" type="rgb"/>
+          <Color blue="fc" green="fa" red="f8" type="rgb" />
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
             <MatteColorBorder bottom="0" left="0" right="1" top="0">
-              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
             </MatteColorBorder>
           </Border>
         </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="80" width="200" height="600"/>
+          <AbsoluteConstraints x="0" y="80" width="200" height="600" />
         </Constraint>
       </Constraints>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jPanelCategories" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanelSupplimers" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanelEmployes" alignment="0" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jPanelCustomers" alignment="0" max="32767" attributes="0"/>
-                      <Component id="pnlGasto" alignment="1" max="32767" attributes="0"/>
-                      <Component id="jPanelProducts" alignment="1" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
+              <Component id="jPanelProducts" alignment="0" max="32767" attributes="0" />
+              <Component id="pnlGasto" alignment="0" max="32767" attributes="0" />
+              <Component id="jPanelCustomers" alignment="0" max="32767" attributes="0" />
+              <Component id="jPanelEmployes" alignment="0" max="32767" attributes="0" />
+              <Component id="jPanelSupplimers" alignment="0" max="32767" attributes="0" />
+              <Component id="jPanelCategories" alignment="0" max="32767" attributes="0" />
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                  <Component id="jPanelProducts" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
-                  <Component id="pnlGasto" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
-                  <Component id="jPanelCustomers" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
-                  <Component id="jPanelEmployes" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
-                  <Component id="jPanelSupplimers" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
-                  <Component id="jPanelCategories" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="255" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0" />
+                  <Component id="jPanelProducts" min="-2" max="-2" attributes="0" />
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
+                  <Component id="pnlGasto" min="-2" max="-2" attributes="0" />
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
+                  <Component id="jPanelCustomers" min="-2" max="-2" attributes="0" />
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
+                  <Component id="jPanelEmployes" min="-2" max="-2" attributes="0" />
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
+                  <Component id="jPanelSupplimers" min="-2" max="-2" attributes="0" />
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
+                  <Component id="jPanelCategories" min="-2" max="-2" attributes="0" />
+                  <EmptySpace pref="230" max="32767" attributes="0" />
               </Group>
           </Group>
         </DimensionLayout>
@@ -89,10 +78,10 @@
         <Container class="javax.swing.JPanel" name="jPanelProducts">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb"/>
+              <Color blue="fc" green="fa" red="f8" type="rgb" />
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="69" green="55" red="47" type="rgb"/>
+              <Color blue="69" green="55" red="47" type="rgb" />
             </Property>
           </Properties>
 
@@ -100,15 +89,15 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="jLabelProducts" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0" />
+                      <Component id="jLabelProducts" min="-2" max="-2" attributes="0" />
+                      <EmptySpace max="32767" attributes="0" />
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelProducts" alignment="0" pref="35" max="32767" attributes="0"/>
+                  <Component id="jLabelProducts" alignment="0" pref="35" max="32767" attributes="0" />
               </Group>
             </DimensionLayout>
           </Layout>
@@ -116,15 +105,15 @@
             <Component class="javax.swing.JLabel" name="jLabelProducts">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
+                  <Font name="Tahoma" size="14" style="0" />
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/aplicaciones.png"/>
+                  <Image iconType="3" name="/images/aplicaciones.png" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Dashboard"/>
+                <Property name="text" type="java.lang.String" value="Dashboard" />
               </Properties>
             </Component>
           </SubComponents>
@@ -132,39 +121,39 @@
         <Container class="javax.swing.JPanel" name="pnlGasto">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fe" green="f8" red="f4" type="rgb"/>
+              <Color blue="fe" green="f8" red="f4" type="rgb" />
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                 <MatteColorBorder bottom="0" left="0" right="0" top="0">
-                  <Color PropertyName="color" blue="eb" green="63" red="25" type="rgb"/>
+                  <Color PropertyName="color" blue="eb" green="63" red="25" type="rgb" />
                 </MatteColorBorder>
               </Border>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="69" green="55" red="47" type="rgb"/>
+              <Color blue="69" green="55" red="47" type="rgb" />
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Hand Cursor" />
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlGastoMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlGastoMouseClicked" />
           </Events>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="jLabelPurchases" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0" />
+                      <Component id="jLabelPurchases" min="-2" max="-2" attributes="0" />
+                      <EmptySpace max="32767" attributes="0" />
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelPurchases" alignment="0" pref="35" max="32767" attributes="0"/>
+                  <Component id="jLabelPurchases" alignment="0" pref="35" max="32767" attributes="0" />
               </Group>
             </DimensionLayout>
           </Layout>
@@ -172,15 +161,15 @@
             <Component class="javax.swing.JLabel" name="jLabelPurchases">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
+                  <Font name="Tahoma" size="14" style="0" />
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb"/>
+                  <Color blue="69" green="55" red="47" type="rgb" />
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/gastos.png"/>
+                  <Image iconType="3" name="/images/icon/grey/gastos.png" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Gastos"/>
+                <Property name="text" type="java.lang.String" value="Gastos" />
               </Properties>
             </Component>
           </SubComponents>
@@ -188,20 +177,20 @@
         <Container class="javax.swing.JPanel" name="jPanelCustomers">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb"/>
+              <Color blue="fc" green="fa" red="f8" type="rgb" />
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                 <MatteColorBorder bottom="0" left="6" right="0" top="0">
-                  <Color PropertyName="color" blue="eb" green="63" red="25" type="rgb"/>
+                  <Color PropertyName="color" blue="eb" green="63" red="25" type="rgb" />
                 </MatteColorBorder>
               </Border>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="69" green="55" red="47" type="rgb"/>
+              <Color blue="69" green="55" red="47" type="rgb" />
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Hand Cursor" />
             </Property>
           </Properties>
 
@@ -209,15 +198,15 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jLabelCustomers" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="62" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0" />
+                      <Component id="jLabelCustomers" min="-2" max="-2" attributes="0" />
+                      <EmptySpace pref="62" max="32767" attributes="0" />
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelCustomers" alignment="0" pref="35" max="32767" attributes="0"/>
+                  <Component id="jLabelCustomers" alignment="0" pref="35" max="32767" attributes="0" />
               </Group>
             </DimensionLayout>
           </Layout>
@@ -225,15 +214,15 @@
             <Component class="javax.swing.JLabel" name="jLabelCustomers">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
+                  <Font name="Tahoma" size="14" style="0" />
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="eb" green="63" red="25" type="rgb"/>
+                  <Color blue="eb" green="63" red="25" type="rgb" />
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/blue/presupuesto.png"/>
+                  <Image iconType="3" name="/images/icon/blue/presupuesto.png" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Presupuesto"/>
+                <Property name="text" type="java.lang.String" value="Presupuesto" />
               </Properties>
             </Component>
           </SubComponents>
@@ -241,26 +230,32 @@
         <Container class="javax.swing.JPanel" name="jPanelEmployes">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb"/>
+              <Color blue="fc" green="fa" red="f8" type="rgb" />
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="69" green="55" red="47" type="rgb"/>
+              <Color blue="69" green="55" red="47" type="rgb" />
+            </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor" />
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelEmployesMouseClicked" />
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="jLabelEmployes" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0" />
+                      <Component id="jLabelEmployes" min="-2" max="-2" attributes="0" />
+                      <EmptySpace max="32767" attributes="0" />
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelEmployes" alignment="0" pref="35" max="32767" attributes="0"/>
+                  <Component id="jLabelEmployes" alignment="0" pref="35" max="32767" attributes="0" />
               </Group>
             </DimensionLayout>
           </Layout>
@@ -268,12 +263,12 @@
             <Component class="javax.swing.JLabel" name="jLabelEmployes">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
+                  <Font name="Tahoma" size="14" style="0" />
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/ahorros.png"/>
+                  <Image iconType="3" name="/images/ahorros.png" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ahorros"/>
+                <Property name="text" type="java.lang.String" value="Ahorros" />
               </Properties>
             </Component>
           </SubComponents>
@@ -281,26 +276,26 @@
         <Container class="javax.swing.JPanel" name="jPanelSupplimers">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb"/>
+              <Color blue="fc" green="fa" red="f8" type="rgb" />
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="69" green="55" red="47" type="rgb"/>
+              <Color blue="69" green="55" red="47" type="rgb" />
             </Property>
-          </Properties>
+          <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor"><Color id="Hand Cursor" /></Property></Properties>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="jLabelSupplimers" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0" />
+                      <Component id="jLabelSupplimers" min="-2" max="-2" attributes="0" />
+                      <EmptySpace max="32767" attributes="0" />
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelSupplimers" alignment="0" pref="35" max="32767" attributes="0"/>
+                  <Component id="jLabelSupplimers" alignment="0" pref="35" max="32767" attributes="0" />
               </Group>
             </DimensionLayout>
           </Layout>
@@ -308,39 +303,39 @@
             <Component class="javax.swing.JLabel" name="jLabelSupplimers">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
+                  <Font name="Tahoma" size="14" style="0" />
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/deudas.png"/>
+                  <Image iconType="3" name="/images/deudas.png" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Deudas"/>
+                <Property name="text" type="java.lang.String" value="Deudas" />
               </Properties>
             </Component>
           </SubComponents>
-        </Container>
+        <Events><EventHandler event="mouseClicked" handler="jPanelSupplimersMouseClicked" /></Events></Container>
         <Container class="javax.swing.JPanel" name="jPanelCategories">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb"/>
+              <Color blue="fc" green="fa" red="f8" type="rgb" />
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="69" green="55" red="47" type="rgb"/>
+              <Color blue="69" green="55" red="47" type="rgb" />
             </Property>
-          </Properties>
+          <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor"><Color id="Hand Cursor" /></Property></Properties>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="jLabelCategories" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0" />
+                      <Component id="jLabelCategories" min="-2" max="-2" attributes="0" />
+                      <EmptySpace max="32767" attributes="0" />
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelCategories" alignment="0" pref="35" max="32767" attributes="0"/>
+                  <Component id="jLabelCategories" alignment="0" pref="35" max="32767" attributes="0" />
               </Group>
             </DimensionLayout>
           </Layout>
@@ -348,54 +343,54 @@
             <Component class="javax.swing.JLabel" name="jLabelCategories">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
+                  <Font name="Tahoma" size="14" style="0" />
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/usuario.png"/>
+                  <Image iconType="3" name="/images/usuario.png" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Usuarios"/>
+                <Property name="text" type="java.lang.String" value="Usuarios" />
               </Properties>
             </Component>
           </SubComponents>
-        </Container>
+        <Events><EventHandler event="mouseClicked" handler="jPanelCategoriesMouseClicked" /></Events></Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="Logo">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="fc" green="fa" red="f8" type="rgb"/>
+          <Color blue="fc" green="fa" red="f8" type="rgb" />
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
             <MatteColorBorder bottom="0" left="0" right="1" top="0">
-              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
             </MatteColorBorder>
           </Border>
         </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="-1" height="80"/>
+          <AbsoluteConstraints x="0" y="0" width="-1" height="80" />
         </Constraint>
       </Constraints>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="false"/>
+        <Property name="useNullLayout" type="boolean" value="false" />
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb"/>
+              <Color blue="fc" green="fa" red="f8" type="rgb" />
             </Property>
-            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="horizontalAlignment" type="int" value="0" />
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/logotipo.png"/>
+              <Image iconType="3" name="/images/logotipo.png" />
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="0" width="200" height="80"/>
+              <AbsoluteConstraints x="0" y="0" width="200" height="80" />
             </Constraint>
           </Constraints>
         </Component>
@@ -404,39 +399,39 @@
     <Container class="javax.swing.JPanel" name="Header">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+          <Color blue="ff" green="ff" red="ff" type="rgb" />
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
             <MatteColorBorder bottom="1" left="0" right="0" top="0">
-              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
             </MatteColorBorder>
           </Border>
         </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="200" y="0" width="1010" height="40"/>
+          <AbsoluteConstraints x="200" y="0" width="1010" height="40" />
         </Constraint>
       </Constraints>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="false"/>
+        <Property name="useNullLayout" type="boolean" value="false" />
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="18" style="1"/>
+              <Font name="Dialog" size="18" style="1" />
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="30" green="1c" red="b" type="rgb"/>
+              <Color blue="30" green="1c" red="b" type="rgb" />
             </Property>
-            <Property name="text" type="java.lang.String" value="Presupuesto"/>
+            <Property name="text" type="java.lang.String" value="Presupuesto" />
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="21" y="0" width="-1" height="39"/>
+              <AbsoluteConstraints x="21" y="0" width="-1" height="39" />
             </Constraint>
           </Constraints>
         </Component>
@@ -445,138 +440,138 @@
     <Container class="javax.swing.JTabbedPane" name="Body">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="200" y="40" width="1010" height="640"/>
+          <AbsoluteConstraints x="200" y="40" width="1010" height="640" />
         </Constraint>
       </Constraints>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" />
       <SubComponents>
         <Container class="javax.swing.JPanel" name="jPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Presupuesto">
-                <Property name="tabTitle" type="java.lang.String" value="Presupuesto"/>
+                <Property name="tabTitle" type="java.lang.String" value="Presupuesto" />
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-            <Property name="useNullLayout" type="boolean" value="false"/>
+            <Property name="useNullLayout" type="boolean" value="false" />
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="jPanel7">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="300" width="640" height="280"/>
+                  <AbsoluteConstraints x="10" y="300" width="640" height="280" />
                 </Constraint>
               </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                <Property name="useNullLayout" type="boolean" value="false"/>
+                <Property name="useNullLayout" type="boolean" value="false" />
               </Layout>
               <SubComponents>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane1">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
+                      <Border info="null" />
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true" />
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="0" y="50" width="640" height="230"/>
+                      <AbsoluteConstraints x="0" y="50" width="640" height="230" />
                     </Constraint>
                   </Constraints>
 
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout" />
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tblPresupuestos">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                          <Color blue="ff" green="ff" red="ff" type="rgb" />
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="33" green="33" red="33" type="rgb"/>
+                          <Color blue="33" green="33" red="33" type="rgb" />
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
-                            <Column editable="false" title="ID" type="java.lang.Integer"/>
-                            <Column editable="false" title="CATEGORIA" type="java.lang.String"/>
-                            <Column editable="false" title="ASIGNADO" type="java.lang.Double"/>
-                            <Column editable="false" title="GASTADO" type="java.lang.Double"/>
-                            <Column editable="false" title="ESTADO" type="java.lang.String"/>
-                            <Column editable="false" title="PROGRESO" type="java.lang.String"/>
+                            <Column editable="false" title="ID" type="java.lang.Integer" />
+                            <Column editable="false" title="CATEGORIA" type="java.lang.String" />
+                            <Column editable="false" title="ASIGNADO" type="java.lang.Double" />
+                            <Column editable="false" title="GASTADO" type="java.lang.Double" />
+                            <Column editable="false" title="ESTADO" type="java.lang.String" />
+                            <Column editable="false" title="PROGRESO" type="java.lang.String" />
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
                             <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
+                              <Title />
+                              <Editor />
+                              <Renderer />
                             </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
+                              <Title />
+                              <Editor />
+                              <Renderer />
                             </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
+                              <Title />
+                              <Editor />
+                              <Renderer />
                             </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
+                              <Title />
+                              <Editor />
+                              <Renderer />
                             </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
+                              <Title />
+                              <Editor />
+                              <Renderer />
                             </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
+                              <Title />
+                              <Editor />
+                              <Renderer />
                             </Column>
                           </TableColumnModel>
                         </Property>
-                        <Property name="doubleBuffered" type="boolean" value="true"/>
-                        <Property name="dragEnabled" type="boolean" value="true"/>
+                        <Property name="doubleBuffered" type="boolean" value="true" />
+                        <Property name="dragEnabled" type="boolean" value="true" />
                         <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                          <Color blue="ff" green="ff" red="ff" type="rgb" />
                         </Property>
                         <Property name="selectionBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="c6" green="4a" red="0" type="rgb"/>
+                          <Color blue="c6" green="4a" red="0" type="rgb" />
                         </Property>
                         <Property name="selectionForeground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                          <Color blue="ff" green="ff" red="ff" type="rgb" />
                         </Property>
-                        <Property name="selectionMode" type="int" value="0"/>
+                        <Property name="selectionMode" type="int" value="0" />
                         <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
-                          <JTableSelectionModel selectionMode="0"/>
+                          <JTableSelectionModel selectionMode="0" />
                         </Property>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                          <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                          <TableHeader reorderingAllowed="true" resizingAllowed="true" />
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -584,36 +579,36 @@
                 <Component class="javax.swing.JLabel" name="jLabel14">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="14" style="1"/>
+                      <Font name="Dialog" size="14" style="1" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/blue/historial.png"/>
+                      <Image iconType="3" name="/images/icon/blue/historial.png" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="PRESUPUESTO DE LAS CATEGORIAS"/>
+                    <Property name="text" type="java.lang.String" value="PRESUPUESTO DE LAS CATEGORIAS" />
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="15" width="270" height="20"/>
+                      <AbsoluteConstraints x="10" y="15" width="270" height="20" />
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="e9" red="dc" type="rgb"/>
+                      <Color blue="ff" green="e9" red="dc" type="rgb" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="55" green="46" red="43" type="rgb"/>
+                      <Color blue="55" green="46" red="43" type="rgb" />
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="SETIEMBRE 2023"/>
+                    <Property name="horizontalAlignment" type="int" value="0" />
+                    <Property name="text" type="java.lang.String" value="SETIEMBRE 2023" />
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="510" y="10" width="120" height="30"/>
+                      <AbsoluteConstraints x="510" y="10" width="120" height="30" />
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -622,19 +617,19 @@
             <Container class="javax.swing.JPanel" name="jPanel2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="670" y="80" width="330" height="340"/>
+                  <AbsoluteConstraints x="670" y="80" width="330" height="340" />
                 </Constraint>
               </Constraints>
 
@@ -642,66 +637,66 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtUmbral" max="32767" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="txtUmbral" max="32767" attributes="0" />
+                                  <EmptySpace type="unrelated" max="-2" attributes="0" />
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel38" min="-2" pref="155" max="-2" attributes="0"/>
-                                      <Component id="cbPeriodo" min="-2" pref="135" max="-2" attributes="0"/>
+                                      <Component id="jLabel38" min="-2" pref="155" max="-2" attributes="0" />
+                                      <Component id="cbPeriodo" min="-2" pref="135" max="-2" attributes="0" />
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="btnAgregarEditarPresupuesto" min="-2" pref="211" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btnEliminar" min="-2" pref="67" max="-2" attributes="0"/>
+                                          <Component id="btnAgregarEditarPresupuesto" min="-2" pref="211" max="-2" attributes="0" />
+                                          <EmptySpace max="-2" attributes="0" />
+                                          <Component id="btnEliminar" min="-2" pref="67" max="-2" attributes="0" />
                                       </Group>
-                                      <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblRegistro" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel37" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
-                                      <Component id="txtPresupuestoMensual" alignment="0" pref="286" max="32767" attributes="0"/>
-                                      <Component id="cbCategoria" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0" />
+                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0" />
+                                      <Component id="lblRegistro" alignment="0" min="-2" max="-2" attributes="0" />
+                                      <Component id="jLabel37" alignment="0" min="-2" pref="155" max="-2" attributes="0" />
+                                      <Component id="txtPresupuestoMensual" alignment="0" pref="286" max="32767" attributes="0" />
+                                      <Component id="cbCategoria" alignment="0" max="32767" attributes="0" />
                                   </Group>
-                                  <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="18" max="32767" attributes="0" />
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="lblRegistro" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cbCategoria" min="-2" pref="35" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtPresupuestoMensual" min="-2" pref="35" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0" />
+                          <Component id="lblRegistro" min="-2" max="-2" attributes="0" />
+                          <EmptySpace type="separate" max="-2" attributes="0" />
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0" />
+                          <EmptySpace max="-2" attributes="0" />
+                          <Component id="cbCategoria" min="-2" pref="35" max="-2" attributes="0" />
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0" />
+                          <Component id="jLabel7" min="-2" max="-2" attributes="0" />
+                          <EmptySpace max="-2" attributes="0" />
+                          <Component id="txtPresupuestoMensual" min="-2" pref="35" max="-2" attributes="0" />
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel37" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0" />
+                              <Component id="jLabel37" alignment="3" min="-2" max="-2" attributes="0" />
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cbPeriodo" max="32767" attributes="0"/>
-                              <Component id="txtUmbral" pref="35" max="32767" attributes="0"/>
+                              <Component id="cbPeriodo" max="32767" attributes="0" />
+                              <Component id="txtUmbral" pref="35" max="32767" attributes="0" />
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnAgregarEditarPresupuesto" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="btnEliminar" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnAgregarEditarPresupuesto" alignment="1" min="-2" pref="40" max="-2" attributes="0" />
+                              <Component id="btnEliminar" min="-2" pref="40" max="-2" attributes="0" />
                           </Group>
-                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                          <EmptySpace pref="14" max="32767" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -710,156 +705,156 @@
                 <Component class="javax.swing.JLabel" name="lblRegistro">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="14" style="1"/>
+                      <Font name="Dialog" size="14" style="1" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Editar Presupuesto"/>
+                    <Property name="text" type="java.lang.String" value="Editar Presupuesto" />
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Seleccionar Categoria"/>
+                    <Property name="text" type="java.lang.String" value="Seleccionar Categoria" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel7">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="L&#xed;mite de presupuesto mensual"/>
+                    <Property name="text" type="java.lang.String" value="Límite de presupuesto mensual" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtPresupuestoMensual">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                      <Color blue="ff" green="ff" red="ff" type="rgb" />
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[15, 25]"/>
+                      <Dimension value="[15, 25]" />
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPresupuestoMensualKeyTyped"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPresupuestoMensualKeyTyped" />
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAgregarEditarPresupuesto">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="eb" green="63" red="25" type="rgb"/>
+                      <Color blue="eb" green="63" red="25" type="rgb" />
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Inter" size="12" style="0"/>
+                      <Font name="Inter" size="12" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                      <Color blue="ff" green="ff" red="ff" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Agregar Presupuesto"/>
+                    <Property name="text" type="java.lang.String" value="Agregar Presupuesto" />
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Hand Cursor"/>
+                      <Color id="Hand Cursor" />
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[131, 25]"/>
+                      <Dimension value="[131, 25]" />
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarEditarPresupuestoActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarEditarPresupuestoActionPerformed" />
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel37">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Umbral de Alerta"/>
+                    <Property name="text" type="java.lang.String" value="Umbral de Alerta" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtUmbral">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                      <Color blue="ff" green="ff" red="ff" type="rgb" />
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[15, 25]"/>
+                      <Dimension value="[15, 25]" />
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel38">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Periodo"/>
+                    <Property name="text" type="java.lang.String" value="Periodo" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnEliminar">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                      <Color blue="ff" green="ff" red="ff" type="rgb" />
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Inter" size="12" style="0"/>
+                      <Font name="Inter" size="12" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="1a" green="1a" red="ba" type="rgb"/>
+                      <Color blue="1a" green="1a" red="ba" type="rgb" />
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/red/limpio.png"/>
+                      <Image iconType="3" name="/images/icon/red/limpio.png" />
                     </Property>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder roundedCorners="true">
-                          <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+                          <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
                         </LineBorder>
                       </Border>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Hand Cursor"/>
+                      <Color id="Hand Cursor" />
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed" />
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cbCategoria">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="new javax.swing.DefaultComboBoxModel&lt;ComboItem&gt;()" type="code"/>
+                      <Connection code="new javax.swing.DefaultComboBoxModel&lt;ComboItem&gt;()" type="code" />
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;ComboItem&gt;"/>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;ComboItem&gt;" />
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cbPeriodo">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="new javax.swing.DefaultComboBoxModel&lt;ComboItem&gt;()" type="code"/>
+                      <Connection code="new javax.swing.DefaultComboBoxModel&lt;ComboItem&gt;()" type="code" />
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;ComboItem&gt;"/>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;ComboItem&gt;" />
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -867,19 +862,19 @@
             <Container class="javax.swing.JPanel" name="jPanelTotalGastos">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="d7" green="c6" red="c3" type="rgb"/>
+                      <Color PropertyName="color" blue="d7" green="c6" red="c3" type="rgb" />
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="80" width="200" height="200"/>
+                  <AbsoluteConstraints x="10" y="80" width="200" height="200" />
                 </Constraint>
               </Constraints>
 
@@ -887,33 +882,33 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel31" pref="150" max="32767" attributes="0"/>
+                              <Component id="jLabel31" pref="150" max="32767" attributes="0" />
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel8" min="-2" pref="27" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" pref="27" max="-2" attributes="0" />
+                                  <EmptySpace max="-2" attributes="0" />
+                                  <Component id="jLabel20" min="-2" max="-2" attributes="0" />
                               </Group>
-                              <Component id="jLabel21" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel21" alignment="0" max="32767" attributes="0" />
                           </Group>
-                          <EmptySpace pref="36" max="32767" attributes="0"/>
+                          <EmptySpace pref="36" max="32767" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel8" min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="jLabel20" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="jLabel8" min="-2" pref="27" max="-2" attributes="0" />
+                              <Component id="jLabel20" min="-2" pref="27" max="-2" attributes="0" />
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel31" min="-2" pref="20" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0" />
+                          <Component id="jLabel21" min="-2" max="-2" attributes="0" />
+                          <EmptySpace max="-2" attributes="0" />
+                          <Component id="jLabel31" min="-2" pref="20" max="-2" attributes="0" />
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -922,50 +917,50 @@
                 <Component class="javax.swing.JLabel" name="jLabel20">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="14" style="0"/>
+                      <Font name="Dialog" size="14" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Total Presupuesto"/>
+                    <Property name="text" type="java.lang.String" value="Total Presupuesto" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel21">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="28" style="1"/>
+                      <Font name="Dialog" size="28" style="1" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="$5,400.00"/>
+                    <Property name="text" type="java.lang.String" value="$5,400.00" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="horizontalAlignment" type="int" value="0" />
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/blue/gastos.png"/>
+                      <Image iconType="3" name="/images/icon/blue/gastos.png" />
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Default Cursor" />
                     </Property>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                    <Property name="horizontalTextPosition" type="int" value="0" />
+                    <Property name="requestFocusEnabled" type="boolean" value="false" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel31">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="12" style="0"/>
+                      <Font name="Dialog" size="12" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="49" green="6c" red="0" type="rgb"/>
+                      <Color blue="49" green="6c" red="0" type="rgb" />
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/green/controlar.png"/>
+                      <Image iconType="3" name="/images/icon/green/controlar.png" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="2.4% vs mes anterior"/>
+                    <Property name="text" type="java.lang.String" value="2.4% vs mes anterior" />
                   </Properties>
                 </Component>
               </SubComponents>
@@ -973,19 +968,19 @@
             <Container class="javax.swing.JPanel" name="jPanelStatus">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="670" y="440" width="330" height="140"/>
+                  <AbsoluteConstraints x="670" y="440" width="330" height="140" />
                 </Constraint>
               </Constraints>
 
@@ -993,23 +988,23 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblRegistro2" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanelPeriodoSiguiente1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblRegistro2" min="-2" max="-2" attributes="0" />
+                              <Component id="jPanelPeriodoSiguiente1" alignment="0" min="-2" max="-2" attributes="0" />
                           </Group>
-                          <EmptySpace pref="16" max="32767" attributes="0"/>
+                          <EmptySpace pref="16" max="32767" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          <Component id="lblRegistro2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jPanelPeriodoSiguiente1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0" />
+                          <Component id="lblRegistro2" min="-2" max="-2" attributes="0" />
+                          <EmptySpace type="separate" max="-2" attributes="0" />
+                          <Component id="jPanelPeriodoSiguiente1" min="-2" max="-2" attributes="0" />
+                          <EmptySpace min="0" pref="17" max="32767" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1018,26 +1013,26 @@
                 <Component class="javax.swing.JLabel" name="lblRegistro2">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="14" style="0"/>
+                      <Font name="Dialog" size="14" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="ACTIVIDAD PRESUPUESTO RECIENTE"/>
+                    <Property name="text" type="java.lang.String" value="ACTIVIDAD PRESUPUESTO RECIENTE" />
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
                   </AuxValues>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jPanelPeriodoSiguiente1">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                      <Color blue="ff" green="ff" red="ff" type="rgb" />
                     </Property>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder roundedCorners="true">
-                          <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+                          <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
                         </LineBorder>
                       </Border>
                     </Property>
@@ -1047,33 +1042,33 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel14" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0" />
+                              <Component id="jPanel14" min="-2" max="-2" attributes="0" />
+                              <EmptySpace max="-2" attributes="0" />
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel39" min="-2" pref="151" max="-2" attributes="0"/>
-                                  <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel42" min="-2" max="-2" attributes="0" />
+                                  <Component id="jLabel39" min="-2" pref="151" max="-2" attributes="0" />
+                                  <Component id="jLabel41" min="-2" max="-2" attributes="0" />
                               </Group>
-                              <EmptySpace pref="59" max="32767" attributes="0"/>
+                              <EmptySpace pref="59" max="32767" attributes="0" />
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="7" max="-2" attributes="0" />
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="jLabel39" min="-2" pref="14" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel39" min="-2" pref="14" max="-2" attributes="0" />
+                                      <EmptySpace max="-2" attributes="0" />
+                                      <Component id="jLabel41" min="-2" max="-2" attributes="0" />
+                                      <EmptySpace max="-2" attributes="0" />
+                                      <Component id="jLabel42" min="-2" max="-2" attributes="0" />
                                   </Group>
-                                  <Component id="jPanel14" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jPanel14" min="-2" max="-2" attributes="0" />
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0" />
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1082,51 +1077,51 @@
                     <Component class="javax.swing.JLabel" name="jLabel39">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Dialog" size="12" style="1"/>
+                          <Font name="Dialog" size="12" style="1" />
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="30" green="1c" red="b" type="rgb"/>
+                          <Color blue="30" green="1c" red="b" type="rgb" />
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Presupuesto Excedido"/>
+                        <Property name="text" type="java.lang.String" value="Presupuesto Excedido" />
                       </Properties>
                     </Component>
                     <Container class="javax.swing.JPanel" name="jPanel14">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="bb" green="f8" red="6c" type="rgb"/>
+                          <Color blue="bb" green="f8" red="6c" type="rgb" />
                         </Property>
-                        <Property name="name" type="java.lang.String" value="" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="" noResource="true" />
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[40, 40]"/>
+                          <Dimension value="[40, 40]" />
                         </Property>
                       </Properties>
 
-                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" />
                       <SubComponents>
                         <Component class="javax.swing.JLabel" name="jLabel11">
                           <Properties>
-                            <Property name="horizontalAlignment" type="int" value="0"/>
+                            <Property name="horizontalAlignment" type="int" value="0" />
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/images/icon/green/controlar.png"/>
+                              <Image iconType="3" name="/images/icon/green/controlar.png" />
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Default Cursor"/>
+                              <Color id="Default Cursor" />
                             </Property>
-                            <Property name="horizontalTextPosition" type="int" value="0"/>
+                            <Property name="horizontalTextPosition" type="int" value="0" />
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[9, 9]"/>
+                              <Dimension value="[9, 9]" />
                             </Property>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[9, 9]"/>
+                              <Dimension value="[9, 9]" />
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[9, 9]"/>
+                              <Dimension value="[9, 9]" />
                             </Property>
-                            <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                            <Property name="requestFocusEnabled" type="boolean" value="false" />
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                              <CardConstraints cardName="card2"/>
+                              <CardConstraints cardName="card2" />
                             </Constraint>
                           </Constraints>
                         </Component>
@@ -1135,23 +1130,23 @@
                     <Component class="javax.swing.JLabel" name="jLabel41">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Dialog" size="10" style="0"/>
+                          <Font name="Dialog" size="10" style="0" />
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="30" green="1c" red="b" type="rgb"/>
+                          <Color blue="30" green="1c" red="b" type="rgb" />
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Food &amp; Dinning went over limit by 142.30"/>
+                        <Property name="text" type="java.lang.String" value="Food &amp; Dinning went over limit by 142.30" />
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel42">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Dialog" size="12" style="0"/>
+                          <Font name="Dialog" size="12" style="0" />
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="30" green="1c" red="b" type="rgb"/>
+                          <Color blue="30" green="1c" red="b" type="rgb" />
                         </Property>
-                        <Property name="text" type="java.lang.String" value="hace 2 horas"/>
+                        <Property name="text" type="java.lang.String" value="hace 2 horas" />
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -1161,19 +1156,19 @@
             <Container class="javax.swing.JPanel" name="jPanelTotalGastos1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="d7" green="c6" red="c3" type="rgb"/>
+                      <Color PropertyName="color" blue="d7" green="c6" red="c3" type="rgb" />
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="230" y="80" width="200" height="200"/>
+                  <AbsoluteConstraints x="230" y="80" width="200" height="200" />
                 </Constraint>
               </Constraints>
 
@@ -1181,35 +1176,35 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel32" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel23" alignment="0" pref="150" max="32767" attributes="0"/>
+                                  <Component id="jLabel32" alignment="0" max="32767" attributes="0" />
+                                  <Component id="jLabel23" alignment="0" pref="150" max="32767" attributes="0" />
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel19" min="-2" pref="27" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel19" min="-2" pref="27" max="-2" attributes="0" />
+                                  <EmptySpace max="-2" attributes="0" />
+                                  <Component id="jLabel22" min="-2" max="-2" attributes="0" />
                               </Group>
                           </Group>
-                          <EmptySpace pref="36" max="32767" attributes="0"/>
+                          <EmptySpace pref="36" max="32767" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel19" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="jLabel22" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="jLabel19" alignment="0" min="-2" pref="27" max="-2" attributes="0" />
+                              <Component id="jLabel22" alignment="0" min="-2" pref="27" max="-2" attributes="0" />
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel32" min="-2" pref="20" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0" />
+                          <Component id="jLabel23" min="-2" max="-2" attributes="0" />
+                          <EmptySpace max="-2" attributes="0" />
+                          <Component id="jLabel32" min="-2" pref="20" max="-2" attributes="0" />
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1218,47 +1213,47 @@
                 <Component class="javax.swing.JLabel" name="jLabel22">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="14" style="0"/>
+                      <Font name="Dialog" size="14" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Gastado hasta hoy"/>
+                    <Property name="text" type="java.lang.String" value="Gastado hasta hoy" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel23">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="28" style="1"/>
+                      <Font name="Dialog" size="28" style="1" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="$3,120.45"/>
+                    <Property name="text" type="java.lang.String" value="$3,120.45" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel19">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="horizontalAlignment" type="int" value="0" />
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/green/controlar.png"/>
+                      <Image iconType="3" name="/images/icon/green/controlar.png" />
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Default Cursor" />
                     </Property>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                    <Property name="horizontalTextPosition" type="int" value="0" />
+                    <Property name="requestFocusEnabled" type="boolean" value="false" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel32">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="12" style="0"/>
+                      <Font name="Dialog" size="12" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="57% de total usado"/>
+                    <Property name="text" type="java.lang.String" value="57% de total usado" />
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1266,126 +1261,126 @@
             <Component class="javax.swing.JLabel" name="lblRegistro1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Dialog" size="14" style="1" />
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="30" green="1c" red="b" type="rgb"/>
+                  <Color blue="30" green="1c" red="b" type="rgb" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Resumen del Presupuesto"/>
+                <Property name="text" type="java.lang.String" value="Resumen del Presupuesto" />
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="10" y="10" width="-1" height="-1" />
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel30">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="0"/>
+                  <Font name="Dialog" size="14" style="0" />
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="30" green="1c" red="b" type="rgb"/>
+                  <Color blue="30" green="1c" red="b" type="rgb" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Gestiona tus l&#xed;mites de gasto mensuales y realiza un seguimiento del rendimiento de cada categor&#xed;a."/>
+                <Property name="text" type="java.lang.String" value="Gestiona tus límites de gasto mensuales y realiza un seguimiento del rendimiento de cada categoría." />
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="40" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="10" y="40" width="-1" height="-1" />
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JButton" name="btnFiltrar">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Inter" size="12" style="0"/>
+                  <Font name="Inter" size="12" style="0" />
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="30" green="1c" red="b" type="rgb"/>
+                  <Color blue="30" green="1c" red="b" type="rgb" />
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/filtrar.png"/>
+                  <Image iconType="3" name="/images/filtrar.png" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Filtros"/>
+                <Property name="text" type="java.lang.String" value="Filtros" />
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
                     </LineBorder>
                   </Border>
                 </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="borderPainted" type="boolean" value="false" />
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Hand Cursor" />
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="900" y="20" width="100" height="35"/>
+                  <AbsoluteConstraints x="900" y="20" width="100" height="35" />
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JButton" name="btnExportarExcel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Inter" size="12" style="0"/>
+                  <Font name="Inter" size="12" style="0" />
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="30" green="1c" red="b" type="rgb"/>
+                  <Color blue="30" green="1c" red="b" type="rgb" />
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/descargar.png"/>
+                  <Image iconType="3" name="/images/icon/grey/descargar.png" />
                 </Property>
-                <Property name="text" type="java.lang.String" value="Exportar Reporte"/>
+                <Property name="text" type="java.lang.String" value="Exportar Reporte" />
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
                     </LineBorder>
                   </Border>
                 </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="borderPainted" type="boolean" value="false" />
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Hand Cursor" />
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1" />
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="750" y="20" width="140" height="35"/>
+                  <AbsoluteConstraints x="750" y="20" width="140" height="35" />
                 </Constraint>
               </Constraints>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanelTotalGastos2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb" />
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="d7" green="c6" red="c3" type="rgb"/>
+                      <Color PropertyName="color" blue="d7" green="c6" red="c3" type="rgb" />
                     </LineBorder>
                   </Border>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="30" green="1c" red="b" type="rgb"/>
+                  <Color blue="30" green="1c" red="b" type="rgb" />
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="450" y="80" width="200" height="200"/>
+                  <AbsoluteConstraints x="450" y="80" width="200" height="200" />
                 </Constraint>
               </Constraints>
 
@@ -1393,38 +1388,38 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel36" pref="180" max="32767" attributes="0"/>
+                              <Component id="jLabel36" pref="180" max="32767" attributes="0" />
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel35" min="-2" pref="27" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel35" min="-2" pref="27" max="-2" attributes="0" />
+                                          <EmptySpace max="-2" attributes="0" />
+                                          <Component id="jLabel33" min="-2" max="-2" attributes="0" />
                                       </Group>
-                                      <Component id="jLabel34" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="jLabel34" alignment="0" min="-2" pref="150" max="-2" attributes="0" />
                                   </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0" />
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0" />
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel35" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="jLabel33" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="jLabel35" alignment="0" min="-2" pref="27" max="-2" attributes="0" />
+                              <Component id="jLabel33" alignment="0" min="-2" pref="27" max="-2" attributes="0" />
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel36" min="-2" pref="20" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0" />
+                          <Component id="jLabel34" min="-2" max="-2" attributes="0" />
+                          <EmptySpace max="-2" attributes="0" />
+                          <Component id="jLabel36" min="-2" pref="20" max="-2" attributes="0" />
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0" />
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1433,47 +1428,47 @@
                 <Component class="javax.swing.JLabel" name="jLabel33">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="14" style="0"/>
+                      <Font name="Dialog" size="14" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Restante"/>
+                    <Property name="text" type="java.lang.String" value="Restante" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel34">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="28" style="1"/>
+                      <Font name="Dialog" size="28" style="1" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value="$2,279.55"/>
+                    <Property name="text" type="java.lang.String" value="$2,279.55" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel35">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="horizontalAlignment" type="int" value="0" />
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/brown/calendario.png"/>
+                      <Image iconType="3" name="/images/icon/brown/calendario.png" />
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Default Cursor" />
                     </Property>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                    <Property name="horizontalTextPosition" type="int" value="0" />
+                    <Property name="requestFocusEnabled" type="boolean" value="false" />
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel36">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="12" style="0"/>
+                      <Font name="Dialog" size="12" style="0" />
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb"/>
+                      <Color blue="30" green="1c" red="b" type="rgb" />
                     </Property>
-                    <Property name="text" type="java.lang.String" value=" Quedan 12 d&#xed;as en el per&#xed;odo"/>
+                    <Property name="text" type="java.lang.String" value=" Quedan 12 días en el período" />
                   </Properties>
                 </Component>
               </SubComponents>
