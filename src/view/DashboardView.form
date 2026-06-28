@@ -1,75 +1,76 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3" />
+    <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1" />
-    <SyntheticProperty name="generateCenter" type="boolean" value="false" />
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0" />
-    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false" />
-    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true" />
-    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false" />
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false" />
-    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1" />
-    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0" />
-    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false" />
-    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2" />
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-77,0,0,4,-69" />
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="1"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-77,0,0,4,-69"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-    <Property name="useNullLayout" type="boolean" value="false" />
+    <Property name="useNullLayout" type="boolean" value="false"/>
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="Sidebar">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="fc" green="fa" red="f8" type="rgb" />
+          <Color blue="fc" green="fa" red="f8" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
             <MatteColorBorder bottom="0" left="0" right="1" top="0">
-              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
             </MatteColorBorder>
           </Border>
         </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="80" width="200" height="600" />
+          <AbsoluteConstraints x="0" y="80" width="200" height="600"/>
         </Constraint>
       </Constraints>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="pnlDashboard" alignment="0" max="32767" attributes="0" />
-              <Component id="pnlGasto" alignment="0" max="32767" attributes="0" />
-              <Component id="pnlPresupuesto" alignment="0" max="32767" attributes="0" />
-              <Component id="pnlAhorros" alignment="0" max="32767" attributes="0" />
-              <Component id="pnlDeudas" alignment="0" max="32767" attributes="0" />
-              <Component id="pnlUsuarios" alignment="0" max="32767" attributes="0" />
+              <Component id="pnlDashboard" alignment="0" max="32767" attributes="0"/>
+              <Component id="pnlGasto" alignment="0" max="32767" attributes="0"/>
+              <Component id="pnlPresupuesto" alignment="0" max="32767" attributes="0"/>
+              <Component id="pnlAhorros" alignment="0" max="32767" attributes="0"/>
+              <Component id="pnlDeudas" alignment="0" max="32767" attributes="0"/>
+              <Component id="pnlUsuarios" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0" />
-                  <Component id="pnlDashboard" min="-2" max="-2" attributes="0" />
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
-                  <Component id="pnlGasto" min="-2" max="-2" attributes="0" />
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
-                  <Component id="pnlPresupuesto" min="-2" max="-2" attributes="0" />
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
-                  <Component id="pnlAhorros" min="-2" max="-2" attributes="0" />
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
-                  <Component id="pnlDeudas" min="-2" max="-2" attributes="0" />
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0" />
-                  <Component id="pnlUsuarios" min="-2" max="-2" attributes="0" />
-                  <EmptySpace pref="255" max="32767" attributes="0" />
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <Component id="pnlDashboard" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="pnlGasto" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="pnlPresupuesto" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="pnlAhorros" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="pnlDeudas" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="pnlUsuarios" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="255" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -78,29 +79,30 @@
         <Container class="javax.swing.JPanel" name="pnlDashboard">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fe" green="f8" red="f4" type="rgb" />
+              <Color blue="fe" green="f8" red="f4" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                 <MatteColorBorder bottom="0" left="6" right="0" top="0">
-                  <Color PropertyName="color" blue="eb" green="63" red="25" type="rgb" />
+                  <Color PropertyName="color" blue="eb" green="63" red="25" type="rgb"/>
                 </MatteColorBorder>
               </Border>
             </Property>
           </Properties>
+
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0" />
-                      <Component id="lblDashboardMenu" min="-2" max="-2" attributes="0" />
-                      <EmptySpace max="32767" attributes="0" />
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="lblDashboardMenu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblDashboardMenu" alignment="0" pref="35" max="32767" attributes="0" />
+                  <Component id="lblDashboardMenu" alignment="0" pref="35" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -108,15 +110,15 @@
             <Component class="javax.swing.JLabel" name="lblDashboardMenu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0" />
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="eb" green="63" red="25" type="rgb" />
+                  <Color blue="eb" green="63" red="25" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/blue/aplicaciones.png" />
+                  <Image iconType="3" name="/images/icon/blue/aplicaciones.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Dashboard" />
+                <Property name="text" type="java.lang.String" value="Dashboard"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -124,28 +126,29 @@
         <Container class="javax.swing.JPanel" name="pnlGasto">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb" />
+              <Color blue="fc" green="fa" red="f8" type="rgb"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor" />
+              <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlGastoMouseClicked" />
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlGastoMouseClicked"/>
           </Events>
+
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0" />
-                      <Component id="lblGastosMenu" min="-2" max="-2" attributes="0" />
-                      <EmptySpace max="32767" attributes="0" />
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="lblGastosMenu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblGastosMenu" alignment="0" pref="35" max="32767" attributes="0" />
+                  <Component id="lblGastosMenu" alignment="0" pref="35" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -153,15 +156,15 @@
             <Component class="javax.swing.JLabel" name="lblGastosMenu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0" />
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb" />
+                  <Color blue="69" green="55" red="47" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/gastos.png" />
+                  <Image iconType="3" name="/images/icon/grey/gastos.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Gastos" />
+                <Property name="text" type="java.lang.String" value="Gastos"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -169,28 +172,29 @@
         <Container class="javax.swing.JPanel" name="pnlPresupuesto">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb" />
+              <Color blue="fc" green="fa" red="f8" type="rgb"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor" />
+              <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlPresupuestoMouseClicked" />
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlPresupuestoMouseClicked"/>
           </Events>
+
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0" />
-                      <Component id="lblPresupuestoMenu" min="-2" max="-2" attributes="0" />
-                      <EmptySpace pref="68" max="32767" attributes="0" />
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="lblPresupuestoMenu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="68" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblPresupuestoMenu" alignment="0" pref="35" max="32767" attributes="0" />
+                  <Component id="lblPresupuestoMenu" alignment="0" pref="35" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -198,15 +202,15 @@
             <Component class="javax.swing.JLabel" name="lblPresupuestoMenu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0" />
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb" />
+                  <Color blue="69" green="55" red="47" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/presupuesto.png" />
+                  <Image iconType="3" name="/images/icon/grey/presupuesto.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Presupuesto" />
+                <Property name="text" type="java.lang.String" value="Presupuesto"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -214,28 +218,29 @@
         <Container class="javax.swing.JPanel" name="pnlAhorros">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb" />
+              <Color blue="fc" green="fa" red="f8" type="rgb"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor" />
+              <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlAhorrosMouseClicked" />
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlAhorrosMouseClicked"/>
           </Events>
+
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0" />
-                      <Component id="lblAhorrosMenu" min="-2" max="-2" attributes="0" />
-                      <EmptySpace max="32767" attributes="0" />
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="lblAhorrosMenu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblAhorrosMenu" alignment="0" pref="35" max="32767" attributes="0" />
+                  <Component id="lblAhorrosMenu" alignment="0" pref="35" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -243,15 +248,15 @@
             <Component class="javax.swing.JLabel" name="lblAhorrosMenu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0" />
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb" />
+                  <Color blue="69" green="55" red="47" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/ahorros.png" />
+                  <Image iconType="3" name="/images/icon/grey/ahorros.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ahorros" />
+                <Property name="text" type="java.lang.String" value="Ahorros"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -259,22 +264,29 @@
         <Container class="javax.swing.JPanel" name="pnlDeudas">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb" />
+              <Color blue="fc" green="fa" red="f8" type="rgb"/>
             </Property>
-          <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor"><Color id="Hand Cursor" /></Property></Properties>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlDeudasMouseClicked"/>
+          </Events>
+
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0" />
-                      <Component id="lblDeudasMenu" min="-2" max="-2" attributes="0" />
-                      <EmptySpace max="32767" attributes="0" />
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="lblDeudasMenu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblDeudasMenu" alignment="0" pref="35" max="32767" attributes="0" />
+                  <Component id="lblDeudasMenu" alignment="0" pref="35" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -282,38 +294,45 @@
             <Component class="javax.swing.JLabel" name="lblDeudasMenu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0" />
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb" />
+                  <Color blue="69" green="55" red="47" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/deudas.png" />
+                  <Image iconType="3" name="/images/icon/grey/deudas.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Deudas" />
+                <Property name="text" type="java.lang.String" value="Deudas"/>
               </Properties>
             </Component>
           </SubComponents>
-        <Events><EventHandler event="mouseClicked" handler="pnlDeudasMouseClicked" /></Events></Container>
+        </Container>
         <Container class="javax.swing.JPanel" name="pnlUsuarios">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb" />
+              <Color blue="fc" green="fa" red="f8" type="rgb"/>
             </Property>
-          <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor"><Color id="Hand Cursor" /></Property></Properties>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlUsuariosMouseClicked"/>
+          </Events>
+
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0" />
-                      <Component id="lblUsuariosMenu" min="-2" max="-2" attributes="0" />
-                      <EmptySpace max="32767" attributes="0" />
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="lblUsuariosMenu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblUsuariosMenu" alignment="0" pref="35" max="32767" attributes="0" />
+                  <Component id="lblUsuariosMenu" alignment="0" pref="35" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -321,57 +340,57 @@
             <Component class="javax.swing.JLabel" name="lblUsuariosMenu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0" />
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb" />
+                  <Color blue="69" green="55" red="47" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/usuario.png" />
+                  <Image iconType="3" name="/images/icon/grey/usuario.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Usuarios" />
+                <Property name="text" type="java.lang.String" value="Usuarios"/>
               </Properties>
             </Component>
           </SubComponents>
-        <Events><EventHandler event="mouseClicked" handler="pnlUsuariosMouseClicked" /></Events></Container>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="Logo">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="fc" green="fa" red="f8" type="rgb" />
+          <Color blue="fc" green="fa" red="f8" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
             <MatteColorBorder bottom="0" left="0" right="1" top="0">
-              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
             </MatteColorBorder>
           </Border>
         </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="-1" height="80" />
+          <AbsoluteConstraints x="0" y="0" width="-1" height="80"/>
         </Constraint>
       </Constraints>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="false" />
+        <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblLogoImg">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fc" green="fa" red="f8" type="rgb" />
+              <Color blue="fc" green="fa" red="f8" type="rgb"/>
             </Property>
-            <Property name="horizontalAlignment" type="int" value="0" />
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/logotipo.png" />
+              <Image iconType="3" name="/images/logotipo.png"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="0" width="200" height="80" />
+              <AbsoluteConstraints x="0" y="0" width="200" height="80"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -380,125 +399,125 @@
     <Container class="javax.swing.JPanel" name="Header">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb" />
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
             <MatteColorBorder bottom="1" left="0" right="0" top="0">
-              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+              <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
             </MatteColorBorder>
           </Border>
         </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="200" y="0" width="1010" height="40" />
+          <AbsoluteConstraints x="200" y="0" width="1010" height="40"/>
         </Constraint>
       </Constraints>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="false" />
+        <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblHeaderTitle">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="18" style="1" />
+              <Font name="Dialog" size="18" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="30" green="1c" red="b" type="rgb" />
+              <Color blue="30" green="1c" red="b" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Finanzas Personales" />
+            <Property name="text" type="java.lang.String" value="Finanzas Personales"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="21" y="0" width="-1" height="39" />
+              <AbsoluteConstraints x="21" y="0" width="-1" height="39"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="btnAddTransaction">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="eb" green="63" red="25" type="rgb" />
+              <Color blue="eb" green="63" red="25" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Inter" size="12" style="0" />
+              <Font name="Inter" size="12" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb" />
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="+ Agregar Transacción" />
+            <Property name="text" type="java.lang.String" value="+ Agregar Transacci&#xf3;n"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor" />
+              <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="670" y="5" width="140" height="30" />
+              <AbsoluteConstraints x="670" y="5" width="140" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCalendarIcon">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0" />
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/icon/brown/calendario.png" />
+              <Image iconType="3" name="/images/icon/brown/calendario.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor" />
+              <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="825" y="5" width="30" height="30" />
+              <AbsoluteConstraints x="825" y="5" width="30" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="lblUserIcon">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0" />
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/icon/blue/agregar-usuario.png" />
+              <Image iconType="3" name="/images/icon/blue/agregar-usuario.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor" />
+              <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="860" y="5" width="30" height="30" />
+              <AbsoluteConstraints x="860" y="5" width="30" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNotificationIcon">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0" />
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/icon/blue/email.png" />
+              <Image iconType="3" name="/images/icon/blue/email.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor" />
+              <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="895" y="5" width="30" height="30" />
+              <AbsoluteConstraints x="895" y="5" width="30" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="lblAvatarIcon">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0" />
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/icon/blue/usuario.png" />
+              <Image iconType="3" name="/images/icon/blue/usuario.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor" />
+              <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="935" y="5" width="30" height="30" />
+              <AbsoluteConstraints x="935" y="5" width="30" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -507,40 +526,40 @@
     <Container class="javax.swing.JTabbedPane" name="Body">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="200" y="40" width="1010" height="640" />
+          <AbsoluteConstraints x="200" y="40" width="1010" height="640"/>
         </Constraint>
       </Constraints>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" />
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="jPanelTabDashboard">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f9" red="f8" type="rgb" />
+              <Color blue="ff" green="f9" red="f8" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Resumen General">
-                <Property name="tabTitle" type="java.lang.String" value="Resumen General" />
+                <Property name="tabTitle" type="java.lang.String" value="Resumen General"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-            <Property name="useNullLayout" type="boolean" value="false" />
+            <Property name="useNullLayout" type="boolean" value="false"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblTimePeriod">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb" />
+                  <Color blue="69" green="55" red="47" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Periodo de Tiempo" />
+                <Property name="text" type="java.lang.String" value="Periodo de Tiempo"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="20" y="10" width="-1" height="-1" />
+                  <AbsoluteConstraints x="20" y="10" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -548,31 +567,31 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
-                    <String value="Octubre 2023" />
-                    <String value="Noviembre 2023" />
-                    <String value="Diciembre 2023" />
+                    <StringItem index="0" value=""/>
+                    <StringItem index="1" value=""/>
+                    <StringItem index="2" value=""/>
                   </StringArray>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;" />
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="20" y="30" width="150" height="30" />
+                  <AbsoluteConstraints x="20" y="30" width="150" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JLabel" name="lblCollaborator">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb" />
+                  <Color blue="69" green="55" red="47" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Colaborador" />
+                <Property name="text" type="java.lang.String" value="Colaborador"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="185" y="10" width="-1" height="-1" />
+                  <AbsoluteConstraints x="185" y="10" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -580,924 +599,899 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
-                    <String value="Todos los usuarios" />
-                    <String value="Administrador" />
-                    <String value="Usuario 1" />
+                    <StringItem index="0" value=""/>
+                    <StringItem index="1" value=""/>
+                    <StringItem index="2" value=""/>
                   </StringArray>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;" />
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="185" y="30" width="150" height="30" />
+                  <AbsoluteConstraints x="185" y="30" width="150" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JButton" name="btnMoreFilters">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb" />
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Inter" size="12" style="0" />
+                  <Font name="Inter" size="12" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="30" green="1c" red="b" type="rgb" />
+                  <Color blue="30" green="1c" red="b" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/filtrar.png" />
+                  <Image iconType="3" name="/images/icon/grey/filtrar.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Más Filtros" />
+                <Property name="text" type="java.lang.String" value="M&#xe1;s Filtros"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="720" y="30" width="120" height="30" />
+                  <AbsoluteConstraints x="720" y="30" width="120" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JButton" name="btnExportPDF">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb" />
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Inter" size="12" style="0" />
+                  <Font name="Inter" size="12" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="30" green="1c" red="b" type="rgb" />
+                  <Color blue="30" green="1c" red="b" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icon/grey/descargar.png" />
+                  <Image iconType="3" name="/images/icon/grey/descargar.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Exportar PDF" />
+                <Property name="text" type="java.lang.String" value="Exportar PDF"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="855" y="30" width="120" height="30" />
+                  <AbsoluteConstraints x="855" y="30" width="120" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>
-
             <Container class="javax.swing.JPanel" name="pnlCardIncome">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb" />
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="20" y="80" width="225" height="100" />
+                  <AbsoluteConstraints x="20" y="80" width="225" height="100"/>
                 </Constraint>
               </Constraints>
+
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                <Property name="useNullLayout" type="boolean" value="false" />
+                <Property name="useNullLayout" type="boolean" value="false"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblCardIncomeTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="0" />
+                      <Font name="Dialog" size="13" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Ingresos Totales" />
+                    <Property name="text" type="java.lang.String" value="Ingresos Totales"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardIncomeValue">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="24" style="1" />
+                      <Font name="Dialog" size="24" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="49" green="6c" red="0" type="rgb" />
+                      <Color blue="49" green="6c" red="0" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="$12,450.00" />
+                    <Property name="text" type="java.lang.String" value="$12,450.00"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="40" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="40" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardIncomeChange">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="1" />
+                      <Font name="Dialog" size="11" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="49" green="6c" red="0" type="rgb" />
+                      <Color blue="49" green="6c" red="0" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="+12% vs mes anterior" />
+                    <Property name="text" type="java.lang.String" value="+12% vs mes anterior"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="72" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="72" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardIncomeIcon">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0" />
+                    <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/green/controlar.png" />
+                      <Image iconType="3" name="/images/icon/green/controlar.png"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="185" y="15" width="30" height="30" />
+                      <AbsoluteConstraints x="185" y="15" width="30" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
               </SubComponents>
             </Container>
-
             <Container class="javax.swing.JPanel" name="pnlCardExpenses">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb" />
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="260" y="80" width="225" height="100" />
+                  <AbsoluteConstraints x="260" y="80" width="225" height="100"/>
                 </Constraint>
               </Constraints>
+
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                <Property name="useNullLayout" type="boolean" value="false" />
+                <Property name="useNullLayout" type="boolean" value="false"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblCardExpensesTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="0" />
+                      <Font name="Dialog" size="13" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Gastos Totales" />
+                    <Property name="text" type="java.lang.String" value="Gastos Totales"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardExpensesValue">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="24" style="1" />
+                      <Font name="Dialog" size="24" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="eb" green="63" red="25" type="rgb" />
+                      <Color blue="eb" green="63" red="25" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="$5,230.45" />
+                    <Property name="text" type="java.lang.String" value="$5,230.45"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="40" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="40" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardExpensesChange">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="1" />
+                      <Font name="Dialog" size="11" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="1a" green="1a" red="ba" type="rgb" />
+                      <Color blue="1a" green="1a" red="ba" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="+4% vs mes anterior" />
+                    <Property name="text" type="java.lang.String" value="+4% vs mes anterior"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="72" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="72" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardExpensesIcon">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0" />
+                    <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/blue/gastos.png" />
+                      <Image iconType="3" name="/images/icon/blue/gastos.png"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="185" y="15" width="30" height="30" />
+                      <AbsoluteConstraints x="185" y="15" width="30" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
               </SubComponents>
             </Container>
-
             <Container class="javax.swing.JPanel" name="pnlCardSavings">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb" />
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="500" y="80" width="225" height="100" />
+                  <AbsoluteConstraints x="500" y="80" width="225" height="100"/>
                 </Constraint>
               </Constraints>
+
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                <Property name="useNullLayout" type="boolean" value="false" />
+                <Property name="useNullLayout" type="boolean" value="false"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblCardSavingsTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="0" />
+                      <Font name="Dialog" size="13" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Ahorros Totales" />
+                    <Property name="text" type="java.lang.String" value="Ahorros Totales"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardSavingsValue">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="24" style="1" />
+                      <Font name="Dialog" size="24" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="$2,100.00" />
+                    <Property name="text" type="java.lang.String" value="$2,100.00"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="40" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="40" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardSavingsChange">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="1" />
+                      <Font name="Dialog" size="11" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="49" green="6c" red="0" type="rgb" />
+                      <Color blue="49" green="6c" red="0" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="84% de la meta mensual" />
+                    <Property name="text" type="java.lang.String" value="84% de la meta mensual"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="72" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="72" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardSavingsIcon">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0" />
+                    <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/brown/calendario.png" />
+                      <Image iconType="3" name="/images/icon/brown/calendario.png"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="185" y="15" width="30" height="30" />
+                      <AbsoluteConstraints x="185" y="15" width="30" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
               </SubComponents>
             </Container>
-
             <Container class="javax.swing.JPanel" name="pnlCardBalance">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb" />
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="740" y="80" width="235" height="100" />
+                  <AbsoluteConstraints x="740" y="80" width="235" height="100"/>
                 </Constraint>
               </Constraints>
+
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                <Property name="useNullLayout" type="boolean" value="false" />
+                <Property name="useNullLayout" type="boolean" value="false"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblCardBalanceTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="0" />
+                      <Font name="Dialog" size="13" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Saldo Actual" />
+                    <Property name="text" type="java.lang.String" value="Saldo Actual"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardBalanceValue">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="24" style="1" />
+                      <Font name="Dialog" size="24" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="$34,819.55" />
+                    <Property name="text" type="java.lang.String" value="$34,819.55"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="40" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="40" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardBalanceChange">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="1" />
+                      <Font name="Dialog" size="11" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Todas las cuentas sincronizadas" />
+                    <Property name="text" type="java.lang.String" value="Todas las cuentas sincronizadas"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="72" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="72" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCardBalanceIcon">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0" />
+                    <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/icon/blue/estadisticas.png" />
+                      <Image iconType="3" name="/images/icon/blue/estadisticas.png"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="185" y="15" width="30" height="30" />
+                      <AbsoluteConstraints x="185" y="15" width="30" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
               </SubComponents>
             </Container>
-
             <Container class="javax.swing.JPanel" name="pnlBudgetVsSpending">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb" />
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="20" y="200" width="590" height="370" />
+                  <AbsoluteConstraints x="20" y="200" width="590" height="370"/>
                 </Constraint>
               </Constraints>
+
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                <Property name="useNullLayout" type="boolean" value="false" />
+                <Property name="useNullLayout" type="boolean" value="false"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblBudgetVsSpendingTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="15" style="1" />
+                      <Font name="Dialog" size="15" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Presupuesto vs Gastos" />
+                    <Property name="text" type="java.lang.String" value="Presupuesto vs Gastos"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblViewAllCategories">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="12" style="0" />
+                      <Font name="Dialog" size="12" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="eb" green="63" red="25" type="rgb" />
+                      <Color blue="eb" green="63" red="25" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Ver Todas las Categorías" />
+                    <Property name="text" type="java.lang.String" value="Ver Todas las Categor&#xed;as"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Hand Cursor" />
+                      <Color id="Hand Cursor"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="460" y="15" width="-1" height="-1" />
+                      <AbsoluteConstraints x="410" y="20" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-
                 <Component class="javax.swing.JLabel" name="lblHousingTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Vivienda" />
+                    <Property name="text" type="java.lang.String" value="Vivienda"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="55" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="55" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblHousingDesc">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="0" />
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Alquiler, Seguro, Servicios" />
+                    <Property name="text" type="java.lang.String" value="Alquiler, Seguro, Servicios"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="73" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="73" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblHousingValue">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="4" />
-                    <Property name="text" type="java.lang.String" value="$1,850.00 / $2,000.00" />
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="$1,850.00 / $2,000.00"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="420" y="65" width="150" height="-1" />
+                      <AbsoluteConstraints x="420" y="65" width="150" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JProgressBar" name="pbHousing">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color blue="ff" green="f1" red="ea" type="rgb"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="eb" green="63" red="25" type="rgb" />
+                      <Color blue="eb" green="63" red="25" type="rgb"/>
                     </Property>
-                    <Property name="value" type="int" value="92" />
-                    <Property name="borderPainted" type="boolean" value="false" />
+                    <Property name="value" type="int" value="92"/>
+                    <Property name="borderPainted" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="95" width="555" height="8" />
+                      <AbsoluteConstraints x="15" y="95" width="555" height="8"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblHousingStatus">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="10" style="1" />
+                      <Font name="Dialog" size="10" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="ZONA SEGURA" />
+                    <Property name="text" type="java.lang.String" value="ZONA SEGURA"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="108" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="108" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblHousingPercent">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="0" />
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="4" />
-                    <Property name="text" type="java.lang.String" value="92% utilizado" />
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="92% utilizado"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="470" y="108" width="100" height="-1" />
+                      <AbsoluteConstraints x="470" y="108" width="100" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-
                 <Component class="javax.swing.JLabel" name="lblFoodTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Comida y Restaurantes" />
+                    <Property name="text" type="java.lang.String" value="Comida y Restaurantes"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="145" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="145" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblFoodDesc">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="0" />
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Comestibles, Restaurantes" />
+                    <Property name="text" type="java.lang.String" value="Comestibles, Restaurantes"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="163" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="163" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblFoodValue">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="4" />
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color='#ba1a1a'&gt;$745.00&lt;/font&gt; / $600.00&lt;/html&gt;" />
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;#ba1a1a&apos;&gt;$745.00&lt;/font&gt; / $600.00&lt;/html&gt;"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="420" y="155" width="150" height="-1" />
+                      <AbsoluteConstraints x="420" y="155" width="150" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JProgressBar" name="pbFood">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="d6" green="da" red="ff" type="rgb" />
+                      <Color blue="d6" green="da" red="ff" type="rgb"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="1a" green="1a" red="ba" type="rgb" />
+                      <Color blue="1a" green="1a" red="ba" type="rgb"/>
                     </Property>
-                    <Property name="value" type="int" value="100" />
-                    <Property name="borderPainted" type="boolean" value="false" />
+                    <Property name="value" type="int" value="100"/>
+                    <Property name="borderPainted" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="185" width="555" height="8" />
+                      <AbsoluteConstraints x="15" y="185" width="555" height="8"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblFoodStatus">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="10" style="1" />
+                      <Font name="Dialog" size="10" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="1a" green="1a" red="ba" type="rgb" />
+                      <Color blue="1a" green="1a" red="ba" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="LÍMITE EXCEDIDO" />
+                    <Property name="text" type="java.lang.String" value="L&#xcd;MITE EXCEDIDO"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="198" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="198" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblFoodExcess">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="0" />
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="1a" green="1a" red="ba" type="rgb" />
+                      <Color blue="1a" green="1a" red="ba" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="4" />
-                    <Property name="text" type="java.lang.String" value="$145.00 de exceso" />
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="$145.00 de exceso"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="470" y="198" width="100" height="-1" />
+                      <AbsoluteConstraints x="470" y="198" width="100" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-
                 <Component class="javax.swing.JLabel" name="lblTransportTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Transporte" />
+                    <Property name="text" type="java.lang.String" value="Transporte"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="235" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="235" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTransportDesc">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="0" />
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Combustible, Transporte Público, Mantenimiento" />
+                    <Property name="text" type="java.lang.String" value="Combustible, Transporte P&#xfa;blico, Mantenimiento"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="253" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="253" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTransportValue">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="4" />
-                    <Property name="text" type="java.lang.String" value="$210.00 / $450.00" />
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="$210.00 / $450.00"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="420" y="245" width="150" height="-1" />
+                      <AbsoluteConstraints x="420" y="245" width="150" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JProgressBar" name="pbTransport">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color blue="ff" green="f1" red="ea" type="rgb"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="49" green="6c" red="0" type="rgb" />
+                      <Color blue="49" green="6c" red="0" type="rgb"/>
                     </Property>
-                    <Property name="value" type="int" value="46" />
-                    <Property name="borderPainted" type="boolean" value="false" />
+                    <Property name="value" type="int" value="46"/>
+                    <Property name="borderPainted" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="275" width="555" height="8" />
+                      <AbsoluteConstraints x="15" y="275" width="555" height="8"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTransportStatus">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="10" style="1" />
+                      <Font name="Dialog" size="10" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="49" green="6c" red="0" type="rgb" />
+                      <Color blue="49" green="6c" red="0" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="EN ORDEN" />
+                    <Property name="text" type="java.lang.String" value="EN ORDEN"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="288" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="288" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTransportPercent">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="0" />
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="4" />
-                    <Property name="text" type="java.lang.String" value="46% utilizado" />
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="46% utilizado"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="470" y="288" width="100" height="-1" />
+                      <AbsoluteConstraints x="470" y="288" width="100" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
               </SubComponents>
             </Container>
-
             <Container class="javax.swing.JPanel" name="pnlQuickInsights">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb" />
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                      <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="630" y="200" width="340" height="370" />
+                  <AbsoluteConstraints x="630" y="200" width="340" height="370"/>
                 </Constraint>
               </Constraints>
+
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                <Property name="useNullLayout" type="boolean" value="false" />
+                <Property name="useNullLayout" type="boolean" value="false"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblQuickInsightsTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="15" style="1" />
+                      <Font name="Dialog" size="15" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Información Rápida" />
+                    <Property name="text" type="java.lang.String" value="Informaci&#xf3;n R&#xe1;pida"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="15" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-
                 <Container class="javax.swing.JPanel" name="pnlSavingsBanner">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="fe" green="f8" red="f4" type="rgb" />
+                      <Color blue="fe" green="f8" red="f4" type="rgb"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="50" width="310" height="90" />
+                      <AbsoluteConstraints x="15" y="50" width="310" height="90"/>
                     </Constraint>
                   </Constraints>
+
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                    <Property name="useNullLayout" type="boolean" value="false" />
+                    <Property name="useNullLayout" type="boolean" value="false"/>
                   </Layout>
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblSavingsBannerIcon">
                       <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0" />
+                        <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/images/icon/blue/estadisticas.png" />
+                          <Image iconType="3" name="/images/icon/blue/estadisticas.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="10" y="15" width="30" height="30" />
+                          <AbsoluteConstraints x="10" y="15" width="30" height="30"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblSavingsBannerTitle">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Dialog" size="12" style="1" />
+                          <Font name="Dialog" size="12" style="1"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="eb" green="63" red="25" type="rgb" />
+                          <Color blue="eb" green="63" red="25" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Potencial de Ahorro" />
+                        <Property name="text" type="java.lang.String" value="Potencial de Ahorro"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="50" y="12" width="-1" height="-1" />
+                          <AbsoluteConstraints x="50" y="12" width="-1" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblSavingsBannerDesc">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Dialog" size="11" style="0" />
-                        </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="69" green="55" red="47" type="rgb" />
+                          <Color blue="69" green="55" red="47" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Gastaste 25% más en comer fuera esta semana. ¡Reducir una comida podría ahorrarte $45!&lt;/html&gt;" />
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;Gastaste 25% m&#xe1;s en comer fuera esta semana. &#xa1;Reducir una comida podr&#xed;a ahorrarte $45!&lt;/html&gt;"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="50" y="30" width="250" height="50" />
+                          <AbsoluteConstraints x="50" y="30" width="250" height="50"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                   </SubComponents>
                 </Container>
-
                 <Component class="javax.swing.JLabel" name="lblUpcomingPayments">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="10" style="1" />
+                      <Font name="Dialog" size="10" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="PRÓXIMOS PAGOS" />
+                    <Property name="text" type="java.lang.String" value="PR&#xd3;XIMOS PAGOS"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="155" width="-1" height="-1" />
+                      <AbsoluteConstraints x="15" y="155" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-
                 <Container class="javax.swing.JPanel" name="pnlInternetIcon">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="fc" green="fa" red="f8" type="rgb" />
+                      <Color blue="fc" green="fa" red="f8" type="rgb"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="180" width="40" height="40" />
+                      <AbsoluteConstraints x="15" y="180" width="40" height="40"/>
                     </Constraint>
                   </Constraints>
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" />
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblInternetIconSymbol">
                       <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0" />
-                        <Property name="text" type="java.lang.String" value="📶" />
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="text" type="java.lang.String" value="\ud83d\udcf6" containsInvalidXMLChars="true"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                          <BorderConstraints direction="Center" />
+                          <BorderConstraints direction="Center"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1506,74 +1500,71 @@
                 <Component class="javax.swing.JLabel" name="lblInternetTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Proveedor de Internet" />
+                    <Property name="text" type="java.lang.String" value="Proveedor de Internet"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="65" y="180" width="150" height="-1" />
+                      <AbsoluteConstraints x="65" y="180" width="150" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInternetDate">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="0" />
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="24 Oct" />
+                    <Property name="text" type="java.lang.String" value="24 Oct"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="65" y="198" width="100" height="-1" />
+                      <AbsoluteConstraints x="65" y="198" width="100" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInternetAmount">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="4" />
-                    <Property name="text" type="java.lang.String" value="$79.99" />
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="$79.99"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="230" y="180" width="95" height="40" />
+                      <AbsoluteConstraints x="230" y="180" width="95" height="40"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-
                 <Container class="javax.swing.JPanel" name="pnlHealthIcon">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="fc" green="fa" red="f8" type="rgb" />
+                      <Color blue="fc" green="fa" red="f8" type="rgb"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="230" width="40" height="40" />
+                      <AbsoluteConstraints x="15" y="230" width="40" height="40"/>
                     </Constraint>
                   </Constraints>
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" />
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblHealthIconSymbol">
                       <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0" />
-                        <Property name="text" type="java.lang.String" value="🛡️" />
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="text" type="java.lang.String" value="\ud83d\udee1&#xfe0f;" containsInvalidXMLChars="true"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                          <BorderConstraints direction="Center" />
+                          <BorderConstraints direction="Center"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1582,79 +1573,75 @@
                 <Component class="javax.swing.JLabel" name="lblHealthTitle">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Seguro de Salud" />
+                    <Property name="text" type="java.lang.String" value="Seguro de Salud"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="65" y="230" width="150" height="-1" />
+                      <AbsoluteConstraints x="65" y="230" width="150" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblHealthDate">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="11" style="0" />
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="69" green="55" red="47" type="rgb" />
+                      <Color blue="69" green="55" red="47" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="26 Oct" />
+                    <Property name="text" type="java.lang.String" value="26 Oct"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="65" y="248" width="100" height="-1" />
+                      <AbsoluteConstraints x="65" y="248" width="100" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblHealthAmount">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Dialog" size="13" style="1" />
+                      <Font name="Dialog" size="13" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="4" />
-                    <Property name="text" type="java.lang.String" value="$212.00" />
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="$212.00"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="230" y="230" width="95" height="40" />
+                      <AbsoluteConstraints x="230" y="230" width="95" height="40"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-
                 <Component class="javax.swing.JButton" name="btnViewScheduled">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb" />
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Inter" size="12" style="0" />
+                      <Font name="Inter" size="12" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="30" green="1c" red="b" type="rgb" />
+                      <Color blue="30" green="1c" red="b" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Ver Transacciones Programadas" />
+                    <Property name="text" type="java.lang.String" value="Ver Transacciones Programadas"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder roundedCorners="true">
-                          <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb" />
+                          <Color PropertyName="color" blue="ff" green="f1" red="ea" type="rgb"/>
                         </LineBorder>
                       </Border>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Hand Cursor" />
+                      <Color id="Hand Cursor"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="15" y="310" width="310" height="35" />
+                      <AbsoluteConstraints x="15" y="310" width="310" height="35"/>
                     </Constraint>
                   </Constraints>
                 </Component>

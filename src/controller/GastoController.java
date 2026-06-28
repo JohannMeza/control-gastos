@@ -5,13 +5,18 @@
  */
 package controller;
 
+import java.awt.Color;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.ComboItem;
 import model.Gasto;
+import model.Presupuesto;
 import model.Session;
 import model.Usuario;
+import model.UsuarioCompartido;
 import service.GastoService;
+import service.UsuarioService;
 import view.SystemView;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -60,6 +65,9 @@ public final class GastoController {
             gasto.setFechaGastoFormat(fechaFormateada);
             gasto.setFechaGasto(java.sql.Date.valueOf(fechaFormateada));
             
+            Usuario activeUser = Session.getInstance().getUsuarioActivo();
+            gasto.setIdUsuario((activeUser != null) ? activeUser.getId() : 1);
+            
             service.guardar(gasto);
             
         } catch (NumberFormatException e) {
@@ -84,6 +92,9 @@ public final class GastoController {
             String fechaFormateada = sdf.format(view.dateFechaNuevo.getDate());
             gasto.setFechaGastoFormat(fechaFormateada);
             gasto.setFechaGasto(java.sql.Date.valueOf(fechaFormateada));
+
+            Usuario activeUser = Session.getInstance().getUsuarioActivo();
+            gasto.setIdUsuario((activeUser != null) ? activeUser.getId() : 1);
 
             String mensaje = service.actualizar(gasto);
 
@@ -115,26 +126,87 @@ public final class GastoController {
     
     public void listarGastos() {
         ComboItem cbUsuario = (ComboItem) view.cbUser.getSelectedItem();
+        if (cbUsuario == null) return;
         Date fechaDesde = view.dateFiltroDesde.getDate();
         Date fechaHasta = view.dateFiltroHasta.getDate();
+        
+        Usuario activeUser = Session.getInstance().getUsuarioActivo();
+        int loggedInUserId = (activeUser != null) ? activeUser.getId() : 1;
+        
         int idUsuario = cbUsuario.getValue();
+        if (idUsuario == 0) {
+            idUsuario = loggedInUserId;
+        }
         
         List<Gasto> lista = service.listar(fechaDesde, fechaHasta, idUsuario);
 
         DefaultTableModel modelo = (DefaultTableModel) view.tblGastos.getModel();
         modelo.setRowCount(0);
 
-        lista.forEach(g -> {
+        double totalExpenses = 0;
+
+        for (Gasto g : lista) {
             modelo.addRow(new Object[]{
                 g.getIdGasto(),
-                g.getFechaGastoFormat(),
+                util.DateUtil.formatLongDate(g.getFechaGastoFormat()),
                 g.getDescripcion(),
                 g.getCategoria(),
                 g.getTipoGasto(),
                 g.getMonto(),
                 g.getUsuario()
             });
-        });
+            totalExpenses += g.getMonto();
+        }
+
+        // Compute Monthly Average
+        double monthlyAverage = totalExpenses;
+        if (fechaDesde != null && fechaHasta != null) {
+            long diffInMillies = Math.abs(fechaHasta.getTime() - fechaDesde.getTime());
+            long diffInDays = java.util.concurrent.TimeUnit.DAYS.convert(diffInMillies, java.util.concurrent.TimeUnit.MILLISECONDS);
+            double months = diffInDays / 30.0;
+            if (months > 0.05) {
+                monthlyAverage = totalExpenses / months;
+            }
+        }
+
+        // Set labels dynamically in Soles (S/.)
+        view.jLabel21.setText("S/. " + String.format("%.2f", totalExpenses));
+        view.jLabel25.setText("S/. " + String.format("%.2f", monthlyAverage));
+
+        // Compute dynamic budget status
+        double totalBudget = 0;
+        try {
+            activeUser = Session.getInstance().getUsuarioActivo();
+            int idOwner = (activeUser != null) ? activeUser.getId() : 1;
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            String[] defaultRange = util.DateUtil.getPeriodDateRange(null);
+            String fIni = (fechaDesde != null) ? sdf.format(fechaDesde) : defaultRange[0];
+            String fFin = (fechaHasta != null) ? sdf.format(fechaHasta) : defaultRange[1];
+            List<Presupuesto> budgets = new service.PresupuestoService().listarPresupuesto(idOwner, idOwner, idUsuario, fIni, fFin, 0, 0);
+            for (Presupuesto p : budgets) {
+                totalBudget += p.getMontoAsignado();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        if (totalBudget > 0 && totalExpenses > totalBudget) {
+            view.jLabel27.setText("EXCEDIDO");
+            view.jLabel27.setForeground(new java.awt.Color(186, 26, 26)); // Red
+        } else {
+            view.jLabel27.setText("DENTRO DEL PRESUPUESTO");
+            view.jLabel27.setForeground(new java.awt.Color(0, 108, 73)); // Green
+        }
+
+        // Calculate dynamic Next Recurring payment date (the 28th of current or next month)
+        Calendar cal = Calendar.getInstance();
+        int currentDay = cal.get(Calendar.DAY_OF_MONTH);
+        if (currentDay > 28) {
+            cal.add(Calendar.MONTH, 1);
+        }
+        cal.set(Calendar.DAY_OF_MONTH, 28);
+        String nextRecurringDate = util.DateUtil.formatLongDate(cal.getTime());
+        view.jLabel29.setText(nextRecurringDate);
     }
     
     public void listarCategorias() {
@@ -167,13 +239,33 @@ public final class GastoController {
         try {
             view.cbUser.removeAllItems();
 
-            List<ComboItem> usuarios = service.listarUsuarios();
+            Usuario activeUser = Session.getInstance().getUsuarioActivo();
+            int loggedInUserId = (activeUser != null) ? activeUser.getId() : 1;
 
-            usuarios.forEach(item -> {
-                view.cbUser.addItem(item);
-            });
+            view.cbUser.addItem(new ComboItem(0, "Todos los usuarios"));
 
-        } catch (Exception e) {}
+            UsuarioService uService = new UsuarioService();
+            Usuario owner = uService.obtenerUsuario(loggedInUserId);
+            if (owner != null) {
+                view.cbUser.addItem(new ComboItem(owner.getId(), owner.getNombre() + " (Yo)"));
+            }
+
+            List<UsuarioCompartido> list = uService.listarUsuariosCompartidos(loggedInUserId);
+            for (UsuarioCompartido uc : list) {
+                if (uc.getEstado().equalsIgnoreCase("Activo")) {
+                    view.cbUser.addItem(new ComboItem(uc.getUsuarioInvitadoId(), uc.getNombreInvitado()));
+                }
+            }
+            
+            if (view.cbUser.getItemCount() > 1) {
+                view.cbUser.setSelectedIndex(1); // Select "Yo" by default
+            } else {
+                view.cbUser.setSelectedIndex(0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public void obtenerGastoSeleccionado() {

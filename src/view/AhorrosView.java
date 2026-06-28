@@ -13,12 +13,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.util.Date;
 import com.toedter.calendar.JDateChooser;
+import controller.AhorroController;
 
 /**
  * Vista de Control de Ahorros.
  * Permite visualizar el total ahorrado, las metas de ahorro, registrar nuevos ahorros y ver el historial.
  */
 public class AhorrosView extends javax.swing.JFrame {
+    public AhorroController controller;
+    public int idAhorroSeleccionado = 0;
+    public javax.swing.JButton btnEliminar;
 
     public AhorrosView() {
         initComponents();
@@ -27,10 +31,42 @@ public class AhorrosView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setupTableStyle();
         setupFormDate();
+        
+        // Programmatic initialization of Delete Button
+        btnEliminar = new javax.swing.JButton();
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 11));
+        btnEliminar.setForeground(new java.awt.Color(186, 26, 26));
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/limpio.png")));
+        btnEliminar.setText(" Eliminar");
+        btnEliminar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlHistorialAhorros.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 90, 28));
+
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnExportarCSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarCSVActionPerformed(evt);
+            }
+        });
+
+        tblAhorros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAhorrosMouseClicked(evt);
+            }
+        });
+
+        controller = new AhorroController(this);
     }
 
     private void setupFormDate() {
         if (dateFecha != null) {
+            dateFecha.setDateFormatString("dd 'de' MMM 'de' yyyy");
             dateFecha.setDate(new Date());
         }
     }
@@ -488,12 +524,12 @@ public class AhorrosView extends javax.swing.JFrame {
         pnlRegistrarAhorro.add(lblRegistrarAhorroTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 15, -1, -1));
 
         lblMonto.setForeground(new java.awt.Color(71, 85, 105));
-        lblMonto.setText("Monto ($)");
-        pnlRegistrarAhorro.add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 48, -1, -1));
+        lblMonto.setText("Monto (S/)");
+        pnlRegistrarAhorro.add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 105, -1, -1));
 
         txtMonto.setText("0.00");
         txtMonto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(203, 213, 225), 1, true));
-        pnlRegistrarAhorro.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 68, 300, 30));
+        pnlRegistrarAhorro.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 125, 140, 30));
 
         lblFecha.setForeground(new java.awt.Color(71, 85, 105));
         lblFecha.setText("Fecha");
@@ -505,10 +541,10 @@ public class AhorrosView extends javax.swing.JFrame {
 
         lblMetaFondo.setForeground(new java.awt.Color(71, 85, 105));
         lblMetaFondo.setText("Meta/Fondo");
-        pnlRegistrarAhorro.add(lblMetaFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 105, -1, -1));
+        pnlRegistrarAhorro.add(lblMetaFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 48, -1, -1));
 
         cbMetaFondo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "", "", "" }));
-        pnlRegistrarAhorro.add(cbMetaFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 125, 140, 30));
+        pnlRegistrarAhorro.add(cbMetaFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 68, 300, 30));
 
         lblDescripcion.setForeground(new java.awt.Color(71, 85, 105));
         lblDescripcion.setText("Descripción");
@@ -724,9 +760,16 @@ public class AhorrosView extends javax.swing.JFrame {
                 "FECHA", "META / FONDO", "MONTO", "USUARIO", "ACCIÓN"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -735,6 +778,12 @@ public class AhorrosView extends javax.swing.JFrame {
         tblAhorros.setSelectionBackground(new java.awt.Color(234, 241, 255));
         tblAhorros.setSelectionForeground(new java.awt.Color(11, 28, 48));
         jScrollPane1.setViewportView(tblAhorros);
+        if (tblAhorros.getColumnModel().getColumnCount() > 0) {
+            tblAhorros.getColumnModel().getColumn(0).setMinWidth(120);
+            tblAhorros.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tblAhorros.getColumnModel().getColumn(1).setMinWidth(150);
+            tblAhorros.getColumnModel().getColumn(1).setPreferredWidth(150);
+        }
 
         pnlHistorialAhorros.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 48, 580, 115));
 
@@ -809,33 +858,35 @@ public class AhorrosView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarAhorroActionPerformed(java.awt.event.ActionEvent evt) {
-        String monto = txtMonto.getText().trim();
-        Date fecha = dateFecha.getDate();
-        String meta = cbMetaFondo.getSelectedItem().toString();
-        String desc = txtDescripcion.getText().trim();
+        if (idAhorroSeleccionado == 0) {
+            controller.guardar();
+        } else {
+            controller.actualizar(idAhorroSeleccionado);
+        }
+    }
 
-        if (monto.isEmpty() || monto.equals("0.00")) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un monto válido.", "Validación", JOptionPane.WARNING_MESSAGE);
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {
+        if (idAhorroSeleccionado == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un registro de ahorro de la tabla.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        controller.eliminar(idAhorroSeleccionado);
+        idAhorroSeleccionado = 0;
+    }
 
-        if (fecha == null) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return;
+    private void btnExportarCSVActionPerformed(java.awt.event.ActionEvent evt) {
+        controller.exportarCSV();
+    }
+
+    private void tblAhorrosMouseClicked(java.awt.event.MouseEvent evt) {
+        int fila = tblAhorros.getSelectedRow();
+        if (fila != -1) {
+            Object idVal = tblAhorros.getValueAt(fila, 4);
+            if (idVal != null) {
+                idAhorroSeleccionado = Integer.parseInt(idVal.toString());
+                controller.obtenerAhorroSeleccionado(idAhorroSeleccionado);
+            }
         }
-
-        // Add mock row dynamically to table
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-        DefaultTableModel model = (DefaultTableModel) tblAhorros.getModel();
-        model.insertRow(0, new Object[]{sdf.format(fecha), meta, "$" + monto, "Admin_Finance", "..."});
-
-        // Show confirmation dialog
-        JOptionPane.showMessageDialog(this, "¡Ahorro registrado exitosamente para: " + meta + "!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-        // Clear input form
-        txtMonto.setText("0.00");
-        txtDescripcion.setText("Nota adicional...");
-        dateFecha.setDate(new Date());
     }
 
     private void pnlGastoMouseClicked(java.awt.event.MouseEvent evt) {
@@ -882,15 +933,15 @@ public class AhorrosView extends javax.swing.JFrame {
     private javax.swing.JPanel Logo;
     private javax.swing.JPanel Sidebar;
     private javax.swing.JButton btnAnterior;
-    private javax.swing.JButton btnExportarCSV;
-    private javax.swing.JButton btnFiltros;
+    public javax.swing.JButton btnExportarCSV;
+    public javax.swing.JButton btnFiltros;
     private javax.swing.JButton btnPag1;
     private javax.swing.JButton btnPag2;
     private javax.swing.JButton btnPag3;
-    private javax.swing.JButton btnRegistrarAhorro;
+    public javax.swing.JButton btnRegistrarAhorro;
     private javax.swing.JButton btnSiguiente;
-    private javax.swing.JComboBox cbMetaFondo;
-    private com.toedter.calendar.JDateChooser dateFecha;
+    public javax.swing.JComboBox cbMetaFondo;
+    public com.toedter.calendar.JDateChooser dateFecha;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelCategories;
     private javax.swing.JLabel jLabelCustomers;
@@ -909,26 +960,26 @@ public class AhorrosView extends javax.swing.JFrame {
     private javax.swing.JLabel lblAutoEst;
     private javax.swing.JLabel lblAutoIcon;
     private javax.swing.JLabel lblAutoName;
-    private javax.swing.JLabel lblAutoPercent;
-    private javax.swing.JLabel lblAutoProgressText;
-    private javax.swing.JLabel lblCardMetaMensualDesc;
+    public javax.swing.JLabel lblAutoPercent;
+    public javax.swing.JLabel lblAutoProgressText;
+    public javax.swing.JLabel lblCardMetaMensualDesc;
     private javax.swing.JLabel lblCardMetaMensualTitle;
-    private javax.swing.JLabel lblCardMetaMensualValue;
-    private javax.swing.JLabel lblCardTotalAhorradoChange;
+    public javax.swing.JLabel lblCardMetaMensualValue;
+    public javax.swing.JLabel lblCardTotalAhorradoChange;
     private javax.swing.JLabel lblCardTotalAhorradoTitle;
-    private javax.swing.JLabel lblCardTotalAhorradoValue;
+    public javax.swing.JLabel lblCardTotalAhorradoValue;
     private javax.swing.JLabel lblConsejoIcon;
     private javax.swing.JLabel lblConsejoText;
     private javax.swing.JLabel lblConsejoTitle;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblEficienciaTitle;
-    private javax.swing.JLabel lblEficienciaValue;
+    public javax.swing.JLabel lblEficienciaValue;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblFondoEmergenciaEst;
     private javax.swing.JLabel lblFondoEmergenciaIcon;
     private javax.swing.JLabel lblFondoEmergenciaName;
-    private javax.swing.JLabel lblFondoEmergenciaPercent;
-    private javax.swing.JLabel lblFondoEmergenciaProgressText;
+    public javax.swing.JLabel lblFondoEmergenciaPercent;
+    public javax.swing.JLabel lblFondoEmergenciaProgressText;
     private javax.swing.JLabel lblFondoEmergenciaTitle;
     private javax.swing.JLabel lblHistorialAhorrosTitle;
     private javax.swing.JLabel lblLevelUp;
@@ -937,33 +988,33 @@ public class AhorrosView extends javax.swing.JFrame {
     private javax.swing.JLabel lblMetasAhorroTitle;
     private javax.swing.JLabel lblMetasGlobalesTitle;
     private javax.swing.JLabel lblMonto;
-    private javax.swing.JLabel lblMostrarTransacciones;
+    public javax.swing.JLabel lblMostrarTransacciones;
     private javax.swing.JLabel lblRegistrarAhorroTitle;
     private javax.swing.JLabel lblVacacionesEst;
     private javax.swing.JLabel lblVacacionesIcon;
     private javax.swing.JLabel lblVacacionesName;
-    private javax.swing.JLabel lblVacacionesPercent;
-    private javax.swing.JLabel lblVacacionesProgressText;
-    private javax.swing.JLabel lblVerTodasMetas;
-    private javax.swing.JProgressBar pbAutoMeta;
-    private javax.swing.JProgressBar pbFondoEmergencia;
-    private javax.swing.JProgressBar pbFondoEmergenciaMeta;
-    private javax.swing.JProgressBar pbMetaMensual;
-    private javax.swing.JProgressBar pbMetasGlobales;
-    private javax.swing.JProgressBar pbVacacionesMeta;
+    public javax.swing.JLabel lblVacacionesPercent;
+    public javax.swing.JLabel lblVacacionesProgressText;
+    public javax.swing.JLabel lblVerTodasMetas;
+    public javax.swing.JProgressBar pbAutoMeta;
+    public javax.swing.JProgressBar pbFondoEmergencia;
+    public javax.swing.JProgressBar pbFondoEmergenciaMeta;
+    public javax.swing.JProgressBar pbMetaMensual;
+    public javax.swing.JProgressBar pbMetasGlobales;
+    public javax.swing.JProgressBar pbVacacionesMeta;
     private javax.swing.JPanel pnlCardEficiencia;
     private javax.swing.JPanel pnlCardMetaMensual;
     private javax.swing.JPanel pnlCardTotalAhorrado;
     private javax.swing.JPanel pnlConsejo;
     private javax.swing.JPanel pnlGasto;
     private javax.swing.JPanel pnlHistorialAhorros;
-    private javax.swing.JPanel pnlMetaAuto;
-    private javax.swing.JPanel pnlMetaFondoEmergencia;
-    private javax.swing.JPanel pnlMetaVacaciones;
-    private javax.swing.JPanel pnlMetasAhorro;
+    public javax.swing.JPanel pnlMetaAuto;
+    public javax.swing.JPanel pnlMetaFondoEmergencia;
+    public javax.swing.JPanel pnlMetaVacaciones;
+    public javax.swing.JPanel pnlMetasAhorro;
     private javax.swing.JPanel pnlRegistrarAhorro;
-    private javax.swing.JTable tblAhorros;
-    private javax.swing.JTextArea txtDescripcion;
-    private javax.swing.JTextField txtMonto;
+    public javax.swing.JTable tblAhorros;
+    public javax.swing.JTextArea txtDescripcion;
+    public javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 }

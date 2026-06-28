@@ -11,6 +11,8 @@ package view;
  */
 public class LoginView extends javax.swing.JFrame {
 
+    private controller.LoginController controller;
+
     /**
      * Creates new form LoginView
      */
@@ -20,6 +22,14 @@ public class LoginView extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Panel de Administración");
         setLocationRelativeTo(null);
+        this.controller = new controller.LoginController(this);
+        
+        btn_logiin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                controller.abrirRegistro();
+            }
+        });
+        
         this.repaint();
     }
 
@@ -117,16 +127,7 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        // Simulación: Obtenemos al usuario con id = 1 después de verificar credenciales
-        service.UsuarioService usuarioService = new service.UsuarioService();
-        model.Usuario usuarioLogueado = usuarioService.obtenerUsuario(1);
-        
-        // Guardamos el usuario a nivel global en la Sesión
-        model.Session.getInstance().setUsuarioActivo(usuarioLogueado);
-
-        SystemView viewSystem = new SystemView();
-        viewSystem.setVisible(true);
-        dispose();
+        controller.procesarLogin();
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     /**
@@ -178,4 +179,20 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_userName;
     // End of variables declaration//GEN-END:variables
+
+    public javax.swing.JTextField getTxtUserName() {
+        return txt_userName;
+    }
+
+    public javax.swing.JPasswordField getTxtPassword() {
+        return txt_password;
+    }
+
+    public javax.swing.JButton getBtnIniciarSesion() {
+        return btnIniciarSesion;
+    }
+
+    public javax.swing.JButton getBtnCrearCuenta() {
+        return btn_logiin;
+    }
 }

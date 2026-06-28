@@ -15,11 +15,14 @@ import javax.swing.border.MatteBorder;
  */
 public class DashboardView extends javax.swing.JFrame {
 
+    private controller.DashboardController controller;
+
     public DashboardView() {
         initComponents();
         setResizable(false);
         setTitle("Panel de Administración");
         setLocationRelativeTo(null);
+        this.controller = new controller.DashboardController(this);
         this.repaint();
     }
 
@@ -51,103 +54,80 @@ public class DashboardView extends javax.swing.JFrame {
         lblAvatarIcon = new javax.swing.JLabel();
         Body = new javax.swing.JTabbedPane();
         jPanelTabDashboard = new javax.swing.JPanel();
-        
-        // Filtros y Cabecera de Tab
         lblTimePeriod = new javax.swing.JLabel();
         cbTimePeriod = new javax.swing.JComboBox<>();
         lblCollaborator = new javax.swing.JLabel();
         cbCollaborator = new javax.swing.JComboBox<>();
         btnMoreFilters = new javax.swing.JButton();
         btnExportPDF = new javax.swing.JButton();
-
-        // Tarjetas (Cards)
         pnlCardIncome = new javax.swing.JPanel();
         lblCardIncomeTitle = new javax.swing.JLabel();
         lblCardIncomeValue = new javax.swing.JLabel();
         lblCardIncomeChange = new javax.swing.JLabel();
         lblCardIncomeIcon = new javax.swing.JLabel();
-
         pnlCardExpenses = new javax.swing.JPanel();
         lblCardExpensesTitle = new javax.swing.JLabel();
         lblCardExpensesValue = new javax.swing.JLabel();
         lblCardExpensesChange = new javax.swing.JLabel();
         lblCardExpensesIcon = new javax.swing.JLabel();
-
         pnlCardSavings = new javax.swing.JPanel();
         lblCardSavingsTitle = new javax.swing.JLabel();
         lblCardSavingsValue = new javax.swing.JLabel();
         lblCardSavingsChange = new javax.swing.JLabel();
         lblCardSavingsIcon = new javax.swing.JLabel();
-
         pnlCardBalance = new javax.swing.JPanel();
         lblCardBalanceTitle = new javax.swing.JLabel();
         lblCardBalanceValue = new javax.swing.JLabel();
         lblCardBalanceChange = new javax.swing.JLabel();
         lblCardBalanceIcon = new javax.swing.JLabel();
-
-        // Columna Izquierda: Budget vs Spending
         pnlBudgetVsSpending = new javax.swing.JPanel();
         lblBudgetVsSpendingTitle = new javax.swing.JLabel();
         lblViewAllCategories = new javax.swing.JLabel();
-        
         lblHousingTitle = new javax.swing.JLabel();
         lblHousingDesc = new javax.swing.JLabel();
         lblHousingValue = new javax.swing.JLabel();
         pbHousing = new javax.swing.JProgressBar();
         lblHousingStatus = new javax.swing.JLabel();
         lblHousingPercent = new javax.swing.JLabel();
-
         lblFoodTitle = new javax.swing.JLabel();
         lblFoodDesc = new javax.swing.JLabel();
         lblFoodValue = new javax.swing.JLabel();
         pbFood = new javax.swing.JProgressBar();
         lblFoodStatus = new javax.swing.JLabel();
         lblFoodExcess = new javax.swing.JLabel();
-
         lblTransportTitle = new javax.swing.JLabel();
         lblTransportDesc = new javax.swing.JLabel();
         lblTransportValue = new javax.swing.JLabel();
         pbTransport = new javax.swing.JProgressBar();
         lblTransportStatus = new javax.swing.JLabel();
         lblTransportPercent = new javax.swing.JLabel();
-
-        // Columna Derecha: Quick Insights
         pnlQuickInsights = new javax.swing.JPanel();
         lblQuickInsightsTitle = new javax.swing.JLabel();
-        
         pnlSavingsBanner = new javax.swing.JPanel();
         lblSavingsBannerIcon = new javax.swing.JLabel();
         lblSavingsBannerTitle = new javax.swing.JLabel();
         lblSavingsBannerDesc = new javax.swing.JLabel();
-        
         lblUpcomingPayments = new javax.swing.JLabel();
-        
         pnlInternetIcon = new javax.swing.JPanel();
         lblInternetIconSymbol = new javax.swing.JLabel();
         lblInternetTitle = new javax.swing.JLabel();
         lblInternetDate = new javax.swing.JLabel();
         lblInternetAmount = new javax.swing.JLabel();
-
         pnlHealthIcon = new javax.swing.JPanel();
         lblHealthIconSymbol = new javax.swing.JLabel();
         lblHealthTitle = new javax.swing.JLabel();
         lblHealthDate = new javax.swing.JLabel();
         lblHealthAmount = new javax.swing.JLabel();
-
         btnViewScheduled = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(248, 249, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        // --- SIDEBAR ---
         Sidebar.setBackground(new java.awt.Color(248, 250, 252));
         Sidebar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(234, 241, 255)));
 
-        // Dashboard (Activo)
         pnlDashboard.setBackground(new java.awt.Color(244, 248, 254));
         pnlDashboard.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 6, 0, 0, new java.awt.Color(37, 99, 235)));
-        pnlDashboard.setForeground(new java.awt.Color(37, 99, 235));
 
         lblDashboardMenu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblDashboardMenu.setForeground(new java.awt.Color(37, 99, 235));
@@ -168,9 +148,7 @@ public class DashboardView extends javax.swing.JFrame {
             .addComponent(lblDashboardMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
-        // Gastos (Inactivo - Clickable)
         pnlGasto.setBackground(new java.awt.Color(248, 250, 252));
-        pnlGasto.setForeground(new java.awt.Color(71, 85, 105));
         pnlGasto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlGasto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -197,9 +175,7 @@ public class DashboardView extends javax.swing.JFrame {
             .addComponent(lblGastosMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
-        // Presupuesto (Inactivo - Clickable)
         pnlPresupuesto.setBackground(new java.awt.Color(248, 250, 252));
-        pnlPresupuesto.setForeground(new java.awt.Color(71, 85, 105));
         pnlPresupuesto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlPresupuesto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -226,9 +202,7 @@ public class DashboardView extends javax.swing.JFrame {
             .addComponent(lblPresupuestoMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
-        // Ahorros
         pnlAhorros.setBackground(new java.awt.Color(248, 250, 252));
-        pnlAhorros.setForeground(new java.awt.Color(71, 85, 105));
         pnlAhorros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlAhorros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -255,7 +229,6 @@ public class DashboardView extends javax.swing.JFrame {
             .addComponent(lblAhorrosMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
-        // Deudas
         pnlDeudas.setBackground(new java.awt.Color(248, 250, 252));
         pnlDeudas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlDeudas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -263,7 +236,6 @@ public class DashboardView extends javax.swing.JFrame {
                 pnlDeudasMouseClicked(evt);
             }
         });
-        pnlDeudas.setForeground(new java.awt.Color(71, 85, 105));
 
         lblDeudasMenu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblDeudasMenu.setForeground(new java.awt.Color(71, 85, 105));
@@ -284,7 +256,6 @@ public class DashboardView extends javax.swing.JFrame {
             .addComponent(lblDeudasMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
-        // Usuarios
         pnlUsuarios.setBackground(new java.awt.Color(248, 250, 252));
         pnlUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -292,7 +263,6 @@ public class DashboardView extends javax.swing.JFrame {
                 pnlUsuariosMouseClicked(evt);
             }
         });
-        pnlUsuarios.setForeground(new java.awt.Color(71, 85, 105));
 
         lblUsuariosMenu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblUsuariosMenu.setForeground(new java.awt.Color(71, 85, 105));
@@ -313,7 +283,6 @@ public class DashboardView extends javax.swing.JFrame {
             .addComponent(lblUsuariosMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
-        // Layout del Sidebar
         javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
         Sidebar.setLayout(SidebarLayout);
         SidebarLayout.setHorizontalGroup(
@@ -345,7 +314,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         getContentPane().add(Sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 200, 600));
 
-        // --- LOGO PANEL ---
         Logo.setBackground(new java.awt.Color(248, 250, 252));
         Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(234, 241, 255)));
         Logo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -357,7 +325,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         getContentPane().add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 80));
 
-        // --- HEADER PANEL ---
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(234, 241, 255)));
         Header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -365,7 +332,7 @@ public class DashboardView extends javax.swing.JFrame {
         lblHeaderTitle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblHeaderTitle.setForeground(new java.awt.Color(11, 28, 48));
         lblHeaderTitle.setText("Finanzas Personales");
-        Header.add(lblHeaderTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, 200, 39));
+        Header.add(lblHeaderTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, -1, 39));
 
         btnAddTransaction.setBackground(new java.awt.Color(37, 99, 235));
         btnAddTransaction.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
@@ -396,25 +363,21 @@ public class DashboardView extends javax.swing.JFrame {
 
         getContentPane().add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 40));
 
-        // --- BODY (TABBED PANE) ---
         jPanelTabDashboard.setBackground(new java.awt.Color(248, 249, 255));
         jPanelTabDashboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        // --- FILTROS ---
         lblTimePeriod.setForeground(new java.awt.Color(71, 85, 105));
         lblTimePeriod.setText("Periodo de Tiempo");
         jPanelTabDashboard.add(lblTimePeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        cbTimePeriod.setBackground(new java.awt.Color(255, 255, 255));
-        cbTimePeriod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Octubre 2023", "Noviembre 2023", "Diciembre 2023" }));
+        cbTimePeriod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "", "" }));
         jPanelTabDashboard.add(cbTimePeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 150, 30));
 
         lblCollaborator.setForeground(new java.awt.Color(71, 85, 105));
         lblCollaborator.setText("Colaborador");
         jPanelTabDashboard.add(lblCollaborator, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 10, -1, -1));
 
-        cbCollaborator.setBackground(new java.awt.Color(255, 255, 255));
-        cbCollaborator.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los usuarios", "Administrador", "Usuario 1" }));
+        cbCollaborator.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "", "" }));
         jPanelTabDashboard.add(cbCollaborator, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 30, 150, 30));
 
         btnMoreFilters.setBackground(new java.awt.Color(255, 255, 255));
@@ -433,9 +396,6 @@ public class DashboardView extends javax.swing.JFrame {
         btnExportPDF.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
         jPanelTabDashboard.add(btnExportPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 30, 120, 30));
 
-        // --- TARJETAS (CARDS ROW Y = 80) ---
-
-        // Card 1: Total Income
         pnlCardIncome.setBackground(new java.awt.Color(255, 255, 255));
         pnlCardIncome.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
         pnlCardIncome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -461,7 +421,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         jPanelTabDashboard.add(pnlCardIncome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 225, 100));
 
-        // Card 2: Total Expenses
         pnlCardExpenses.setBackground(new java.awt.Color(255, 255, 255));
         pnlCardExpenses.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
         pnlCardExpenses.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -487,7 +446,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         jPanelTabDashboard.add(pnlCardExpenses, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 225, 100));
 
-        // Card 3: Total Savings
         pnlCardSavings.setBackground(new java.awt.Color(255, 255, 255));
         pnlCardSavings.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
         pnlCardSavings.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -513,7 +471,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         jPanelTabDashboard.add(pnlCardSavings, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 225, 100));
 
-        // Card 4: Current Balance
         pnlCardBalance.setBackground(new java.awt.Color(255, 255, 255));
         pnlCardBalance.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
         pnlCardBalance.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -539,7 +496,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         jPanelTabDashboard.add(pnlCardBalance, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 80, 235, 100));
 
-        // --- COLUMNA IZQUIERDA: BUDGET VS SPENDING ---
         pnlBudgetVsSpending.setBackground(new java.awt.Color(255, 255, 255));
         pnlBudgetVsSpending.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
         pnlBudgetVsSpending.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -553,24 +509,22 @@ public class DashboardView extends javax.swing.JFrame {
         lblViewAllCategories.setForeground(new java.awt.Color(37, 99, 235));
         lblViewAllCategories.setText("Ver Todas las Categorías");
         lblViewAllCategories.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlBudgetVsSpending.add(lblViewAllCategories, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 15, -1, -1));
+        pnlBudgetVsSpending.add(lblViewAllCategories, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, -1));
 
-        // Housing
         lblHousingTitle.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         lblHousingTitle.setForeground(new java.awt.Color(11, 28, 48));
         lblHousingTitle.setText("Vivienda");
         pnlBudgetVsSpending.add(lblHousingTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 55, -1, -1));
 
-        lblHousingDesc.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblHousingDesc.setForeground(new java.awt.Color(71, 85, 105));
         lblHousingDesc.setText("Alquiler, Seguro, Servicios");
         pnlBudgetVsSpending.add(lblHousingDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 73, -1, -1));
 
         lblHousingValue.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         lblHousingValue.setForeground(new java.awt.Color(11, 28, 48));
+        lblHousingValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblHousingValue.setText("$1,850.00 / $2,000.00");
         pnlBudgetVsSpending.add(lblHousingValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 65, 150, -1));
-        lblHousingValue.setHorizontalAlignment(SwingConstants.RIGHT);
 
         pbHousing.setBackground(new java.awt.Color(234, 241, 255));
         pbHousing.setForeground(new java.awt.Color(37, 99, 235));
@@ -583,28 +537,25 @@ public class DashboardView extends javax.swing.JFrame {
         lblHousingStatus.setText("ZONA SEGURA");
         pnlBudgetVsSpending.add(lblHousingStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 108, -1, -1));
 
-        lblHousingPercent.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblHousingPercent.setForeground(new java.awt.Color(71, 85, 105));
+        lblHousingPercent.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblHousingPercent.setText("92% utilizado");
         pnlBudgetVsSpending.add(lblHousingPercent, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 108, 100, -1));
-        lblHousingPercent.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        // Food & Dining
         lblFoodTitle.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         lblFoodTitle.setForeground(new java.awt.Color(11, 28, 48));
         lblFoodTitle.setText("Comida y Restaurantes");
         pnlBudgetVsSpending.add(lblFoodTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 145, -1, -1));
 
-        lblFoodDesc.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblFoodDesc.setForeground(new java.awt.Color(71, 85, 105));
         lblFoodDesc.setText("Comestibles, Restaurantes");
         pnlBudgetVsSpending.add(lblFoodDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 163, -1, -1));
 
         lblFoodValue.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         lblFoodValue.setForeground(new java.awt.Color(11, 28, 48));
+        lblFoodValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblFoodValue.setText("<html><font color='#ba1a1a'>$745.00</font> / $600.00</html>");
         pnlBudgetVsSpending.add(lblFoodValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 155, 150, -1));
-        lblFoodValue.setHorizontalAlignment(SwingConstants.RIGHT);
 
         pbFood.setBackground(new java.awt.Color(255, 218, 214));
         pbFood.setForeground(new java.awt.Color(186, 26, 26));
@@ -617,28 +568,25 @@ public class DashboardView extends javax.swing.JFrame {
         lblFoodStatus.setText("LÍMITE EXCEDIDO");
         pnlBudgetVsSpending.add(lblFoodStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 198, -1, -1));
 
-        lblFoodExcess.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblFoodExcess.setForeground(new java.awt.Color(186, 26, 26));
+        lblFoodExcess.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblFoodExcess.setText("$145.00 de exceso");
         pnlBudgetVsSpending.add(lblFoodExcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 198, 100, -1));
-        lblFoodExcess.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        // Transport
         lblTransportTitle.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         lblTransportTitle.setForeground(new java.awt.Color(11, 28, 48));
         lblTransportTitle.setText("Transporte");
         pnlBudgetVsSpending.add(lblTransportTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 235, -1, -1));
 
-        lblTransportDesc.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblTransportDesc.setForeground(new java.awt.Color(71, 85, 105));
         lblTransportDesc.setText("Combustible, Transporte Público, Mantenimiento");
         pnlBudgetVsSpending.add(lblTransportDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 253, -1, -1));
 
         lblTransportValue.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         lblTransportValue.setForeground(new java.awt.Color(11, 28, 48));
+        lblTransportValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTransportValue.setText("$210.00 / $450.00");
         pnlBudgetVsSpending.add(lblTransportValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 245, 150, -1));
-        lblTransportValue.setHorizontalAlignment(SwingConstants.RIGHT);
 
         pbTransport.setBackground(new java.awt.Color(234, 241, 255));
         pbTransport.setForeground(new java.awt.Color(0, 108, 73));
@@ -651,15 +599,13 @@ public class DashboardView extends javax.swing.JFrame {
         lblTransportStatus.setText("EN ORDEN");
         pnlBudgetVsSpending.add(lblTransportStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 288, -1, -1));
 
-        lblTransportPercent.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblTransportPercent.setForeground(new java.awt.Color(71, 85, 105));
+        lblTransportPercent.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTransportPercent.setText("46% utilizado");
         pnlBudgetVsSpending.add(lblTransportPercent, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 288, 100, -1));
-        lblTransportPercent.setHorizontalAlignment(SwingConstants.RIGHT);
 
         jPanelTabDashboard.add(pnlBudgetVsSpending, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 590, 370));
 
-        // --- COLUMNA DERECHA: QUICK INSIGHTS ---
         pnlQuickInsights.setBackground(new java.awt.Color(255, 255, 255));
         pnlQuickInsights.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
         pnlQuickInsights.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -669,7 +615,6 @@ public class DashboardView extends javax.swing.JFrame {
         lblQuickInsightsTitle.setText("Información Rápida");
         pnlQuickInsights.add(lblQuickInsightsTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 15, -1, -1));
 
-        // Savings Potential Banner
         pnlSavingsBanner.setBackground(new java.awt.Color(244, 248, 254));
         pnlSavingsBanner.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -682,25 +627,24 @@ public class DashboardView extends javax.swing.JFrame {
         lblSavingsBannerTitle.setText("Potencial de Ahorro");
         pnlSavingsBanner.add(lblSavingsBannerTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 12, -1, -1));
 
-        lblSavingsBannerDesc.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblSavingsBannerDesc.setForeground(new java.awt.Color(71, 85, 105));
         lblSavingsBannerDesc.setText("<html>Gastaste 25% más en comer fuera esta semana. ¡Reducir una comida podría ahorrarte $45!</html>");
         pnlSavingsBanner.add(lblSavingsBannerDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 250, 50));
 
         pnlQuickInsights.add(pnlSavingsBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 50, 310, 90));
 
-        // Upcoming Payments
         lblUpcomingPayments.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         lblUpcomingPayments.setForeground(new java.awt.Color(71, 85, 105));
         lblUpcomingPayments.setText("PRÓXIMOS PAGOS");
         pnlQuickInsights.add(lblUpcomingPayments, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 155, -1, -1));
 
-        // Internet Provider Item
         pnlInternetIcon.setBackground(new java.awt.Color(248, 250, 252));
         pnlInternetIcon.setLayout(new java.awt.BorderLayout());
-        lblInternetIconSymbol.setHorizontalAlignment(SwingConstants.CENTER);
+
+        lblInternetIconSymbol.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblInternetIconSymbol.setText("📶");
         pnlInternetIcon.add(lblInternetIconSymbol, java.awt.BorderLayout.CENTER);
+
         pnlQuickInsights.add(pnlInternetIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 180, 40, 40));
 
         lblInternetTitle.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
@@ -708,23 +652,23 @@ public class DashboardView extends javax.swing.JFrame {
         lblInternetTitle.setText("Proveedor de Internet");
         pnlQuickInsights.add(lblInternetTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 180, 150, -1));
 
-        lblInternetDate.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblInternetDate.setForeground(new java.awt.Color(71, 85, 105));
         lblInternetDate.setText("24 Oct");
         pnlQuickInsights.add(lblInternetDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 198, 100, -1));
 
         lblInternetAmount.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         lblInternetAmount.setForeground(new java.awt.Color(11, 28, 48));
+        lblInternetAmount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblInternetAmount.setText("$79.99");
         pnlQuickInsights.add(lblInternetAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 95, 40));
-        lblInternetAmount.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        // Health Insurance Item
         pnlHealthIcon.setBackground(new java.awt.Color(248, 250, 252));
         pnlHealthIcon.setLayout(new java.awt.BorderLayout());
-        lblHealthIconSymbol.setHorizontalAlignment(SwingConstants.CENTER);
+
+        lblHealthIconSymbol.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHealthIconSymbol.setText("🛡️");
         pnlHealthIcon.add(lblHealthIconSymbol, java.awt.BorderLayout.CENTER);
+
         pnlQuickInsights.add(pnlHealthIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 230, 40, 40));
 
         lblHealthTitle.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
@@ -732,18 +676,16 @@ public class DashboardView extends javax.swing.JFrame {
         lblHealthTitle.setText("Seguro de Salud");
         pnlQuickInsights.add(lblHealthTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 230, 150, -1));
 
-        lblHealthDate.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblHealthDate.setForeground(new java.awt.Color(71, 85, 105));
         lblHealthDate.setText("26 Oct");
         pnlQuickInsights.add(lblHealthDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 248, 100, -1));
 
         lblHealthAmount.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         lblHealthAmount.setForeground(new java.awt.Color(11, 28, 48));
+        lblHealthAmount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblHealthAmount.setText("$212.00");
         pnlQuickInsights.add(lblHealthAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, 95, 40));
-        lblHealthAmount.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        // Action Button
         btnViewScheduled.setBackground(new java.awt.Color(255, 255, 255));
         btnViewScheduled.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         btnViewScheduled.setForeground(new java.awt.Color(11, 28, 48));
@@ -754,7 +696,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         jPanelTabDashboard.add(pnlQuickInsights, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 200, 340, 370));
 
-        // Agregar la pestaña general de Dashboard
         Body.addTab("Resumen General", jPanelTabDashboard);
 
         getContentPane().add(Body, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 1010, 640));
@@ -799,117 +740,94 @@ public class DashboardView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane Body;
-    private javax.swing.JPanel Header;
-    private javax.swing.JPanel Logo;
-    private javax.swing.JPanel Sidebar;
-    
-    // Menu Sidebar
-    private javax.swing.JPanel pnlDashboard;
-    private javax.swing.JLabel lblDashboardMenu;
-    private javax.swing.JPanel pnlGasto;
-    private javax.swing.JLabel lblGastosMenu;
-    private javax.swing.JPanel pnlPresupuesto;
-    private javax.swing.JLabel lblPresupuestoMenu;
-    private javax.swing.JPanel pnlAhorros;
-    private javax.swing.JLabel lblAhorrosMenu;
-    private javax.swing.JPanel pnlDeudas;
-    private javax.swing.JLabel lblDeudasMenu;
-    private javax.swing.JPanel pnlUsuarios;
-    private javax.swing.JLabel lblUsuariosMenu;
-
-    // Header Components
-    private javax.swing.JLabel lblHeaderTitle;
-    private javax.swing.JLabel lblLogoImg;
-    private javax.swing.JButton btnAddTransaction;
-    private javax.swing.JLabel lblCalendarIcon;
-    private javax.swing.JLabel lblUserIcon;
-    private javax.swing.JLabel lblNotificationIcon;
-    private javax.swing.JLabel lblAvatarIcon;
-
-    // Tab Dashboard Components
-    private javax.swing.JPanel jPanelTabDashboard;
-    private javax.swing.JLabel lblTimePeriod;
-    private javax.swing.JComboBox<String> cbTimePeriod;
-    private javax.swing.JLabel lblCollaborator;
-    private javax.swing.JComboBox<String> cbCollaborator;
-    private javax.swing.JButton btnMoreFilters;
-    private javax.swing.JButton btnExportPDF;
-
-    // Cards
-    private javax.swing.JPanel pnlCardIncome;
-    private javax.swing.JLabel lblCardIncomeTitle;
-    private javax.swing.JLabel lblCardIncomeValue;
-    private javax.swing.JLabel lblCardIncomeChange;
-    private javax.swing.JLabel lblCardIncomeIcon;
-
-    private javax.swing.JPanel pnlCardExpenses;
-    private javax.swing.JLabel lblCardExpensesTitle;
-    private javax.swing.JLabel lblCardExpensesValue;
-    private javax.swing.JLabel lblCardExpensesChange;
-    private javax.swing.JLabel lblCardExpensesIcon;
-
-    private javax.swing.JPanel pnlCardSavings;
-    private javax.swing.JLabel lblCardSavingsTitle;
-    private javax.swing.JLabel lblCardSavingsValue;
-    private javax.swing.JLabel lblCardSavingsChange;
-    private javax.swing.JLabel lblCardSavingsIcon;
-
-    private javax.swing.JPanel pnlCardBalance;
-    private javax.swing.JLabel lblCardBalanceTitle;
-    private javax.swing.JLabel lblCardBalanceValue;
-    private javax.swing.JLabel lblCardBalanceChange;
-    private javax.swing.JLabel lblCardBalanceIcon;
-
-    // Budget vs Spending
-    private javax.swing.JPanel pnlBudgetVsSpending;
-    private javax.swing.JLabel lblBudgetVsSpendingTitle;
-    private javax.swing.JLabel lblViewAllCategories;
-    
-    private javax.swing.JLabel lblHousingTitle;
-    private javax.swing.JLabel lblHousingDesc;
-    private javax.swing.JLabel lblHousingValue;
-    private javax.swing.JProgressBar pbHousing;
-    private javax.swing.JLabel lblHousingStatus;
-    private javax.swing.JLabel lblHousingPercent;
-
-    private javax.swing.JLabel lblFoodTitle;
-    private javax.swing.JLabel lblFoodDesc;
-    private javax.swing.JLabel lblFoodValue;
-    private javax.swing.JProgressBar pbFood;
-    private javax.swing.JLabel lblFoodStatus;
-    private javax.swing.JLabel lblFoodExcess;
-
-    private javax.swing.JLabel lblTransportTitle;
-    private javax.swing.JLabel lblTransportDesc;
-    private javax.swing.JLabel lblTransportValue;
-    private javax.swing.JProgressBar pbTransport;
-    private javax.swing.JLabel lblTransportStatus;
-    private javax.swing.JLabel lblTransportPercent;
-
-    // Quick Insights
-    private javax.swing.JPanel pnlQuickInsights;
-    private javax.swing.JLabel lblQuickInsightsTitle;
-    
-    private javax.swing.JPanel pnlSavingsBanner;
-    private javax.swing.JLabel lblSavingsBannerIcon;
-    private javax.swing.JLabel lblSavingsBannerTitle;
-    private javax.swing.JLabel lblSavingsBannerDesc;
-    
-    private javax.swing.JLabel lblUpcomingPayments;
-    
-    private javax.swing.JPanel pnlInternetIcon;
-    private javax.swing.JLabel lblInternetIconSymbol;
-    private javax.swing.JLabel lblInternetTitle;
-    private javax.swing.JLabel lblInternetDate;
-    private javax.swing.JLabel lblInternetAmount;
-
-    private javax.swing.JPanel pnlHealthIcon;
-    private javax.swing.JLabel lblHealthIconSymbol;
-    private javax.swing.JLabel lblHealthTitle;
-    private javax.swing.JLabel lblHealthDate;
-    private javax.swing.JLabel lblHealthAmount;
-
-    private javax.swing.JButton btnViewScheduled;
+    public javax.swing.JTabbedPane Body;
+    public javax.swing.JPanel Header;
+    public javax.swing.JPanel Logo;
+    public javax.swing.JPanel Sidebar;
+    public javax.swing.JButton btnAddTransaction;
+    public javax.swing.JButton btnExportPDF;
+    public javax.swing.JButton btnMoreFilters;
+    public javax.swing.JButton btnViewScheduled;
+    public javax.swing.JComboBox cbCollaborator;
+    public javax.swing.JComboBox<String> cbTimePeriod;
+    public javax.swing.JPanel jPanelTabDashboard;
+    public javax.swing.JLabel lblAhorrosMenu;
+    public javax.swing.JLabel lblAvatarIcon;
+    public javax.swing.JLabel lblBudgetVsSpendingTitle;
+    public javax.swing.JLabel lblCalendarIcon;
+    public javax.swing.JLabel lblCardBalanceChange;
+    public javax.swing.JLabel lblCardBalanceIcon;
+    public javax.swing.JLabel lblCardBalanceTitle;
+    public javax.swing.JLabel lblCardBalanceValue;
+    public javax.swing.JLabel lblCardExpensesChange;
+    public javax.swing.JLabel lblCardExpensesIcon;
+    public javax.swing.JLabel lblCardExpensesTitle;
+    public javax.swing.JLabel lblCardExpensesValue;
+    public javax.swing.JLabel lblCardIncomeChange;
+    public javax.swing.JLabel lblCardIncomeIcon;
+    public javax.swing.JLabel lblCardIncomeTitle;
+    public javax.swing.JLabel lblCardIncomeValue;
+    public javax.swing.JLabel lblCardSavingsChange;
+    public javax.swing.JLabel lblCardSavingsIcon;
+    public javax.swing.JLabel lblCardSavingsTitle;
+    public javax.swing.JLabel lblCardSavingsValue;
+    public javax.swing.JLabel lblCollaborator;
+    public javax.swing.JLabel lblDashboardMenu;
+    public javax.swing.JLabel lblDeudasMenu;
+    public javax.swing.JLabel lblFoodDesc;
+    public javax.swing.JLabel lblFoodExcess;
+    public javax.swing.JLabel lblFoodStatus;
+    public javax.swing.JLabel lblFoodTitle;
+    public javax.swing.JLabel lblFoodValue;
+    public javax.swing.JLabel lblGastosMenu;
+    public javax.swing.JLabel lblHeaderTitle;
+    public javax.swing.JLabel lblHealthAmount;
+    public javax.swing.JLabel lblHealthDate;
+    public javax.swing.JLabel lblHealthIconSymbol;
+    public javax.swing.JLabel lblHealthTitle;
+    public javax.swing.JLabel lblHousingDesc;
+    public javax.swing.JLabel lblHousingPercent;
+    public javax.swing.JLabel lblHousingStatus;
+    public javax.swing.JLabel lblHousingTitle;
+    public javax.swing.JLabel lblHousingValue;
+    public javax.swing.JLabel lblInternetAmount;
+    public javax.swing.JLabel lblInternetDate;
+    public javax.swing.JLabel lblInternetIconSymbol;
+    public javax.swing.JLabel lblInternetTitle;
+    public javax.swing.JLabel lblLogoImg;
+    public javax.swing.JLabel lblNotificationIcon;
+    public javax.swing.JLabel lblPresupuestoMenu;
+    public javax.swing.JLabel lblQuickInsightsTitle;
+    public javax.swing.JLabel lblSavingsBannerDesc;
+    public javax.swing.JLabel lblSavingsBannerIcon;
+    public javax.swing.JLabel lblSavingsBannerTitle;
+    public javax.swing.JLabel lblTimePeriod;
+    public javax.swing.JLabel lblTransportDesc;
+    public javax.swing.JLabel lblTransportPercent;
+    public javax.swing.JLabel lblTransportStatus;
+    public javax.swing.JLabel lblTransportTitle;
+    public javax.swing.JLabel lblTransportValue;
+    public javax.swing.JLabel lblUpcomingPayments;
+    public javax.swing.JLabel lblUserIcon;
+    public javax.swing.JLabel lblUsuariosMenu;
+    public javax.swing.JLabel lblViewAllCategories;
+    public javax.swing.JProgressBar pbFood;
+    public javax.swing.JProgressBar pbHousing;
+    public javax.swing.JProgressBar pbTransport;
+    public javax.swing.JPanel pnlAhorros;
+    public javax.swing.JPanel pnlBudgetVsSpending;
+    public javax.swing.JPanel pnlCardBalance;
+    public javax.swing.JPanel pnlCardExpenses;
+    public javax.swing.JPanel pnlCardIncome;
+    public javax.swing.JPanel pnlCardSavings;
+    public javax.swing.JPanel pnlDashboard;
+    public javax.swing.JPanel pnlDeudas;
+    public javax.swing.JPanel pnlGasto;
+    public javax.swing.JPanel pnlHealthIcon;
+    public javax.swing.JPanel pnlInternetIcon;
+    public javax.swing.JPanel pnlPresupuesto;
+    public javax.swing.JPanel pnlQuickInsights;
+    public javax.swing.JPanel pnlSavingsBanner;
+    public javax.swing.JPanel pnlUsuarios;
     // End of variables declaration//GEN-END:variables
 }

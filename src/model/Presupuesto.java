@@ -111,11 +111,21 @@ public class Presupuesto {
         this.limPresuMens = limPresuMens;
     }
 
+    private int idUsuario;
+
     public int getUmbralAlerta() {
         return umbralAlerta;
     }
 
     public void setUmbralAlerta(int umbralAlerta) {
         this.umbralAlerta = umbralAlerta;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }

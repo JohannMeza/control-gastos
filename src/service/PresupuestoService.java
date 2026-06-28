@@ -16,9 +16,14 @@ public class PresupuestoService {
         return dao.listarPeriodo();
     }
     
-    public List<Presupuesto> listarPresupuesto(int idUsuario) {
-        return dao.listarPresupuesto(idUsuario);
+    public List<Presupuesto> listarPresupuesto(int idUsuario, int idUsuarioOwner, int idFiltradoUsuario, String fechaInicio, String fechaFin, int idCategoria, int idEstado) {
+        return dao.listarPresupuesto(idUsuario, idUsuarioOwner, idFiltradoUsuario, fechaInicio, fechaFin, idCategoria, idEstado);
     }
+
+    public List<model.PresupuestoActividad> listarPresupuestoActividades(int idUsuarioOwner, int idFiltradoUsuario, String fechaInicio, String fechaFin) {
+        return dao.listarPresupuestoActividades(idUsuarioOwner, idFiltradoUsuario, fechaInicio, fechaFin);
+    }
+
     
     public String guardarPresupuesto(Presupuesto presupuesto) {
         return dao.guardarPresupuesto(presupuesto);
@@ -26,5 +31,9 @@ public class PresupuestoService {
     
     public String eliminarPresupuesto(int idPresupuesto) {
         return dao.eliminarPresupuesto(idPresupuesto);
+    }
+
+    public List<Integer> obtenerAniosConDatos(int idUsuario) {
+        return dao.obtenerAniosConDatos(idUsuario);
     }
 }

@@ -19,6 +19,11 @@ public class SystemView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.repaint();
         
+        // Set long Spanish format for date choosers
+        dateFiltroDesde.setDateFormatString("dd 'de' MMM 'de' yyyy");
+        dateFiltroHasta.setDateFormatString("dd 'de' MMM 'de' yyyy");
+        dateFechaNuevo.setDateFormatString("dd 'de' MMM 'de' yyyy");
+        
         // Obtener datos del usuario logueado en la sesión
         Usuario usuarioActivo = Session.getInstance().getUsuarioActivo();
         if (usuarioActivo != null) {
@@ -133,13 +138,13 @@ public class SystemView extends javax.swing.JFrame {
         Sidebar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(234, 241, 255)));
 
         jPanelProducts.setBackground(new java.awt.Color(248, 250, 252));
+        jPanelProducts.setForeground(new java.awt.Color(71, 85, 105));
         jPanelProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanelProductsMouseClicked(evt);
             }
         });
-        jPanelProducts.setForeground(new java.awt.Color(71, 85, 105));
 
         jLabelProducts.setBackground(new java.awt.Color(255, 255, 255));
         jLabelProducts.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -701,11 +706,11 @@ public class SystemView extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel20.setText("TOTAL EXPENSES");
+        jLabel20.setText("GASTOS TOTALES");
 
         jLabel21.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel21.setText("$ 14,240.50");
+        jLabel21.setText("S/. 0.00");
 
         jPanel6.setBackground(new java.awt.Color(255, 218, 214));
         jPanel6.setName(""); // NOI18N
@@ -752,11 +757,11 @@ public class SystemView extends javax.swing.JFrame {
 
         jLabel24.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel24.setText("MONTHLY AVERAGE");
+        jLabel24.setText("PROMEDIO MENSUAL");
 
         jLabel25.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel25.setText("$ 4,820.00");
+        jLabel25.setText("S/. 0.00");
 
         jPanel12.setBackground(new java.awt.Color(211, 228, 254));
         jPanel12.setName(""); // NOI18N
@@ -803,7 +808,7 @@ public class SystemView extends javax.swing.JFrame {
 
         jLabel26.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel26.setText("STATUS");
+        jLabel26.setText("ESTADO");
 
         jLabel27.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(0, 108, 73));
@@ -852,13 +857,13 @@ public class SystemView extends javax.swing.JFrame {
         jPanelPeriodoSiguiente.setBackground(new java.awt.Color(255, 255, 255));
         jPanelPeriodoSiguiente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
 
-        jLabel28.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel28.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel28.setText("NEXT RECURRING");
+        jLabel28.setText("PRÓXIMO VENCIMIENTO");
 
-        jLabel29.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel29.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel29.setText("Oct 28, 2023");
+        jLabel29.setText("28 de junio de 2023");
 
         jPanel16.setBackground(new java.awt.Color(255, 219, 205));
         jPanel16.setName(""); // NOI18N
@@ -883,7 +888,7 @@ public class SystemView extends javax.swing.JFrame {
                 .addGroup(jPanelPeriodoSiguienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel28)
                     .addComponent(jLabel29))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelPeriodoSiguienteLayout.setVerticalGroup(
             jPanelPeriodoSiguienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1123,13 +1128,13 @@ public class SystemView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
+    public javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
+    public javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
+    public javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
+    public javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

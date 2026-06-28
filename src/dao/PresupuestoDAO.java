@@ -58,14 +58,22 @@ public class PresupuestoDAO {
         return lista;
     }
     
-    public List<Presupuesto> listarPresupuesto(int idUsuario) {
+    public List<Presupuesto> listarPresupuesto(int idUsuario, int idUsuarioOwner, int idFiltradoUsuario, String fechaInicio, String fechaFin, int idCategoria, int idEstado) {
         List<Presupuesto> lista = new ArrayList<>();
-        String sql = "EXEC CG_ListaPresupuestosActivos_SP";
+        String sql = "{CALL CG_ListaPresupuestosActivos_SP(?, ?, ?, ?, ?, ?, ?)}";
 
         try (
             Connection conn = ConexionDB.getConnection();
             PreparedStatement stmt = conn.prepareCall(sql)
         ) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idUsuarioOwner);
+            stmt.setInt(3, idFiltradoUsuario);
+            stmt.setString(4, fechaInicio);
+            stmt.setString(5, fechaFin);
+            stmt.setInt(6, idCategoria);
+            stmt.setInt(7, idEstado);
+
             ResultSet rs = stmt.executeQuery();
             
             while (rs.next()) {
@@ -87,9 +95,45 @@ public class PresupuestoDAO {
 
         return lista;
     }
+
+    public List<model.PresupuestoActividad> listarPresupuestoActividades(int idUsuarioOwner, int idFiltradoUsuario, String fechaInicio, String fechaFin) {
+        List<model.PresupuestoActividad> lista = new ArrayList<>();
+        String sql = "{CALL CG_ObtenerPresupuestoActividades_SP(?, ?, ?, ?)}";
+
+        try (
+            Connection conn = ConexionDB.getConnection();
+            PreparedStatement stmt = conn.prepareCall(sql)
+        ) {
+            stmt.setInt(1, idUsuarioOwner);
+            stmt.setInt(2, idFiltradoUsuario);
+            stmt.setString(3, fechaInicio);
+            stmt.setString(4, fechaFin);
+
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                model.PresupuestoActividad act = new model.PresupuestoActividad();
+                act.setIdGasto(rs.getInt("idGasto"));
+                act.setcGasto(rs.getString("cGasto"));
+                act.setNombreCategoria(rs.getString("nombreCategoria"));
+                act.setMontoGasto(rs.getDouble("montoGasto"));
+                act.setcFechaGasto(rs.getString("cFechaGasto"));
+                act.setLimitePresupuesto(rs.getDouble("limitePresupuesto"));
+                act.setUmbralAlerta(rs.getInt("umbralAlerta"));
+                act.setTotalGastadoMes(rs.getDouble("totalGastadoMes"));
+                lista.add(act);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
     
     public String guardarPresupuesto(Presupuesto presupuesto) {
-        String sql = "{CALL CG_GuardaPresupuestoIngresado_SP(?)}";
+        String sql = "{CALL CG_GuardaPresupuestoIngresado_SP(?, ?)}";
         
         try (
             Connection conn = ConexionDB.getConnection();
@@ -99,6 +143,7 @@ public class PresupuestoDAO {
             String xml = XmlUtil.convertirAXml(presupuesto);
 
             stmt.setString(1, xml);
+            stmt.setInt(2, presupuesto.getIdUsuario());
 
             ResultSet rs = stmt.executeQuery();
 
@@ -134,5 +179,31 @@ public class PresupuestoDAO {
         }
 
         return "No se recibió respuesta";
+    }
+
+    public List<Integer> obtenerAniosConDatos(int idUsuario) {
+        List<Integer> anios = new ArrayList<>();
+        String sql = "SELECT anio FROM (" +
+                     "  SELECT DISTINCT YEAR(dFecha) AS anio FROM FINANZAS.AHORROS WHERE idUsuReg = ? AND lEsActivo = 1" +
+                     "  UNION" +
+                     "  SELECT DISTINCT YEAR(cFechaGasto) AS anio FROM FINANZAS.GASTOS WHERE idUsuReg = ? AND lEsActivo = 1" +
+                     "  UNION" +
+                     "  SELECT DISTINCT YEAR(dFecha) AS anio FROM FINANZAS.INGRESOS WHERE idUsuario = ? AND lEsActivo = 1" +
+                     ") T WHERE anio IS NOT NULL ORDER BY anio DESC";
+
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idUsuario);
+            stmt.setInt(3, idUsuario);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    anios.add(rs.getInt("anio"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return anios;
     }
 }

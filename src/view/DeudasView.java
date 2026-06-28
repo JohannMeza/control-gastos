@@ -397,13 +397,13 @@ public class DeudasView extends javax.swing.JFrame {
         lblCardDeudaTotalValue.setText("$45,280.00");
         pnlCardDeudaTotal.add(lblCardDeudaTotalValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
-        jPanel16.setBackground(new java.awt.Color(108, 248, 187));
+        jPanel16.setBackground(new java.awt.Color(255, 218, 214));
         jPanel16.setName(""); // NOI18N
         jPanel16.setPreferredSize(new java.awt.Dimension(40, 40));
         jPanel16.setLayout(new java.awt.CardLayout());
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/chat-flecha-abajo.png"))); // NOI18N
         jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel14.setMaximumSize(new java.awt.Dimension(9, 9));
@@ -430,13 +430,13 @@ public class DeudasView extends javax.swing.JFrame {
         lblCardProximoVencimientoValue.setText("Oct 15, 2023");
         pnlCardProximoVencimiento.add(lblCardProximoVencimientoValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
-        jPanel17.setBackground(new java.awt.Color(108, 248, 187));
+        jPanel17.setBackground(new java.awt.Color(211, 228, 254));
         jPanel17.setName(""); // NOI18N
         jPanel17.setPreferredSize(new java.awt.Dimension(40, 40));
         jPanel17.setLayout(new java.awt.CardLayout());
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/historial.png"))); // NOI18N
         jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel15.setMaximumSize(new java.awt.Dimension(9, 9));
@@ -527,7 +527,7 @@ public class DeudasView extends javax.swing.JFrame {
         pnlNuevaDeuda.add(lblFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 144, -1, -1));
 
         dateFechaInicio.setBackground(new java.awt.Color(255, 255, 255));
-        dateFechaInicio.setDateFormatString("dd/MM/yyyy");
+        dateFechaInicio.setDateFormatString("dd 'de' MMM 'de' yyyy");
         pnlNuevaDeuda.add(dateFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 162, 135, 26));
 
         btnRegistrarDeuda.setBackground(new java.awt.Color(37, 99, 235));
@@ -573,7 +573,7 @@ public class DeudasView extends javax.swing.JFrame {
         pnlRegistrarAbono.add(lblFechaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 136, -1, -1));
 
         dateFechaPago.setBackground(new java.awt.Color(255, 255, 255));
-        dateFechaPago.setDateFormatString("dd/MM/yyyy");
+        dateFechaPago.setDateFormatString("dd 'de' MMM 'de' yyyy");
         pnlRegistrarAbono.add(dateFechaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 152, 280, 26));
 
         btnConfirmarPago.setBackground(new java.awt.Color(255, 255, 255));
@@ -620,8 +620,9 @@ public class DeudasView extends javax.swing.JFrame {
 
         lblDebt1Badge.setFont(new java.awt.Font("Dialog", 1, 9)); // NOI18N
         lblDebt1Badge.setForeground(new java.awt.Color(6, 95, 70));
-        lblDebt1Badge.setText("   AL DÍA");
-        pnlDebt1.add(lblDebt1Badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 8, 65, 18));
+        lblDebt1Badge.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDebt1Badge.setText("AL DÍA");
+        pnlDebt1.add(lblDebt1Badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 80, 18));
 
         pbDebt1.setValue(18);
         pbDebt1.setForeground(new java.awt.Color(16, 185, 129));
@@ -666,8 +667,9 @@ public class DeudasView extends javax.swing.JFrame {
 
         lblDebt3Badge.setFont(new java.awt.Font("Dialog", 1, 9)); // NOI18N
         lblDebt3Badge.setForeground(new java.awt.Color(30, 58, 138));
-        lblDebt3Badge.setText("   PENDIENTE");
-        pnlDebt3.add(lblDebt3Badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 8, 75, 18));
+        lblDebt3Badge.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDebt3Badge.setText("PENDIENTE");
+        pnlDebt3.add(lblDebt3Badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(385, 10, 90, 18));
 
         pbDebt3.setValue(62);
         pbDebt3.setForeground(new java.awt.Color(37, 99, 235));
@@ -711,8 +713,9 @@ public class DeudasView extends javax.swing.JFrame {
 
         lblDebt2Badge.setFont(new java.awt.Font("Dialog", 1, 8)); // NOI18N
         lblDebt2Badge.setForeground(new java.awt.Color(153, 27, 27));
+        lblDebt2Badge.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDebt2Badge.setText(" PRÓXIMO A VENCER");
-        pnlDebt2.add(lblDebt2Badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 8, 105, 18));
+        pnlDebt2.add(lblDebt2Badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 105, 18));
 
         lblDebt2WarningIcon.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         lblDebt2WarningIcon.setForeground(new java.awt.Color(71, 85, 105));
@@ -893,98 +896,94 @@ public class DeudasView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane Body;
-    private javax.swing.JPanel Header;
-    private javax.swing.JPanel Logo;
-    private javax.swing.JPanel Sidebar;
-    private javax.swing.JButton btnConfirmarPago;
-    private javax.swing.JButton btnRegistrarDeuda;
-    private javax.swing.JComboBox cbSeleccionarDeuda;
-    private com.toedter.calendar.JDateChooser dateFechaInicio;
-    private com.toedter.calendar.JDateChooser dateFechaPago;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabelCategories;
-    private javax.swing.JLabel jLabelCustomers;
-    private javax.swing.JLabel jLabelEmployes;
-    private javax.swing.JLabel jLabelProducts;
-    private javax.swing.JLabel jLabelPurchases;
-    private javax.swing.JLabel jLabelSupplimers;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanelCategories;
-    private javax.swing.JPanel jPanelCustomers;
-    private javax.swing.JPanel jPanelEmployes;
-    private javax.swing.JPanel jPanelProducts;
-    private javax.swing.JPanel jPanelSupplimers;
-    private javax.swing.JPanel jPanelTabDeudas;
-    private javax.swing.JScrollPane jScrollPaneDeudas;
-    private javax.swing.JLabel lblAcreedor;
-    private javax.swing.JLabel lblCardDeudaTotalTitle;
-    private javax.swing.JLabel lblCardDeudaTotalValue;
-    private javax.swing.JLabel lblCardProximoVencimientoTitle;
-    private javax.swing.JLabel lblCardProximoVencimientoValue;
-    private javax.swing.JLabel lblCardTotalPagadoTitle;
-    private javax.swing.JLabel lblCardTotalPagadoValue;
-    private javax.swing.JLabel lblCuotasTotales;
-    private javax.swing.JLabel lblDebt1Badge;
-    private javax.swing.JLabel lblDebt1Desc;
-    private javax.swing.JLabel lblDebt1Percent;
-    private javax.swing.JLabel lblDebt1ProgressText;
-    private javax.swing.JLabel lblDebt1SaldoTitle;
-    private javax.swing.JLabel lblDebt1SaldoValue;
-    private javax.swing.JLabel lblDebt1Title;
-    private javax.swing.JLabel lblDebt2Badge;
-    private javax.swing.JLabel lblDebt2Desc;
-    private javax.swing.JLabel lblDebt2PayNow;
-    private javax.swing.JLabel lblDebt2Title;
-    private javax.swing.JLabel lblDebt2WarningIcon;
-    private javax.swing.JLabel lblDebt2WarningText;
-    private javax.swing.JLabel lblDebt3Badge;
-    private javax.swing.JLabel lblDebt3Desc;
-    private javax.swing.JLabel lblDebt3Percent;
-    private javax.swing.JLabel lblDebt3ProgressText;
-    private javax.swing.JLabel lblDebt3SaldoTitle;
-    private javax.swing.JLabel lblDebt3SaldoValue;
-    private javax.swing.JLabel lblDebt3Title;
-    private javax.swing.JLabel lblDeudasActivasSubtitle;
-    private javax.swing.JLabel lblDeudasActivasTitle;
-    private javax.swing.JLabel lblExportarCSV;
-    private javax.swing.JLabel lblFechaInicio;
-    private javax.swing.JLabel lblFechaPago;
-    private javax.swing.JLabel lblHistorialRecienteTitle;
-    private javax.swing.JLabel lblMontoAbono;
-    private javax.swing.JLabel lblMontoTotal;
-    private javax.swing.JLabel lblNuevaDeudaTitle;
-    private javax.swing.JLabel lblRegistrarAbonoTitle;
-    private javax.swing.JLabel lblSeleccionarDeuda;
-    private javax.swing.JLabel lblTasaInteres;
-    private javax.swing.JProgressBar pbDebt1;
-    private javax.swing.JProgressBar pbDebt3;
-    private javax.swing.JPanel pnlCardDeudaTotal;
-    private javax.swing.JPanel pnlCardProximoVencimiento;
-    private javax.swing.JPanel pnlCardTotalPagado;
-    private javax.swing.JPanel pnlDebt1;
-    private javax.swing.JPanel pnlDebt2;
-    private javax.swing.JPanel pnlDebt3;
-    private javax.swing.JPanel pnlDeudasActivas;
-    private javax.swing.JPanel pnlGasto;
-    private javax.swing.JPanel pnlHistorialReciente;
-    private javax.swing.JPanel pnlNuevaDeuda;
-    private javax.swing.JPanel pnlRegistrarAbono;
-    private javax.swing.JTable tblHistorial;
-    private javax.swing.JTextField txtAcreedor;
-    private javax.swing.JTextField txtCuotasTotales;
-    private javax.swing.JTextField txtMontoAbono;
-    private javax.swing.JTextField txtMontoTotal;
-    private javax.swing.JTextField txtTasaInteres;
+    public javax.swing.JTabbedPane Body;
+    public javax.swing.JPanel Header;
+    public javax.swing.JPanel Logo;
+    public javax.swing.JPanel Sidebar;
+    public javax.swing.JButton btnConfirmarPago;
+    public javax.swing.JButton btnRegistrarDeuda;
+    public javax.swing.JComboBox cbSeleccionarDeuda;
+    public com.toedter.calendar.JDateChooser dateFechaInicio;
+    public com.toedter.calendar.JDateChooser dateFechaPago;
+    public javax.swing.JLabel jLabel13;
+    public javax.swing.JLabel jLabel14;
+    public javax.swing.JLabel jLabel15;
+    public javax.swing.JLabel jLabel16;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabelCategories;
+    public javax.swing.JLabel jLabelCustomers;
+    public javax.swing.JLabel jLabelEmployes;
+    public javax.swing.JLabel jLabelProducts;
+    public javax.swing.JLabel jLabelPurchases;
+    public javax.swing.JLabel jLabelSupplimers;
+    public javax.swing.JPanel jPanel16;
+    public javax.swing.JPanel jPanel17;
+    public javax.swing.JPanel jPanel18;
+    public javax.swing.JPanel jPanelCategories;
+    public javax.swing.JPanel jPanelCustomers;
+    public javax.swing.JPanel jPanelEmployes;
+    public javax.swing.JPanel jPanelProducts;
+    public javax.swing.JPanel jPanelSupplimers;
+    public javax.swing.JPanel jPanelTabDeudas;
+    public javax.swing.JScrollPane jScrollPaneDeudas;
+    public javax.swing.JLabel lblAcreedor;
+    public javax.swing.JLabel lblCardDeudaTotalTitle;
+    public javax.swing.JLabel lblCardDeudaTotalValue;
+    public javax.swing.JLabel lblCardProximoVencimientoTitle;
+    public javax.swing.JLabel lblCardProximoVencimientoValue;
+    public javax.swing.JLabel lblCardTotalPagadoTitle;
+    public javax.swing.JLabel lblCardTotalPagadoValue;
+    public javax.swing.JLabel lblCuotasTotales;
+    public javax.swing.JLabel lblDebt1Badge;
+    public javax.swing.JLabel lblDebt1Desc;
+    public javax.swing.JLabel lblDebt1Percent;
+    public javax.swing.JLabel lblDebt1ProgressText;
+    public javax.swing.JLabel lblDebt1SaldoTitle;
+    public javax.swing.JLabel lblDebt1SaldoValue;
+    public javax.swing.JLabel lblDebt1Title;
+    public javax.swing.JLabel lblDebt2Badge;
+    public javax.swing.JLabel lblDebt2Desc;
+    public javax.swing.JLabel lblDebt2PayNow;
+    public javax.swing.JLabel lblDebt2Title;
+    public javax.swing.JLabel lblDebt2WarningIcon;
+    public javax.swing.JLabel lblDebt2WarningText;
+    public javax.swing.JLabel lblDebt3Badge;
+    public javax.swing.JLabel lblDebt3Desc;
+    public javax.swing.JLabel lblDebt3Percent;
+    public javax.swing.JLabel lblDebt3ProgressText;
+    public javax.swing.JLabel lblDebt3SaldoTitle;
+    public javax.swing.JLabel lblDebt3SaldoValue;
+    public javax.swing.JLabel lblDebt3Title;
+    public javax.swing.JLabel lblDeudasActivasSubtitle;
+    public javax.swing.JLabel lblDeudasActivasTitle;
+    public javax.swing.JLabel lblExportarCSV;
+    public javax.swing.JLabel lblFechaInicio;
+    public javax.swing.JLabel lblFechaPago;
+    public javax.swing.JLabel lblHistorialRecienteTitle;
+    public javax.swing.JLabel lblMontoAbono;
+    public javax.swing.JLabel lblMontoTotal;
+    public javax.swing.JLabel lblNuevaDeudaTitle;
+    public javax.swing.JLabel lblRegistrarAbonoTitle;
+    public javax.swing.JLabel lblSeleccionarDeuda;
+    public javax.swing.JLabel lblTasaInteres;
+    public javax.swing.JProgressBar pbDebt1;
+    public javax.swing.JProgressBar pbDebt3;
+    public javax.swing.JPanel pnlCardDeudaTotal;
+    public javax.swing.JPanel pnlCardProximoVencimiento;
+    public javax.swing.JPanel pnlCardTotalPagado;
+    public javax.swing.JPanel pnlDebt1;
+    public javax.swing.JPanel pnlDebt2;
+    public javax.swing.JPanel pnlDebt3;
+    public javax.swing.JPanel pnlDeudasActivas;
+    public javax.swing.JPanel pnlGasto;
+    public javax.swing.JPanel pnlHistorialReciente;
+    public javax.swing.JPanel pnlNuevaDeuda;
+    public javax.swing.JPanel pnlRegistrarAbono;
+    public javax.swing.JTable tblHistorial;
+    public javax.swing.JTextField txtAcreedor;
+    public javax.swing.JTextField txtCuotasTotales;
+    public javax.swing.JTextField txtMontoAbono;
+    public javax.swing.JTextField txtMontoTotal;
+    public javax.swing.JTextField txtTasaInteres;
     // End of variables declaration//GEN-END:variables
 }

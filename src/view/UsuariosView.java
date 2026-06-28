@@ -19,13 +19,15 @@ import java.text.SimpleDateFormat;
  */
 public class UsuariosView extends javax.swing.JFrame {
 
+    private controller.UsuarioController controller;
+
     public UsuariosView() {
         initComponents();
         setResizable(false);
         setTitle("Panel de Administración");
         setLocationRelativeTo(null);
         setupTableStyle();
-        addMockData();
+        this.controller = new controller.UsuarioController(this);
         this.repaint();
     }
 
@@ -157,9 +159,9 @@ public class UsuariosView extends javax.swing.JFrame {
                 if (valStr.equals("SETTINGS")) {
                     label.setText("<html><span style='font-size:16px; color:#64748b;'>&#9881;</span></html>"); // Gear emoji/symbol
                 } else if (valStr.equals("CHANGE_REMOVE")) {
-                    label.setText("<html><a href='#' style='color:#2563eb; text-decoration:none; font-size:11px; font-weight:bold;'>Cambiar Rol</a> &nbsp;|&nbsp; <a href='#' style='color:#ef4444; text-decoration:none; font-size:11px; font-weight:bold;'>Eliminar</a></html>");
+                    label.setText("<html><a href='#' style='color:#2563eb; text-decoration:none; font-size:11px; font-weight:bold;'>Opciones</a></html>");
                 } else if (valStr.equals("RESEND_REVOKE")) {
-                    label.setText("<html><a href='#' style='color:#2563eb; text-decoration:none; font-size:11px; font-weight:bold;'>Reenviar</a> &nbsp;|&nbsp; <a href='#' style='color:#ef4444; text-decoration:none; font-size:11px; font-weight:bold;'>Revocar</a></html>");
+                    label.setText("<html><a href='#' style='color:#2563eb; text-decoration:none; font-size:11px; font-weight:bold;'>Opciones</a></html>");
                 } else {
                     label.setText(valStr);
                 }
@@ -501,7 +503,7 @@ public class UsuariosView extends javax.swing.JFrame {
         pnlInvitarUsuario.add(btnEnviarInvitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 175, 280, 34));
 
         lblAsientosTitle.setForeground(new java.awt.Color(71, 85, 105));
-        lblAsientosTitle.setText("Asientos Usados");
+        lblAsientosTitle.setText("Usuarios compartidos");
         pnlInvitarUsuario.add(lblAsientosTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 235, -1, -1));
 
         lblAsientosValue.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -554,6 +556,19 @@ public class UsuariosView extends javax.swing.JFrame {
         tblUsuarios.setSelectionBackground(new java.awt.Color(234, 241, 255));
         tblUsuarios.setSelectionForeground(new java.awt.Color(11, 28, 48));
         jScrollPaneUsuarios.setViewportView(tblUsuarios);
+        if (tblUsuarios.getColumnModel().getColumnCount() > 0) {
+            tblUsuarios.getColumnModel().getColumn(0).setMinWidth(200);
+            tblUsuarios.getColumnModel().getColumn(0).setPreferredWidth(260);
+            tblUsuarios.getColumnModel().getColumn(1).setResizable(false);
+            tblUsuarios.getColumnModel().getColumn(1).setMinWidth(80);
+            tblUsuarios.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tblUsuarios.getColumnModel().getColumn(2).setResizable(false);
+            tblUsuarios.getColumnModel().getColumn(2).setMinWidth(90);
+            tblUsuarios.getColumnModel().getColumn(2).setPreferredWidth(90);
+            tblUsuarios.getColumnModel().getColumn(3).setResizable(false);
+            tblUsuarios.getColumnModel().getColumn(3).setMinWidth(150);
+            tblUsuarios.getColumnModel().getColumn(3).setPreferredWidth(160);
+        }
 
         pnlUsuariosAutorizados.add(jScrollPaneUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 55, 610, 255));
 
@@ -615,13 +630,13 @@ public class UsuariosView extends javax.swing.JFrame {
         lblCardSincronizacionValue.setText("Hace 2 minutos por Jane Doe");
         pnlCardSincronizacion.add(lblCardSincronizacionValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
-        jPanel8.setBackground(new java.awt.Color(255, 218, 214));
+        jPanel8.setBackground(new java.awt.Color(108, 248, 187));
         jPanel8.setName(""); // NOI18N
         jPanel8.setPreferredSize(new java.awt.Dimension(60, 60));
         jPanel8.setLayout(new java.awt.CardLayout());
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/chat-flecha-abajo.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
         jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel10.setRequestFocusEnabled(false);
@@ -645,13 +660,13 @@ public class UsuariosView extends javax.swing.JFrame {
         lblCardMfaValue.setText("100% del equipo protegido");
         pnlCardMfa.add(lblCardMfaValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
-        jPanel7.setBackground(new java.awt.Color(255, 218, 214));
+        jPanel7.setBackground(new java.awt.Color(211, 228, 254));
         jPanel7.setName(""); // NOI18N
         jPanel7.setPreferredSize(new java.awt.Dimension(60, 60));
         jPanel7.setLayout(new java.awt.CardLayout());
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/chat-flecha-abajo.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/usuario.png"))); // NOI18N
         jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel9.setRequestFocusEnabled(false);
@@ -681,7 +696,7 @@ public class UsuariosView extends javax.swing.JFrame {
         jPanel6.setLayout(new java.awt.CardLayout());
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/chat-flecha-abajo.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/deudas.png"))); // NOI18N
         jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel8.setRequestFocusEnabled(false);
@@ -721,41 +736,15 @@ public class UsuariosView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {
-        JOptionPane.showMessageDialog(this, "Lista de usuarios exportada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        if (controller != null) {
+            controller.exportarCSV();
+        }
     }
 
     private void btnEnviarInvitacionActionPerformed(java.awt.event.ActionEvent evt) {
-        String correo = txtCorreo.getText().trim();
-        String rol = cbRol.getSelectedItem().toString();
-
-        if (correo.isEmpty() || correo.equals("colega@ejemplo.com")) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un correo electrónico válido.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return;
+        if (controller != null) {
+            controller.enviarInvitacion();
         }
-
-        // Add to mock rows in JTable
-        DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
-        String initials = "❓"; // Question mark initials for pending
-        if (correo.contains("@")) {
-            String prefix = correo.split("@")[0];
-            if (prefix.length() >= 2) {
-                initials = prefix.substring(0, 2).toUpperCase();
-            } else if (prefix.length() == 1) {
-                initials = prefix.toUpperCase();
-            }
-        }
-        
-        String rolCode = "VIEWER";
-        if (rol.contains("Editor")) {
-            rolCode = "EDITOR";
-        } else if (rol.contains("Admin")) {
-            rolCode = "ADMIN";
-        }
-
-        model.addRow(new Object[]{initials + "|" + correo + "|Invitado recientemente", rolCode, "Pendiente", "RESEND_REVOKE"});
-
-        JOptionPane.showMessageDialog(this, "Invitación enviada exitosamente a: " + correo, "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        txtCorreo.setText("colega@ejemplo.com");
     }
 
     private void btnPagPrevActionPerformed(java.awt.event.ActionEvent evt) {}
@@ -801,62 +790,62 @@ public class UsuariosView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane Body;
-    private javax.swing.JPanel Header;
-    private javax.swing.JPanel Logo;
-    private javax.swing.JPanel Sidebar;
-    private javax.swing.JButton btnEnviarInvitacion;
-    private javax.swing.JButton btnExportar;
-    private javax.swing.JButton btnPagActive;
-    private javax.swing.JButton btnPagNext;
-    private javax.swing.JButton btnPagPrev;
-    private javax.swing.JComboBox cbRol;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelCategories;
-    private javax.swing.JLabel jLabelCustomers;
-    private javax.swing.JLabel jLabelEmployes;
-    private javax.swing.JLabel jLabelProducts;
-    private javax.swing.JLabel jLabelPurchases;
-    private javax.swing.JLabel jLabelSupplimers;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanelCategories;
-    private javax.swing.JPanel jPanelCustomers;
-    private javax.swing.JPanel jPanelEmployes;
-    private javax.swing.JPanel jPanelProducts;
-    private javax.swing.JPanel jPanelSupplimers;
-    private javax.swing.JPanel jPanelTabUsuarios;
-    private javax.swing.JScrollPane jScrollPaneUsuarios;
-    private javax.swing.JLabel lblAsientosTitle;
-    private javax.swing.JLabel lblAsientosValue;
-    private javax.swing.JLabel lblCardAuditoriaTitle;
-    private javax.swing.JLabel lblCardAuditoriaValue;
-    private javax.swing.JLabel lblCardMfaTitle;
-    private javax.swing.JLabel lblCardMfaValue;
-    private javax.swing.JLabel lblCardSincronizacionTitle;
-    private javax.swing.JLabel lblCardSincronizacionValue;
-    private javax.swing.JLabel lblConexionesCount;
-    private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel lblInvitarUsuarioTitle;
-    private javax.swing.JLabel lblLicenciaDesc;
-    private javax.swing.JLabel lblRol;
-    private javax.swing.JLabel lblTabDesc;
-    private javax.swing.JLabel lblTabTitle;
-    private javax.swing.JLabel lblUsuariosAutorizadosTitle;
-    private javax.swing.JProgressBar pbAsientos;
-    private javax.swing.JPanel pnlCardAuditoria;
-    private javax.swing.JPanel pnlCardMfa;
-    private javax.swing.JPanel pnlCardSincronizacion;
-    private javax.swing.JPanel pnlGasto;
-    private javax.swing.JPanel pnlInvitarUsuario;
-    private javax.swing.JPanel pnlUsuariosAutorizados;
-    private javax.swing.JTable tblUsuarios;
-    private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtCorreo;
+    public javax.swing.JTabbedPane Body;
+    public javax.swing.JPanel Header;
+    public javax.swing.JPanel Logo;
+    public javax.swing.JPanel Sidebar;
+    public javax.swing.JButton btnEnviarInvitacion;
+    public javax.swing.JButton btnExportar;
+    public javax.swing.JButton btnPagActive;
+    public javax.swing.JButton btnPagNext;
+    public javax.swing.JButton btnPagPrev;
+    public javax.swing.JComboBox cbRol;
+    public javax.swing.JLabel jLabel10;
+    public javax.swing.JLabel jLabel13;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel8;
+    public javax.swing.JLabel jLabel9;
+    public javax.swing.JLabel jLabelCategories;
+    public javax.swing.JLabel jLabelCustomers;
+    public javax.swing.JLabel jLabelEmployes;
+    public javax.swing.JLabel jLabelProducts;
+    public javax.swing.JLabel jLabelPurchases;
+    public javax.swing.JLabel jLabelSupplimers;
+    public javax.swing.JPanel jPanel6;
+    public javax.swing.JPanel jPanel7;
+    public javax.swing.JPanel jPanel8;
+    public javax.swing.JPanel jPanelCategories;
+    public javax.swing.JPanel jPanelCustomers;
+    public javax.swing.JPanel jPanelEmployes;
+    public javax.swing.JPanel jPanelProducts;
+    public javax.swing.JPanel jPanelSupplimers;
+    public javax.swing.JPanel jPanelTabUsuarios;
+    public javax.swing.JScrollPane jScrollPaneUsuarios;
+    public javax.swing.JLabel lblAsientosTitle;
+    public javax.swing.JLabel lblAsientosValue;
+    public javax.swing.JLabel lblCardAuditoriaTitle;
+    public javax.swing.JLabel lblCardAuditoriaValue;
+    public javax.swing.JLabel lblCardMfaTitle;
+    public javax.swing.JLabel lblCardMfaValue;
+    public javax.swing.JLabel lblCardSincronizacionTitle;
+    public javax.swing.JLabel lblCardSincronizacionValue;
+    public javax.swing.JLabel lblConexionesCount;
+    public javax.swing.JLabel lblCorreo;
+    public javax.swing.JLabel lblInvitarUsuarioTitle;
+    public javax.swing.JLabel lblLicenciaDesc;
+    public javax.swing.JLabel lblRol;
+    public javax.swing.JLabel lblTabDesc;
+    public javax.swing.JLabel lblTabTitle;
+    public javax.swing.JLabel lblUsuariosAutorizadosTitle;
+    public javax.swing.JProgressBar pbAsientos;
+    public javax.swing.JPanel pnlCardAuditoria;
+    public javax.swing.JPanel pnlCardMfa;
+    public javax.swing.JPanel pnlCardSincronizacion;
+    public javax.swing.JPanel pnlGasto;
+    public javax.swing.JPanel pnlInvitarUsuario;
+    public javax.swing.JPanel pnlUsuariosAutorizados;
+    public javax.swing.JTable tblUsuarios;
+    public javax.swing.JTextField txtBuscar;
+    public javax.swing.JTextField txtCorreo;
     // End of variables declaration//GEN-END:variables
 }

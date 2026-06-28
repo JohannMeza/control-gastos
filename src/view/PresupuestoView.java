@@ -5,6 +5,14 @@ import java.util.Date;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import model.ComboItem;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JProgressBar;
 
 public class PresupuestoView extends javax.swing.JFrame {
     private PresupuestoController controller;
@@ -15,6 +23,7 @@ public class PresupuestoView extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Panel de Administración");
         setLocationRelativeTo(null);
+        setupTableStyle();
         this.repaint();
         
         Calendar cal = Calendar.getInstance();
@@ -120,12 +129,6 @@ public class PresupuestoView extends javax.swing.JFrame {
 
         jPanelProducts.setBackground(new java.awt.Color(248, 250, 252));
         jPanelProducts.setForeground(new java.awt.Color(71, 85, 105));
-        jPanelProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelProducts.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelProductsMouseClicked(evt);
-            }
-        });
 
         jLabelProducts.setBackground(new java.awt.Color(255, 255, 255));
         jLabelProducts.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -227,13 +230,13 @@ public class PresupuestoView extends javax.swing.JFrame {
         );
 
         jPanelSupplimers.setBackground(new java.awt.Color(248, 250, 252));
+        jPanelSupplimers.setForeground(new java.awt.Color(71, 85, 105));
         jPanelSupplimers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelSupplimers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanelSupplimersMouseClicked(evt);
             }
         });
-        jPanelSupplimers.setForeground(new java.awt.Color(71, 85, 105));
 
         jLabelSupplimers.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelSupplimers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/deudas.png"))); // NOI18N
@@ -254,13 +257,13 @@ public class PresupuestoView extends javax.swing.JFrame {
         );
 
         jPanelCategories.setBackground(new java.awt.Color(248, 250, 252));
+        jPanelCategories.setForeground(new java.awt.Color(71, 85, 105));
         jPanelCategories.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelCategories.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanelCategoriesMouseClicked(evt);
             }
         });
-        jPanelCategories.setForeground(new java.awt.Color(71, 85, 105));
 
         jLabelCategories.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelCategories.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/usuario.png"))); // NOI18N
@@ -401,7 +404,7 @@ public class PresupuestoView extends javax.swing.JFrame {
 
         lblRegistro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblRegistro.setForeground(new java.awt.Color(11, 28, 48));
-        lblRegistro.setText("Editar Presupuesto");
+        lblRegistro.setText("Agregar Presupuesto");
 
         jLabel3.setForeground(new java.awt.Color(11, 28, 48));
         jLabel3.setText("Seleccionar Categoria");
@@ -521,7 +524,7 @@ public class PresupuestoView extends javax.swing.JFrame {
 
         jLabel21.setFont(new java.awt.Font("Dialog", 1, 28)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel21.setText("$5,400.00");
+        jLabel21.setText("S/. 0.00");
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/gastos.png"))); // NOI18N
@@ -663,7 +666,7 @@ public class PresupuestoView extends javax.swing.JFrame {
 
         jLabel23.setFont(new java.awt.Font("Dialog", 1, 28)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel23.setText("$3,120.45");
+        jLabel23.setText("S/. 0.00");
 
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
@@ -747,7 +750,7 @@ public class PresupuestoView extends javax.swing.JFrame {
 
         jLabel34.setFont(new java.awt.Font("Dialog", 1, 28)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel34.setText("$2,279.55");
+        jLabel34.setText("S/. 0.00");
 
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/brown/calendario.png"))); // NOI18N
@@ -941,40 +944,40 @@ public class PresupuestoView extends javax.swing.JFrame {
     public javax.swing.JButton btnAgregarEditarPresupuesto;
     public javax.swing.JButton btnEliminar;
     public javax.swing.JButton btnExportarExcel;
-    private javax.swing.JButton btnFiltrar;
+    public javax.swing.JButton btnFiltrar;
     public javax.swing.JComboBox<ComboItem> cbCategoria;
     public javax.swing.JComboBox<ComboItem> cbPeriodo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabelCategories;
-    private javax.swing.JLabel jLabelCustomers;
-    private javax.swing.JLabel jLabelEmployes;
-    private javax.swing.JLabel jLabelProducts;
-    private javax.swing.JLabel jLabelPurchases;
-    private javax.swing.JLabel jLabelSupplimers;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel11;
+    public javax.swing.JLabel jLabel13;
+    public javax.swing.JLabel jLabel14;
+    public javax.swing.JLabel jLabel19;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel20;
+    public javax.swing.JLabel jLabel21;
+    public javax.swing.JLabel jLabel22;
+    public javax.swing.JLabel jLabel23;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel30;
+    public javax.swing.JLabel jLabel31;
+    public javax.swing.JLabel jLabel32;
+    public javax.swing.JLabel jLabel33;
+    public javax.swing.JLabel jLabel34;
+    public javax.swing.JLabel jLabel35;
+    public javax.swing.JLabel jLabel36;
+    public javax.swing.JLabel jLabel37;
+    public javax.swing.JLabel jLabel38;
+    public javax.swing.JLabel jLabel39;
+    public javax.swing.JLabel jLabel41;
+    public javax.swing.JLabel jLabel42;
+    public javax.swing.JLabel jLabel7;
+    public javax.swing.JLabel jLabel8;
+    public javax.swing.JLabel jLabelCategories;
+    public javax.swing.JLabel jLabelCustomers;
+    public javax.swing.JLabel jLabelEmployes;
+    public javax.swing.JLabel jLabelProducts;
+    public javax.swing.JLabel jLabelPurchases;
+    public javax.swing.JLabel jLabelSupplimers;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
@@ -984,7 +987,7 @@ public class PresupuestoView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelEmployes;
     private javax.swing.JPanel jPanelPeriodoSiguiente1;
     private javax.swing.JPanel jPanelProducts;
-    private javax.swing.JPanel jPanelStatus;
+    public javax.swing.JPanel jPanelStatus;
     private javax.swing.JPanel jPanelSupplimers;
     private javax.swing.JPanel jPanelTotalGastos;
     private javax.swing.JPanel jPanelTotalGastos1;
@@ -998,4 +1001,129 @@ public class PresupuestoView extends javax.swing.JFrame {
     public javax.swing.JTextField txtPresupuestoMensual;
     public javax.swing.JTextField txtUmbral;
     // End of variables declaration//GEN-END:variables
+
+    private void setupTableStyle() {
+        tblPresupuestos.setRowHeight(30);
+        tblPresupuestos.getTableHeader().setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12));
+        tblPresupuestos.getTableHeader().setBackground(new java.awt.Color(248, 250, 252));
+        tblPresupuestos.getTableHeader().setForeground(new java.awt.Color(71, 85, 105));
+        
+        // Columna 4 (ESTADO) - Pill badges
+        tblPresupuestos.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setHorizontalAlignment(SwingConstants.CENTER);
+                String text = (value != null) ? value.toString() : "";
+                
+                // Color badges matching AhorrosView estilo y colores:
+                // Red for EXCEDIDO, Orange for ADVERTENCIA, Green for BAJO, Blue for EN CAMINO
+                if (text.equalsIgnoreCase("EXCEDIDO")) {
+                    label.setText("<html><body style='padding: 3px 10px; background-color: #fee2e2; color: #991b1b; border-radius: 12px; font-weight: bold;'>EXCEDIDO</body></html>");
+                } else if (text.equalsIgnoreCase("ADVERTENCIA")) {
+                    label.setText("<html><body style='padding: 3px 10px; background-color: #ffedd5; color: #9a3412; border-radius: 12px; font-weight: bold;'>ADVERTENCIA</body></html>");
+                } else if (text.equalsIgnoreCase("BAJO")) {
+                    label.setText("<html><body style='padding: 3px 10px; background-color: #d1fae5; color: #065f46; border-radius: 12px; font-weight: bold;'>BAJO</body></html>");
+                } else if (text.equalsIgnoreCase("EN CAMINO")) {
+                    label.setText("<html><body style='padding: 3px 10px; background-color: #dbeafe; color: #1e40af; border-radius: 12px; font-weight: bold;'>EN CAMINO</body></html>");
+                } else {
+                    label.setText("<html><body style='padding: 3px 10px; background-color: #f1f5f9; color: #334155; border-radius: 12px; font-weight: bold;'>" + text + "</body></html>");
+                }
+                label.setOpaque(true);
+                if (isSelected) {
+                    label.setBackground(table.getSelectionBackground());
+                } else {
+                    label.setBackground(Color.WHITE);
+                }
+                return label;
+            }
+        });
+        
+        // Columna 5 (PROGRESO) - ProgressBarRenderer
+        tblPresupuestos.getColumnModel().getColumn(5).setCellRenderer(new ProgressBarRenderer());
+
+        // Columna 0 (ID) - Center aligned
+        tblPresupuestos.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            { setHorizontalAlignment(SwingConstants.CENTER); }
+        });
+        
+        // Align amounts right and format to Soles S/.
+        tblPresupuestos.getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
+            { setHorizontalAlignment(SwingConstants.RIGHT); setFont(new Font("Dialog", Font.BOLD, 12)); }
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                if (value instanceof Double) {
+                    setText("S/. " + String.format("%.2f", (Double)value));
+                } else if (value != null) {
+                    try {
+                        double val = Double.parseDouble(value.toString());
+                        setText("S/. " + String.format("%.2f", val));
+                    } catch (Exception e) {}
+                }
+                return c;
+            }
+        });
+        tblPresupuestos.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
+            { setHorizontalAlignment(SwingConstants.RIGHT); setFont(new Font("Dialog", Font.BOLD, 12)); }
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                if (value instanceof Double) {
+                    setText("S/. " + String.format("%.2f", (Double)value));
+                } else if (value != null) {
+                    try {
+                        double val = Double.parseDouble(value.toString());
+                        setText("S/. " + String.format("%.2f", val));
+                    } catch (Exception e) {}
+                }
+                return c;
+            }
+        });
+    }
+
+    public static class ProgressBarRenderer extends JProgressBar implements javax.swing.table.TableCellRenderer {
+        public ProgressBarRenderer() {
+            super(0, 100);
+            setStringPainted(true);
+            setBorderPainted(false);
+            setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 11));
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            double pct = 0;
+            if (value instanceof Number) {
+                pct = ((Number) value).doubleValue();
+            } else if (value != null) {
+                String valStr = value.toString().replace("%", "").replace(",", ".").trim();
+                try {
+                    pct = Double.parseDouble(valStr);
+                } catch (NumberFormatException e) {
+                    pct = 0.0;
+                }
+            }
+
+            setValue((int) Math.round(pct));
+            setString(String.format("%.1f%%", pct));
+
+            // Color logic:
+            // Exceeded (> 100%) = Red
+            // Low (<= 30%) = Green
+            // Normal (30% - 100%) = Blue
+            if (pct > 100.0) {
+                setForeground(new Color(186, 26, 26));
+            } else if (pct <= 30.0) {
+                setForeground(new Color(34, 197, 94));
+            } else {
+                setForeground(new Color(37, 99, 235));
+            }
+
+            setBackground(new Color(241, 245, 249));
+
+            return this;
+        }
+    }
 }
