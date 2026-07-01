@@ -222,4 +222,25 @@ public class AhorroDAO {
         }
         return "No se recibió respuesta al guardar la meta.";
     }
+
+    public double obtenerAhorradoMesPasado(int idUsuario) {
+        String sql = "SELECT ISNULL(SUM(nMonto), 0) AS total " +
+                     "FROM FINANZAS.AHORROS " +
+                     "WHERE idUsuReg = ? " +
+                     "  AND dFecha >= DATEADD(month, DATEDIFF(month, 0, GETDATE()) - 1, 0) " +
+                     "  AND dFecha < DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0) " +
+                     "  AND lEsActivo = 1";
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("total");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
 }

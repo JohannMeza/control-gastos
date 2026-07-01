@@ -111,14 +111,59 @@ public final class DashboardController {
             view.lblCardBalanceValue.setText("S/. " + String.format("%.2f", r.getBalanceMes()));
             view.lblCardBalanceChange.setText(r.getBalanceCambio());
             
-            view.lblSavingsBannerTitle.setText(r.getBannerTitle());
-            view.lblSavingsBannerDesc.setText(r.getBannerDesc());
+            view.lblSavingsBannerTitle.setText(cleanEncoding(r.getBannerTitle()));
+            view.lblSavingsBannerDesc.setText(cleanEncoding(r.getBannerDesc()));
             
-            view.lblInternetAmount.setText("S/. " + String.format("%.2f", r.getUpcomingPayInternetAmount()));
-            view.lblInternetDate.setText(util.DateUtil.formatLongDate(r.getUpcomingPayInternetDate()));
-            
-            view.lblHealthAmount.setText("S/. " + String.format("%.2f", r.getUpcomingPayHealthAmount()));
-            view.lblHealthDate.setText(util.DateUtil.formatLongDate(r.getUpcomingPayHealthDate()));
+            // 2. Cargar Próximos Pagos Dinámicamente
+            view.pnlPaymentsList.removeAll();
+            List<model.PagoProgramado> pagos = service.obtenerProximosPagos(idUsuarioOwner);
+            if (pagos == null || pagos.isEmpty()) {
+                javax.swing.JLabel lblNone = new javax.swing.JLabel("Sin pagos programados");
+                lblNone.setFont(new java.awt.Font("Dialog", java.awt.Font.ITALIC, 13));
+                lblNone.setForeground(new java.awt.Color(148, 163, 184));
+                lblNone.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+                lblNone.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 0, 0, 0));
+                view.pnlPaymentsList.add(lblNone);
+            } else {
+                for (model.PagoProgramado p : pagos) {
+                    javax.swing.JPanel card = new javax.swing.JPanel(new java.awt.BorderLayout(10, 0));
+                    card.setBackground(new java.awt.Color(248, 250, 252));
+                    card.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+                        javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(241, 245, 249)),
+                        javax.swing.BorderFactory.createEmptyBorder(8, 10, 8, 10)
+                    ));
+                    card.setMaximumSize(new java.awt.Dimension(310, 52));
+                    card.setPreferredSize(new java.awt.Dimension(310, 52));
+
+                    // Left Panel: Title & Date
+                    javax.swing.JPanel pnlText = new javax.swing.JPanel(new java.awt.GridLayout(2, 1, 0, 2));
+                    pnlText.setBackground(new java.awt.Color(248, 250, 252));
+
+                    javax.swing.JLabel lblConcepto = new javax.swing.JLabel(p.getConcepto());
+                    lblConcepto.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12));
+                    lblConcepto.setForeground(new java.awt.Color(11, 28, 48));
+
+                    javax.swing.JLabel lblFecha = new javax.swing.JLabel(p.getFechaVencimiento());
+                    lblFecha.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 11));
+                    lblFecha.setForeground(new java.awt.Color(100, 116, 139));
+
+                    pnlText.add(lblConcepto);
+                    pnlText.add(lblFecha);
+
+                    // Right Label: Amount
+                    javax.swing.JLabel lblMonto = new javax.swing.JLabel("S/. " + String.format("%.2f", p.getMonto()), javax.swing.SwingConstants.RIGHT);
+                    lblMonto.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 13));
+                    lblMonto.setForeground(new java.awt.Color(11, 28, 48));
+
+                    card.add(pnlText, java.awt.BorderLayout.CENTER);
+                    card.add(lblMonto, java.awt.BorderLayout.EAST);
+
+                    view.pnlPaymentsList.add(card);
+                    view.pnlPaymentsList.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 4)));
+                }
+            }
+            view.pnlPaymentsList.revalidate();
+            view.pnlPaymentsList.repaint();
 
             // 2. Cargar Gráficos (Presupuesto vs Gastos)
             List<DashboardGraficos> listGraficos = service.obtenerGraficos(
@@ -439,5 +484,15 @@ public final class DashboardController {
         card.add(lblPct, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 55, 205, 15));
 
         return card;
+    }
+
+    private String cleanEncoding(String text) {
+        if (text == null) return null;
+        return text.replace("\u00c1\u00a1", "\u00a1") // Á¡ -> ¡
+                   .replace("\u00c2\u00a1", "\u00a1") // Â¡ -> ¡
+                   .replace("Á¡", "¡")
+                   .replace("Â¡", "¡")
+                   .replace("\u00c3\u00a1", "\u00e1") // Ã¡ -> á
+                   .replace("Ã¡", "á");
     }
 }

@@ -18,6 +18,11 @@ public class NuevaMetaDialog extends JDialog {
     private JButton btnCancelar;
     private boolean guardado = false;
     private MetaAhorro nuevaMeta;
+    private java.util.List<String> existingMetaNames;
+
+    public void setExistingMetaNames(java.util.List<String> existingMetaNames) {
+        this.existingMetaNames = existingMetaNames;
+    }
 
     public NuevaMetaDialog(Frame parent) {
         super(parent, "Nueva Meta de Ahorro", true);
@@ -214,8 +219,19 @@ public class NuevaMetaDialog extends JDialog {
         }
 
         if (desc.equalsIgnoreCase("Fondo Emergencia")) {
-            JOptionPane.showMessageDialog(this, "Ya existe una meta con el nombre 'Fondo Emergencia' o este nombre está reservado para la tarjeta principal.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return;
+            boolean alreadyExists = false;
+            if (existingMetaNames != null) {
+                for (String name : existingMetaNames) {
+                    if (name.equalsIgnoreCase("Fondo Emergencia")) {
+                        alreadyExists = true;
+                        break;
+                    }
+                }
+            }
+            if (alreadyExists) {
+                JOptionPane.showMessageDialog(this, "Ya existe una meta activa llamada 'Fondo Emergencia'. No se puede duplicar.", "Validación", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
         }
 
         if (desc.equalsIgnoreCase("Ahorro") || desc.equalsIgnoreCase("Ahorros")) {

@@ -62,6 +62,58 @@ public class AhorrosView extends javax.swing.JFrame {
         });
 
         controller = new AhorroController(this);
+
+        // Programmatic addition of the Auditoria button in Sidebar
+        Sidebar.setLayout(null);
+        jPanelProducts.setBounds(0, 10, 200, 35);
+        pnlGasto.setBounds(0, 70, 200, 35);
+        jPanelCustomers.setBounds(0, 130, 200, 35);
+        jPanelEmployes.setBounds(0, 190, 200, 35);
+        jPanelSupplimers.setBounds(0, 250, 200, 35);
+        jPanelCategories.setBounds(0, 310, 200, 35);
+
+        javax.swing.JPanel pnlAuditoria = new javax.swing.JPanel();
+        pnlAuditoria.setBackground(new java.awt.Color(248, 250, 252));
+        pnlAuditoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlAuditoria.setBounds(0, 370, 200, 35);
+        javax.swing.JLabel lblAuditoria = new javax.swing.JLabel();
+        lblAuditoria.setFont(new java.awt.Font("Tahoma", 0, 14));
+        lblAuditoria.setForeground(new java.awt.Color(71, 85, 105));
+        lblAuditoria.setText("Auditor\u00eda");
+        lblAuditoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0));
+        try {
+            lblAuditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/auditoria.png")));
+        } catch (Exception ex) {}
+        pnlAuditoria.setLayout(new java.awt.BorderLayout());
+        pnlAuditoria.add(lblAuditoria, java.awt.BorderLayout.CENTER);
+        pnlAuditoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new AuditoriaView().setVisible(true);
+                dispose();
+            }
+        });
+        Sidebar.add(pnlAuditoria);
+        Sidebar.revalidate();
+        Sidebar.repaint();
+        util.MenuHelper.addAvatarToHeader(this, Header);
+
+        // Limpiar campos por defecto
+        txtMonto.setText("");
+        txtDescripcion.setText("");
+
+        // Restringir ingreso de caracteres no numéricos en monto
+        txtMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.' && c != java.awt.event.KeyEvent.VK_BACK_SPACE) {
+                    evt.consume();
+                }
+                if (c == '.' && txtMonto.getText().contains(".")) {
+                    evt.consume();
+                }
+            }
+        });
     }
 
     private void setupFormDate() {
@@ -838,7 +890,7 @@ public class AhorrosView extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel2.setText("Gastos");
+        jLabel2.setText("Ahorros");
         Header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, -1, 39));
 
         getContentPane().add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 40));

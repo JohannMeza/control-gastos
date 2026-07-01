@@ -436,7 +436,29 @@ public final class UsuarioController {
     }
 
     public void exportarCSV() {
-        service.exportarCSV(view.tblUsuarios);
+        try {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
+            String timestamp = sdf.format(new java.util.Date());
+            String defaultName = "Usuarios_" + timestamp + ".xlsx";
+
+            javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+            fileChooser.setDialogTitle("Guardar Reporte de Usuarios");
+            fileChooser.setSelectedFile(new java.io.File(defaultName));
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de Excel (*.xlsx)", "xlsx"));
+
+            int userSelection = fileChooser.showSaveDialog(view);
+            if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+                java.io.File fileToSave = fileChooser.getSelectedFile();
+                String filePath = fileToSave.getAbsolutePath();
+                if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                    fileToSave = new java.io.File(filePath + ".xlsx");
+                }
+                service.exportarExcel(view.tblUsuarios, fileToSave);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(view, "Error al abrir el selector de archivos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private String getInitials(String name, String email) {

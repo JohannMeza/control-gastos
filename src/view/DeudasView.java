@@ -19,15 +19,119 @@ import java.text.SimpleDateFormat;
  */
 public class DeudasView extends javax.swing.JFrame {
 
+    private controller.DeudaController controller;
+
     public DeudasView() {
         initComponents();
+        
+        // Inicializar tarjetas como invisibles por defecto
+        pnlDebt1.setVisible(false);
+        pnlDebt2.setVisible(false);
+        pnlDebt3.setVisible(false);
+        
+        // Limpiar campos por defecto (quitar ceros autocompletados)
+        txtMontoTotal.setText("");
+        txtTasaInteres.setText("");
+        txtCuotasTotales.setText("");
+        txtMontoAbono.setText("");
+
+        // Restringir entrada a solo números reales para Monto Total
+        txtMontoTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.' && c != java.awt.event.KeyEvent.VK_BACK_SPACE) {
+                    evt.consume();
+                }
+                if (c == '.' && txtMontoTotal.getText().contains(".")) {
+                    evt.consume();
+                }
+            }
+        });
+
+        // Restringir entrada a solo números reales para Tasa
+        txtTasaInteres.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.' && c != java.awt.event.KeyEvent.VK_BACK_SPACE) {
+                    evt.consume();
+                }
+                if (c == '.' && txtTasaInteres.getText().contains(".")) {
+                    evt.consume();
+                }
+            }
+        });
+
+        // Restringir entrada a solo números enteros para Cuotas
+        txtCuotasTotales.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != java.awt.event.KeyEvent.VK_BACK_SPACE) {
+                    evt.consume();
+                }
+            }
+        });
+
+        // Restringir entrada a solo números reales para Monto Abono
+        txtMontoAbono.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.' && c != java.awt.event.KeyEvent.VK_BACK_SPACE) {
+                    evt.consume();
+                }
+                if (c == '.' && txtMontoAbono.getText().contains(".")) {
+                    evt.consume();
+                }
+            }
+        });
+        
+        // Configurar cursor de mano para "Pagar Ahora"
+        lblDebt2PayNow.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        
         setResizable(false);
-        setTitle("Panel de Administración");
+        setTitle("Panel de Administraci\u00f3n");
         setLocationRelativeTo(null);
         setupTableStyle();
         setupFormDates();
-        addMockData();
-        this.repaint();
+        // addMockData(); // Removido mock data para que inicie vacío y cargue de BD
+        this.controller = new controller.DeudaController(this);
+        
+        // Programmatic addition of the Auditoria button in Sidebar
+        Sidebar.setLayout(null);
+        jPanelProducts.setBounds(0, 10, 200, 35);
+        pnlGasto.setBounds(0, 70, 200, 35);
+        jPanelCustomers.setBounds(0, 130, 200, 35);
+        jPanelEmployes.setBounds(0, 190, 200, 35);
+        jPanelSupplimers.setBounds(0, 250, 200, 35);
+        jPanelCategories.setBounds(0, 310, 200, 35);
+
+        javax.swing.JPanel pnlAuditoria = new javax.swing.JPanel();
+        pnlAuditoria.setBackground(new java.awt.Color(248, 250, 252));
+        pnlAuditoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlAuditoria.setBounds(0, 370, 200, 35);
+        javax.swing.JLabel lblAuditoria = new javax.swing.JLabel();
+        lblAuditoria.setFont(new java.awt.Font("Tahoma", 0, 14));
+        lblAuditoria.setForeground(new java.awt.Color(71, 85, 105));
+        lblAuditoria.setText("Auditor\u00eda");
+        lblAuditoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0));
+        try {
+            lblAuditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/auditoria.png")));
+        } catch (Exception ex) {}
+        pnlAuditoria.setLayout(new java.awt.BorderLayout());
+        pnlAuditoria.add(lblAuditoria, java.awt.BorderLayout.CENTER);
+        pnlAuditoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new AuditoriaView().setVisible(true);
+                dispose();
+            }
+        });
+        Sidebar.add(pnlAuditoria);
+        Sidebar.revalidate();
+        Sidebar.repaint();
+        util.MenuHelper.addAvatarToHeader(this, Header);
     }
 
     private void setupTableStyle() {
@@ -301,6 +405,7 @@ public class DeudasView extends javax.swing.JFrame {
         );
 
         jPanelSupplimers.setBackground(new java.awt.Color(244, 248, 254));
+        jPanelSupplimers.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 6, 0, 0, new java.awt.Color(37, 99, 235)));
 
         jLabelSupplimers.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelSupplimers.setForeground(new java.awt.Color(37, 99, 235));
@@ -804,57 +909,11 @@ public class DeudasView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarDeudaActionPerformed(java.awt.event.ActionEvent evt) {
-        String acreedor = txtAcreedor.getText().trim();
-        String monto = txtMontoTotal.getText().trim();
-        Date fecha = dateFechaInicio.getDate();
-
-        if (acreedor.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar el acreedor.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (monto.isEmpty() || monto.equals("0.00")) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un monto válido.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (fecha == null) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de inicio.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        JOptionPane.showMessageDialog(this, "¡Deuda con " + acreedor + " registrada exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
-        txtAcreedor.setText("");
-        txtMontoTotal.setText("0.00");
-        txtTasaInteres.setText("0.0");
-        txtCuotasTotales.setText("12");
-        dateFechaInicio.setDate(new Date());
+        controller.guardarDeuda();
     }
 
     private void btnConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {
-        String deuda = cbSeleccionarDeuda.getSelectedItem().toString();
-        String abono = txtMontoAbono.getText().trim();
-        Date fecha = dateFechaPago.getDate();
-
-        if (abono.isEmpty() || abono.equals("0.00")) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un monto de abono válido.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (fecha == null) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de pago.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        DefaultTableModel model = (DefaultTableModel) tblHistorial.getModel();
-        model.insertRow(0, new Object[]{sdf.format(fecha), deuda, "+$" + abono, "$0.00"});
-
-        JOptionPane.showMessageDialog(this, "¡Pago de $" + abono + " a " + deuda + " confirmado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
-        txtMontoAbono.setText("0.00");
-        dateFechaPago.setDate(new Date());
+        controller.registrarAbono();
     }
 
     private void pnlGastoMouseClicked(java.awt.event.MouseEvent evt) {

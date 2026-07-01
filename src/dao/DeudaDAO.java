@@ -219,4 +219,20 @@ public class DeudaDAO {
         }
         return lista;
     }
+
+    public double obtenerUltimoAbono(int idDeuda) {
+        String sql = "SELECT TOP 1 nMontoAbono FROM FINANZAS.ABONO_DEUDAS WHERE idDeuda = ? AND lEsActivo = 1 ORDER BY idAbono DESC";
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idDeuda);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("nMontoAbono");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
 }

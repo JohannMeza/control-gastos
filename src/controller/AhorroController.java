@@ -136,15 +136,26 @@ public final class AhorroController {
     private void abrirDialogoNuevaMeta() {
         java.awt.Window win = javax.swing.SwingUtilities.getWindowAncestor(view);
         java.awt.Frame parentFrame = (win instanceof java.awt.Frame) ? (java.awt.Frame) win : null;
+        
+        // Fetch existing meta names to prevent duplicates dynamically
+        Usuario activeUser = Session.getInstance().getUsuarioActivo();
+        int idUsuario = (activeUser != null) ? activeUser.getId() : 1;
+        List<MetaAhorro> metas = service.obtenerMetasDetalle(idUsuario);
+        java.util.List<String> existingNames = new java.util.ArrayList<>();
+        if (metas != null) {
+            for (MetaAhorro m : metas) {
+                existingNames.add(m.getDescripcion());
+            }
+        }
+
         NuevaMetaDialog dialog = new NuevaMetaDialog(parentFrame);
+        dialog.setExistingMetaNames(existingNames);
         dialog.setVisible(true);
 
         if (dialog.isGuardado()) {
             MetaAhorro meta = dialog.getNuevaMeta();
-            Usuario activeUser = Session.getInstance().getUsuarioActivo();
-            int idUsuario = (activeUser != null) ? activeUser.getId() : 1;
 
-            String msg = service.guardarMeta(meta, idUsuario);
+            String msg = cleanEncoding(service.guardarMeta(meta, idUsuario));
             if (msg != null && msg.startsWith("ERROR:")) {
                 JOptionPane.showMessageDialog(view, msg.replace("ERROR:", "").trim(), "Validación", JOptionPane.WARNING_MESSAGE);
             } else {
@@ -164,9 +175,24 @@ public final class AhorroController {
             // 1. Resumen Cards
             MetasResumen r = service.obtenerResumen(idUsuario);
             view.lblCardTotalAhorradoValue.setText("S/. " + String.format("%.2f", r.getTotalAhorrado()));
-            view.lblCardMetaMensualValue.setText("S/. " + String.format("%.2f", r.getMetaMensualTarget()));
             
             double ahorradoMes = r.getAhorradoEsteMes();
+            double ahorradoMesPasado = service.obtenerAhorradoMesPasado(idUsuario);
+            if (ahorradoMesPasado == 0 && ahorradoMes == 0) {
+                view.lblCardTotalAhorradoChange.setText("Sin ahorros registrados");
+            } else if (ahorradoMesPasado == 0) {
+                view.lblCardTotalAhorradoChange.setText("+100.0% desde el mes pasado");
+            } else {
+                double diff = ((ahorradoMes - ahorradoMesPasado) / ahorradoMesPasado) * 100.0;
+                if (diff >= 0) {
+                    view.lblCardTotalAhorradoChange.setText(String.format(java.util.Locale.US, "+%.1f%% desde el mes pasado", diff));
+                } else {
+                    view.lblCardTotalAhorradoChange.setText(String.format(java.util.Locale.US, "%.1f%% desde el mes pasado", diff));
+                }
+            }
+
+            view.lblCardMetaMensualValue.setText("S/. " + String.format("%.2f", r.getMetaMensualTarget()));
+            
             double targetMes = r.getMetaMensualTarget();
             int progressMes = (targetMes > 0) ? (int) ((ahorradoMes * 100.0) / targetMes) : 0;
             view.pbMetaMensual.setValue(Math.min(progressMes, 100));
@@ -180,6 +206,7 @@ public final class AhorroController {
             List<MetaAhorro> metas = service.obtenerMetasDetalle(idUsuario);
             
             // Render specific properties on the static top-left panel (e.g. for "Fondo Emergencia" if it exists)
+            boolean foundFondo = false;
             for (MetaAhorro m : metas) {
                 if (m.getDescripcion().equalsIgnoreCase("Fondo Emergencia")) {
                     int percent = (m.getMontoObjetivo() > 0) ? (int) ((m.getMontoActual() * 100.0) / m.getMontoObjetivo()) : 0;
@@ -188,8 +215,15 @@ public final class AhorroController {
                     view.lblFondoEmergenciaPercent.setText(percent + "%");
                     view.lblFondoEmergenciaProgressText.setText(progressText);
                     view.pbFondoEmergenciaMeta.setValue(Math.min(percent, 100));
+                    foundFondo = true;
                     break;
                 }
+            }
+            if (!foundFondo) {
+                view.pbFondoEmergencia.setValue(0);
+                view.lblFondoEmergenciaPercent.setText("0%");
+                view.lblFondoEmergenciaProgressText.setText("S/. 0 / S/. 0");
+                view.pbFondoEmergenciaMeta.setValue(0);
             }
 
             pnlMetasContenedor.removeAll();
@@ -286,7 +320,13 @@ public final class AhorroController {
                 return;
             }
 
-            double monto = Double.parseDouble(view.txtMonto.getText());
+            String montoStr = view.txtMonto.getText().trim();
+            if (montoStr.isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Debe ingresar un monto.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            double monto = Double.parseDouble(montoStr);
             if (monto <= 0) {
                 JOptionPane.showMessageDialog(view, "El monto debe ser mayor que 0.", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -310,7 +350,7 @@ public final class AhorroController {
             Usuario activeUser = Session.getInstance().getUsuarioActivo();
             a.setIdUsuario((activeUser != null) ? activeUser.getId() : 1);
 
-            String msg = service.guardar(a);
+            String msg = cleanEncoding(service.guardar(a));
             JOptionPane.showMessageDialog(view, msg, "Sistema", JOptionPane.INFORMATION_MESSAGE);
 
             limpiarFormulario();
@@ -332,7 +372,13 @@ public final class AhorroController {
                 return;
             }
 
-            double monto = Double.parseDouble(view.txtMonto.getText());
+            String montoStr = view.txtMonto.getText().trim();
+            if (montoStr.isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Debe ingresar un monto.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            double monto = Double.parseDouble(montoStr);
             if (monto <= 0) {
                 JOptionPane.showMessageDialog(view, "El monto debe ser mayor que 0.", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -356,7 +402,7 @@ public final class AhorroController {
             Usuario activeUser = Session.getInstance().getUsuarioActivo();
             a.setIdUsuario((activeUser != null) ? activeUser.getId() : 1);
 
-            String msg = service.actualizar(a);
+            String msg = cleanEncoding(service.actualizar(a));
             JOptionPane.showMessageDialog(view, msg, "Sistema", JOptionPane.INFORMATION_MESSAGE);
 
             limpiarFormulario();
@@ -374,7 +420,7 @@ public final class AhorroController {
         try {
             int confirm = JOptionPane.showConfirmDialog(view, "¿Está seguro de eliminar este registro de ahorro?", "Confirmar", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                String msg = service.eliminar(idAhorro);
+                String msg = cleanEncoding(service.eliminar(idAhorro));
                 JOptionPane.showMessageDialog(view, msg, "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 listarAhorros();
                 cargarResumenYMetas();
@@ -409,16 +455,68 @@ public final class AhorroController {
     }
 
     public void exportarCSV() {
-        service.exportarCSV(view.tblAhorros);
+        try {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
+            String timestamp = sdf.format(new java.util.Date());
+            String defaultName = "Ahorros_" + timestamp + ".xlsx";
+
+            javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+            fileChooser.setDialogTitle("Guardar Reporte de Ahorros");
+            fileChooser.setSelectedFile(new java.io.File(defaultName));
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de Excel (*.xlsx)", "xlsx"));
+
+            int userSelection = fileChooser.showSaveDialog(view);
+            if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+                java.io.File fileToSave = fileChooser.getSelectedFile();
+                String filePath = fileToSave.getAbsolutePath();
+                if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                    fileToSave = new java.io.File(filePath + ".xlsx");
+                }
+                service.exportarExcel(view.tblAhorros, fileToSave);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(view, "Error al abrir el selector de archivos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void limpiarFormulario() {
-        view.txtMonto.setText("0.00");
+        view.txtMonto.setText("");
         view.txtDescripcion.setText("");
         view.dateFecha.setDate(new Date());
         if (view.cbMetaFondo.getItemCount() > 0) {
             view.cbMetaFondo.setSelectedIndex(0);
         }
+        view.txtMonto.setText(""); // Forzar a vacío después de disparar el action listener del combo
         view.btnRegistrarAhorro.setText("Registrar Ahorro");
+        view.idAhorroSeleccionado = 0;
+    }
+
+    private String cleanEncoding(String text) {
+        if (text == null) return null;
+        return text.replace("\u00c3\u00b3", "ó")
+                   .replace("Ã³", "ó")
+                   .replace("\u00c3\u00a1", "á")
+                   .replace("Ã¡", "á")
+                   .replace("\u00c3\u00a9", "é")
+                   .replace("Ã©", "é")
+                   .replace("\u00c3\u00ad", "í")
+                   .replace("Ã\u00ad", "í")
+                   .replace("\u00c3\u00ba", "ú")
+                   .replace("Ãº", "ú")
+                   .replace("\u00c3\u00b1", "ñ")
+                   .replace("Ã±", "ñ")
+                   .replace("\u00c3\u0093", "Ó")
+                   .replace("Ã“", "Ó")
+                   .replace("\u00c3\u0081", "Á")
+                   .replace("Ã\u0081", "Á")
+                   .replace("\u00c3\u0089", "É")
+                   .replace("Ã\u0089", "É")
+                   .replace("\u00c3\u008d", "Í")
+                   .replace("Ã\u008d", "Í")
+                   .replace("\u00c3\u009a", "Ú")
+                   .replace("Ã\u009a", "Ú")
+                   .replace("\u00c3\u0091", "Ñ")
+                   .replace("Ã\u0091", "Ñ");
     }
 }

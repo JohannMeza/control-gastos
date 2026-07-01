@@ -13,59 +13,63 @@ public class SetupDeudasDB {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement()) {
             
-            System.out.println("Creating table FINANZAS.DEUDAS...");
-            stmt.execute("IF NOT EXISTS (SELECT * FROM sys.tables t JOIN sys.schemas s ON t.schema_id = s.schema_id WHERE t.name = 'DEUDAS' AND s.name = 'FINANZAS')\n" +
-                         "CREATE TABLE FINANZAS.DEUDAS (\n" +
-                         "    idDeuda INT IDENTITY(1,1) PRIMARY KEY,\n" +
-                         "    cAcreedor NVARCHAR(150) NOT NULL,\n" +
-                         "    nMontoTotal DECIMAL(15,2) NOT NULL,\n" +
-                         "    nTasaInteres DECIMAL(5,2) NOT NULL,\n" +
-                         "    nCuotasTotales INT NOT NULL,\n" +
-                         "    nCuotasPagadas INT DEFAULT 0,\n" +
-                         "    dFechaInicio DATE NOT NULL,\n" +
-                         "    lEsActivo BIT DEFAULT 1,\n" +
-                         "    idUsuario INT FOREIGN KEY REFERENCES usuarios(id),\n" +
-                         "    idUsuReg INT,\n" +
-                         "    dFecReg DATETIME DEFAULT GETDATE(),\n" +
-                         "    idUsuMod INT,\n" +
-                         "    dFecMod DATETIME\n" +
-                         ");");
+            try {
+                System.out.println("Creating table FINANZAS.DEUDAS...");
+                stmt.execute("IF NOT EXISTS (SELECT * FROM sys.tables t JOIN sys.schemas s ON t.schema_id = s.schema_id WHERE t.name = 'DEUDAS' AND s.name = 'FINANZAS')\n" +
+                             "CREATE TABLE FINANZAS.DEUDAS (\n" +
+                             "    idDeuda INT IDENTITY(1,1) PRIMARY KEY,\n" +
+                             "    cAcreedor NVARCHAR(150) NOT NULL,\n" +
+                             "    nMontoTotal DECIMAL(15,2) NOT NULL,\n" +
+                             "    nTasaInteres DECIMAL(5,2) NOT NULL,\n" +
+                             "    nCuotasTotales INT NOT NULL,\n" +
+                             "    nCuotasPagadas INT DEFAULT 0,\n" +
+                             "    dFechaInicio DATE NOT NULL,\n" +
+                             "    lEsActivo BIT DEFAULT 1,\n" +
+                             "    idUsuario INT FOREIGN KEY REFERENCES usuarios(id),\n" +
+                             "    idUsuReg INT,\n" +
+                             "    dFecReg DATETIME DEFAULT GETDATE(),\n" +
+                             "    idUsuMod INT,\n" +
+                             "    dFecMod DATETIME\n" +
+                             ");");
 
-            System.out.println("Creating table FINANZAS.ABONO_DEUDAS...");
-            stmt.execute("IF NOT EXISTS (SELECT * FROM sys.tables t JOIN sys.schemas s ON t.schema_id = s.schema_id WHERE t.name = 'ABONO_DEUDAS' AND s.name = 'FINANZAS')\n" +
-                         "CREATE TABLE FINANZAS.ABONO_DEUDAS (\n" +
-                         "    idAbono INT IDENTITY(1,1) PRIMARY KEY,\n" +
-                         "    idDeuda INT FOREIGN KEY REFERENCES FINANZAS.DEUDAS(idDeuda),\n" +
-                         "    nMontoAbono DECIMAL(15,2) NOT NULL,\n" +
-                         "    dFechaPago DATE NOT NULL,\n" +
-                         "    lEsActivo BIT DEFAULT 1,\n" +
-                         "    idUsuReg INT FOREIGN KEY REFERENCES usuarios(id),\n" +
-                         "    dFecReg DATETIME DEFAULT GETDATE(),\n" +
-                         "    idUsuMod INT,\n" +
-                         "    dFecMod DATETIME\n" +
-                         ");");
+                System.out.println("Creating table FINANZAS.ABONO_DEUDAS...");
+                stmt.execute("IF NOT EXISTS (SELECT * FROM sys.tables t JOIN sys.schemas s ON t.schema_id = s.schema_id WHERE t.name = 'ABONO_DEUDAS' AND s.name = 'FINANZAS')\n" +
+                             "CREATE TABLE FINANZAS.ABONO_DEUDAS (\n" +
+                             "    idAbono INT IDENTITY(1,1) PRIMARY KEY,\n" +
+                             "    idDeuda INT FOREIGN KEY REFERENCES FINANZAS.DEUDAS(idDeuda),\n" +
+                             "    nMontoAbono DECIMAL(15,2) NOT NULL,\n" +
+                             "    dFechaPago DATE NOT NULL,\n" +
+                             "    lEsActivo BIT DEFAULT 1,\n" +
+                             "    idUsuReg INT FOREIGN KEY REFERENCES usuarios(id),\n" +
+                             "    dFecReg DATETIME DEFAULT GETDATE(),\n" +
+                             "    idUsuMod INT,\n" +
+                             "    dFecMod DATETIME\n" +
+                             ");");
 
-            System.out.println("Inserting initial mock deudas if not exists...");
-            stmt.execute("IF (SELECT COUNT(*) FROM FINANZAS.DEUDAS) = 0\n" +
-                         "BEGIN\n" +
-                         "    INSERT INTO FINANZAS.DEUDAS (cAcreedor, nMontoTotal, nTasaInteres, nCuotasTotales, nCuotasPagadas, dFechaInicio, idUsuario, idUsuReg) VALUES\n" +
-                         "    ('Préstamo Hipotecario - Banco BBVA', 120000.00, 4.5, 240, 45, '2023-01-10', 1, 1),\n" +
-                         "    ('Tarjeta de Crédito Oro - Visa', 4500.00, 22.0, 12, 1, '2024-05-15', 1, 1),\n" +
-                         "    ('Préstamo Automotriz - Ford Credit', 25000.00, 6.0, 48, 30, '2023-09-20', 1, 1);\n" +
-                         "END;");
+                System.out.println("Inserting initial mock deudas if not exists...");
+                stmt.execute("IF (SELECT COUNT(*) FROM FINANZAS.DEUDAS) = 0\n" +
+                             "BEGIN\n" +
+                             "    INSERT INTO FINANZAS.DEUDAS (cAcreedor, nMontoTotal, nTasaInteres, nCuotasTotales, nCuotasPagadas, dFechaInicio, idUsuario, idUsuReg) VALUES\n" +
+                             "    ('Pr\u00e9stamo Hipotecario - Banco BBVA', 120000.00, 4.5, 240, 45, '2023-01-10', 1, 1),\n" +
+                             "    ('Tarjeta de Cr\u00e9dito Oro - Visa', 4500.00, 22.0, 12, 1, '2024-05-15', 1, 1),\n" +
+                             "    ('Pr\u00e9stamo Automotriz - Ford Credit', 25000.00, 6.0, 48, 30, '2023-09-20', 1, 1);\n" +
+                             "END;");
 
-            System.out.println("Inserting initial mock abonos if not exists...");
-            stmt.execute("IF (SELECT COUNT(*) FROM FINANZAS.ABONO_DEUDAS) = 0\n" +
-                         "BEGIN\n" +
-                         "    DECLARE @idBBVA INT = (SELECT TOP 1 idDeuda FROM FINANZAS.DEUDAS WHERE cAcreedor LIKE '%BBVA%');\n" +
-                         "    DECLARE @idVisa INT = (SELECT TOP 1 idDeuda FROM FINANZAS.DEUDAS WHERE cAcreedor LIKE '%Visa%');\n" +
-                         "    DECLARE @idFord INT = (SELECT TOP 1 idDeuda FROM FINANZAS.DEUDAS WHERE cAcreedor LIKE '%Ford%');\n" +
-                         "    \n" +
-                         "    INSERT INTO FINANZAS.ABONO_DEUDAS (idDeuda, nMontoAbono, dFechaPago, idUsuReg) VALUES\n" +
-                         "    (@idBBVA, 500.00, '2024-05-10', 1),\n" +
-                         "    (@idVisa, 150.00, '2024-05-12', 1),\n" +
-                         "    (@idFord, 520.00, '2024-05-20', 1);\n" +
-                         "END;");
+                System.out.println("Inserting initial mock abonos if not exists...");
+                stmt.execute("IF (SELECT COUNT(*) FROM FINANZAS.ABONO_DEUDAS) = 0\n" +
+                             "BEGIN\n" +
+                             "    DECLARE @idBBVA INT = (SELECT TOP 1 idDeuda FROM FINANZAS.DEUDAS WHERE cAcreedor LIKE '%BBVA%');\n" +
+                             "    DECLARE @idVisa INT = (SELECT TOP 1 idDeuda FROM FINANZAS.DEUDAS WHERE cAcreedor LIKE '%Visa%');\n" +
+                             "    DECLARE @idFord INT = (SELECT TOP 1 idDeuda FROM FINANZAS.DEUDAS WHERE cAcreedor LIKE '%Ford%');\n" +
+                             "    \n" +
+                             "    INSERT INTO FINANZAS.ABONO_DEUDAS (idDeuda, nMontoAbono, dFechaPago, idUsuReg) VALUES\n" +
+                             "    (@idBBVA, 500.00, '2024-05-10', 1),\n" +
+                             "    (@idVisa, 150.00, '2024-05-12', 1),\n" +
+                             "    (@idFord, 520.00, '2024-05-20', 1);\n" +
+                             "END;");
+            } catch (Exception ex) {
+                System.out.println("Warning: Seeding/creating tables failed: " + ex.getMessage());
+            }
 
             System.out.println("Creating stored procedures for Deudas...");
 
@@ -78,10 +82,11 @@ public class SetupDeudasDB {
                 "BEGIN\n" +
                 "    SELECT\n" +
                 "        idDeuda AS value\n" +
-                "        , cAcreedor + ' ($' + CAST(CAST(nMontoTotal AS DECIMAL(10,2)) AS VARCHAR) + ')' AS label\n" +
+                "        , cAcreedor + ' (S/. ' + CAST(CAST(nMontoTotal AS DECIMAL(10,2)) AS VARCHAR) + ')' AS label\n" +
                 "    FROM FINANZAS.DEUDAS\n" +
                 "    WHERE lEsActivo = 1\n" +
-                "      AND idUsuario = @idUsuario;\n" +
+                "      AND idUsuario = @idUsuario\n" +
+                "      AND nCuotasPagadas < nCuotasTotales;\n" +
                 "END;"
             );
 
@@ -359,9 +364,18 @@ public class SetupDeudasDB {
                 "      AND MONTH(a.dFechaPago) = MONTH(GETDATE())\n" +
                 "      AND YEAR(a.dFechaPago) = YEAR(GETDATE());\n" +
                 "      \n" +
+                "    -- Obtener la fecha del próximo vencimiento de la cuota activa más cercana\n" +
+                "    DECLARE @proximoVencimiento DATE = (\n" +
+                "        SELECT MIN(DATEADD(month, nCuotasPagadas, dFechaInicio)) \n" +
+                "        FROM FINANZAS.DEUDAS \n" +
+                "        WHERE idUsuario = @idUsuario \n" +
+                "          AND lEsActivo = 1 \n" +
+                "          AND nCuotasPagadas < nCuotasTotales\n" +
+                "    );\n" +
+                "      \n" +
                 "    SELECT \n" +
                 "        ISNULL(@totalDeuda, 0) AS totalDeuda,\n" +
-                "        '15/' + FORMAT(DATEADD(month, 1, GETDATE()), 'MM/yyyy') AS proximoVencimiento,\n" +
+                "        COALESCE(CONVERT(VARCHAR(10), @proximoVencimiento, 103), 'Sin vencimientos') AS proximoVencimiento,\n" +
                 "        ISNULL(@totalPagadoEsteMes, 0) AS totalPagadoEsteMes;\n" +
                 "END;"
             );

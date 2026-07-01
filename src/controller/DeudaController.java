@@ -16,14 +16,18 @@ import view.DeudasView;
 public final class DeudaController {
     private DeudasView view;
     private DeudaService service;
+    private javax.swing.JPanel pnlDeudasContenedor;
 
     public DeudaController(DeudasView view) {
         this.view = view;
         this.service = new DeudaService();
 
+        setupContenedorDeudas();
         listarDeudasCombo();
         listarHistorialAbonos();
         cargarResumenYDeudas();
+        
+        setupListeners();
     }
 
     public void listarDeudasCombo() {
@@ -68,66 +72,238 @@ public final class DeudaController {
             Usuario activeUser = Session.getInstance().getUsuarioActivo();
             int idUsuario = (activeUser != null) ? activeUser.getId() : 1;
 
-            // 1. Resumen Cards
+            // Obtener hoy a medianoche
+            java.util.Calendar todayCal = java.util.Calendar.getInstance();
+            todayCal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+            todayCal.set(java.util.Calendar.MINUTE, 0);
+            todayCal.set(java.util.Calendar.SECOND, 0);
+            todayCal.set(java.util.Calendar.MILLISECOND, 0);
+            long todayMs = todayCal.getTimeInMillis();
+
             DeudaResumen r = service.obtenerResumen(idUsuario);
             view.lblCardDeudaTotalValue.setText("S/. " + String.format("%.2f", r.getTotalDeuda()));
             view.lblCardProximoVencimientoValue.setText(util.DateUtil.formatLongDate(r.getProximoVencimiento()));
             view.lblCardTotalPagadoValue.setText("S/. " + String.format("%.2f", r.getTotalPagadoEsteMes()));
 
-            // 2. Active Debt Progress Cards (Top 3)
             List<Deuda> deudas = service.listarDeudas(idUsuario);
             int size = deudas.size();
 
-            // Card 1
-            if (size > 0) {
-                Deuda d1 = deudas.get(0);
-                view.lblDebt1Title.setText(d1.getAcreedor());
-                view.lblDebt1Desc.setText("Monto Inicial: S/. " + String.format("%.2f", d1.getMontoTotal()) + " | Tasa: " + d1.getTasaInteres() + "%");
-                view.lblDebt1Badge.setText(getEstadoBadge(d1.getEstado()));
-                
-                int percent = (d1.getMontoTotal() > 0) ? (int) ((d1.getMontoPagado() * 100.0) / d1.getMontoTotal()) : 0;
-                view.pbDebt1.setValue(Math.min(percent, 100));
-                view.lblDebt1Percent.setText(percent + "%");
-                view.lblDebt1ProgressText.setText("Progreso de Pago (" + d1.getCuotasPagadas() + " de " + d1.getCuotasTotales() + " cuotas)");
-                view.lblDebt1SaldoValue.setText("S/. " + String.format("%.2f", d1.getMontoRestante()));
-                view.pnlDebt1.setVisible(true);
-            } else {
-                view.pnlDebt1.setVisible(false);
+            pnlDeudasContenedor.removeAll();
+
+            for (Deuda d : deudas) {
+                // Calculate next due date
+                java.util.Calendar dueCal = java.util.Calendar.getInstance();
+                if (d.getFechaInicio() != null) {
+                    dueCal.setTime(d.getFechaInicio());
+                }
+                dueCal.add(java.util.Calendar.MONTH, d.getCuotasPagadas());
+                dueCal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+                dueCal.set(java.util.Calendar.MINUTE, 0);
+                dueCal.set(java.util.Calendar.SECOND, 0);
+                dueCal.set(java.util.Calendar.MILLISECOND, 0);
+                long dueMs = dueCal.getTimeInMillis();
+                long diffDays = (dueMs - todayMs) / (1000 * 60 * 60 * 24);
+
+                int day = dueCal.get(java.util.Calendar.DAY_OF_MONTH);
+                int month = dueCal.get(java.util.Calendar.MONTH);
+                String[] meses = {"enero", "febrero", "marzo", "abril", "mayo", "junio", 
+                                  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
+                String nombreMes = meses[month];
+
+                String estadoStr = "";
+                String badgeStyle = "";
+                String warningText = "";
+                java.awt.Color progressColor = new java.awt.Color(16, 185, 129); // Green for AL DIA
+                java.awt.Color cardBg = java.awt.Color.WHITE;
+                java.awt.Color cardBorder = new java.awt.Color(234, 234, 241);
+                java.awt.Font textFont = new java.awt.Font("Dialog", java.awt.Font.PLAIN, 9);
+                java.awt.Color textColor = new java.awt.Color(71, 85, 105);
+
+                int cuotaSiguiente = d.getCuotasPagadas() + 1;
+
+                if (diffDays < 0) {
+                    estadoStr = "VENCIDO";
+                    badgeStyle = "padding: 2px 8px; background-color: #fee2e2; color: #991b1b; border-radius: 8px; font-weight: bold;";
+                    warningText = "Venció el " + day + " de " + nombreMes + " (" + cuotaSiguiente + " de " + d.getCuotasTotales() + ")";
+                    progressColor = new java.awt.Color(239, 68, 68); // Red
+                    cardBg = new java.awt.Color(254, 242, 242); // Light red (#fef2f2)
+                    cardBorder = new java.awt.Color(252, 165, 165); // Red border (#fca5a5)
+                    textFont = new java.awt.Font("Dialog", java.awt.Font.BOLD, 10);
+                    textColor = new java.awt.Color(153, 27, 27); // Red (#991b1b)
+                } else if (diffDays == 0) {
+                    estadoStr = "ULTIMO DIA";
+                    badgeStyle = "padding: 2px 8px; background-color: #fee2e2; color: #991b1b; border-radius: 8px; font-weight: bold;";
+                    warningText = "Último día de pago (Cuota " + cuotaSiguiente + " de " + d.getCuotasTotales() + ")";
+                    progressColor = new java.awt.Color(239, 68, 68); // Red
+                    cardBg = new java.awt.Color(254, 242, 242); // Light red (#fef2f2)
+                    cardBorder = new java.awt.Color(252, 165, 165); // Red border (#fca5a5)
+                    textFont = new java.awt.Font("Dialog", java.awt.Font.BOLD, 10);
+                    textColor = new java.awt.Color(153, 27, 27); // Red (#991b1b)
+                } else if (diffDays <= 3) {
+                    estadoStr = "PRÓXIMO A VENCER";
+                    badgeStyle = "padding: 2px 8px; background-color: #ffedd5; color: #c2410c; border-radius: 8px; font-weight: bold;";
+                    warningText = "Vence el " + day + " de " + nombreMes + " (" + cuotaSiguiente + " de " + d.getCuotasTotales() + ")";
+                    progressColor = new java.awt.Color(249, 115, 22); // Orange
+                } else if (diffDays <= 10) {
+                    estadoStr = "PENDIENTE";
+                    badgeStyle = "padding: 2px 8px; background-color: #dbeafe; color: #1e40af; border-radius: 8px; font-weight: bold;";
+                    warningText = "Vence el " + day + " de " + nombreMes + " (" + cuotaSiguiente + " de " + d.getCuotasTotales() + ")";
+                    progressColor = new java.awt.Color(37, 99, 235); // Blue
+                } else {
+                    estadoStr = "AL DIA";
+                    badgeStyle = "padding: 2px 8px; background-color: #d1fae5; color: #065f46; border-radius: 8px; font-weight: bold;";
+                    warningText = "Vence el " + day + " de " + nombreMes + " (" + cuotaSiguiente + " de " + d.getCuotasTotales() + ")";
+                    progressColor = new java.awt.Color(16, 185, 129); // Green
+                }
+
+                // Create Card JPanel (100% width, conditional background and border)
+                javax.swing.JPanel card = new javax.swing.JPanel();
+                card.setLayout(null);
+                card.setPreferredSize(new java.awt.Dimension(630, 75));
+                card.setMaximumSize(new java.awt.Dimension(630, 75));
+                card.setMinimumSize(new java.awt.Dimension(630, 75));
+                card.setBackground(cardBg);
+                card.setBorder(new javax.swing.border.LineBorder(cardBorder, 1, true));
+
+                // Title
+                javax.swing.JLabel lblTitle = new javax.swing.JLabel(d.getAcreedor());
+                lblTitle.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12));
+                lblTitle.setForeground(new java.awt.Color(11, 28, 48));
+                lblTitle.setBounds(12, 8, 300, 16);
+                card.add(lblTitle);
+
+                // Description
+                javax.swing.JLabel lblDesc = new javax.swing.JLabel("Monto Inicial: S/. " + String.format("%.2f", d.getMontoTotal()) + " | Tasa: " + d.getTasaInteres() + "%");
+                lblDesc.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
+                lblDesc.setForeground(new java.awt.Color(100, 116, 139));
+                lblDesc.setBounds(12, 24, 300, 14);
+                card.add(lblDesc);
+
+                // Warning Text (RED and BOLD only for VENCIDO/ULTIMO DIA)
+                javax.swing.JLabel lblProg = new javax.swing.JLabel(warningText);
+                lblProg.setFont(textFont);
+                lblProg.setForeground(textColor);
+                lblProg.setBounds(12, 38, 320, 14);
+                card.add(lblProg);
+
+                // Progress Bar
+                javax.swing.JProgressBar pb = new javax.swing.JProgressBar();
+                int pct = (d.getMontoTotal() > 0) ? (int) ((d.getMontoPagado() * 100.0) / d.getMontoTotal()) : 0;
+                pb.setValue(Math.min(pct, 100));
+                pb.setBorderPainted(false);
+                pb.setBackground(new java.awt.Color(226, 232, 240));
+                pb.setForeground(progressColor);
+                pb.setBounds(12, 54, 320, 6);
+                card.add(pb);
+
+                // Percent
+                javax.swing.JLabel lblPct = new javax.swing.JLabel(pct + "%");
+                lblPct.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 9));
+                lblPct.setForeground(new java.awt.Color(11, 28, 48));
+                lblPct.setBounds(340, 38, 40, 14);
+                card.add(lblPct);
+
+                // Badge (Dynamic Alert Box text: AL DIA, PENDIENTE, ULTIMO DIA, VENCIDO)
+                javax.swing.JLabel lblBdg = new javax.swing.JLabel("<html><body style='" + badgeStyle + "'>" + estadoStr + "</body></html>");
+                lblBdg.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 9));
+                lblBdg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                lblBdg.setBounds(350, 10, 130, 18);
+                card.add(lblBdg);
+
+                // Saldo Pendiente Title
+                javax.swing.JLabel lblSalT = new javax.swing.JLabel("Saldo Pendiente");
+                lblSalT.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 9));
+                lblSalT.setForeground(new java.awt.Color(100, 116, 139));
+                lblSalT.setBounds(495, 10, 95, 14);
+                card.add(lblSalT);
+
+                // Saldo Pendiente Value
+                javax.swing.JLabel lblSalV = new javax.swing.JLabel("S/. " + String.format("%.2f", d.getMontoRestante()));
+                lblSalV.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 13));
+                lblSalV.setForeground(new java.awt.Color(11, 28, 48));
+                lblSalV.setBounds(495, 24, 95, 16);
+                card.add(lblSalV);
+
+                // Pagar Ahora Button/Link (Only show for VENCIDO and ULTIMO DIA statuses)
+                if (diffDays <= 0) {
+                    javax.swing.JLabel lblPay = new javax.swing.JLabel("Pagar Ahora");
+                    lblPay.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 10));
+                    lblPay.setForeground(new java.awt.Color(37, 99, 235));
+                    lblPay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lblPay.setBounds(495, 45, 95, 16);
+                    lblPay.addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            prepararPagoRapidoParaDeuda(d);
+                        }
+                    });
+                    card.add(lblPay);
+                }
+
+                pnlDeudasContenedor.add(card);
+                pnlDeudasContenedor.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8)));
             }
 
-            // Card 2
-            if (size > 1) {
-                Deuda d2 = deudas.get(1);
-                view.lblDebt2Title.setText(d2.getAcreedor());
-                view.lblDebt2Desc.setText("Monto Inicial: S/. " + String.format("%.2f", d2.getMontoTotal()) + " | Tasa: " + d2.getTasaInteres() + "%");
-                view.lblDebt2Badge.setText(getEstadoBadge(d2.getEstado()));
-                
-                // Card 2 matches the Visa Oro styling layout in DeudasView.
-                view.lblDebt2WarningText.setText("Vence el 15 de este mes (Cuota " + (d2.getCuotasPagadas() + 1) + " de " + d2.getCuotasTotales() + ")");
-                view.pnlDebt2.setVisible(true);
-            } else {
-                view.pnlDebt2.setVisible(false);
+            view.lblDeudasActivasSubtitle.setText(size + (size == 1 ? " Deuda en curso" : " Deudas en curso"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setupContenedorDeudas() {
+        // Remove old static cards
+        view.pnlDeudasActivas.remove(view.pnlDebt1);
+        view.pnlDeudasActivas.remove(view.pnlDebt2);
+        view.pnlDeudasActivas.remove(view.pnlDebt3);
+
+        pnlDeudasContenedor = new javax.swing.JPanel();
+        pnlDeudasContenedor.setLayout(new javax.swing.BoxLayout(pnlDeudasContenedor, javax.swing.BoxLayout.Y_AXIS));
+        pnlDeudasContenedor.setBackground(java.awt.Color.WHITE);
+
+        javax.swing.JScrollPane scrollDeudas = new javax.swing.JScrollPane(pnlDeudasContenedor);
+        scrollDeudas.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollDeudas.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollDeudas.setBorder(null);
+        scrollDeudas.setBackground(java.awt.Color.WHITE);
+        scrollDeudas.getViewport().setBackground(java.awt.Color.WHITE);
+
+        // Place JScrollPane at the exact coordinates of the old static cards
+        view.pnlDeudasActivas.add(scrollDeudas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 630, 210));
+
+        view.pnlDeudasActivas.revalidate();
+        view.pnlDeudasActivas.repaint();
+    }
+
+    public void prepararPagoRapidoParaDeuda(Deuda d) {
+        try {
+            int idDeuda = d.getIdDeuda();
+            // Seleccionar deuda en el combo box
+            for (int i = 0; i < view.cbSeleccionarDeuda.getItemCount(); i++) {
+                Object item = view.cbSeleccionarDeuda.getItemAt(i);
+                if (item instanceof ComboItem) {
+                    ComboItem ci = (ComboItem) item;
+                    if (ci.getValue() == idDeuda) {
+                        view.cbSeleccionarDeuda.setSelectedIndex(i);
+                        break;
+                    }
+                }
             }
 
-            // Card 3
-            if (size > 2) {
-                Deuda d3 = deudas.get(2);
-                view.lblDebt3Title.setText(d3.getAcreedor());
-                view.lblDebt3Desc.setText("Monto Inicial: S/. " + String.format("%.2f", d3.getMontoTotal()) + " | Tasa: " + d3.getTasaInteres() + "%");
-                view.lblDebt3Badge.setText(getEstadoBadge(d3.getEstado()));
-                
-                int percent = (d3.getMontoTotal() > 0) ? (int) ((d3.getMontoPagado() * 100.0) / d3.getMontoTotal()) : 0;
-                view.pbDebt3.setValue(Math.min(percent, 100));
-                view.lblDebt3Percent.setText(percent + "%");
-                view.lblDebt3ProgressText.setText("Progreso de Pago (" + d3.getCuotasPagadas() + " de " + d3.getCuotasTotales() + " cuotas)");
-                view.lblDebt3SaldoValue.setText("S/. " + String.format("%.2f", d3.getMontoRestante()));
-                view.pnlDebt3.setVisible(true);
-            } else {
-                view.pnlDebt3.setVisible(false);
+            // Obtener último abono registrado para esta deuda si existe
+            double cuota = service.obtenerUltimoAbono(idDeuda);
+            if (cuota <= 0) {
+                if (d.getCuotasTotales() > 0) {
+                    cuota = d.getMontoTotal() / d.getCuotasTotales();
+                }
+            }
+            if (cuota > d.getMontoRestante() || cuota <= 0) {
+                cuota = d.getMontoRestante();
             }
 
-            view.lblDeudasActivasSubtitle.setText(size + " deudas en curso");
-
+            view.txtMontoAbono.setText(String.format(java.util.Locale.US, "%.2f", cuota));
+            view.txtMontoAbono.requestFocus();
+            view.txtMontoAbono.selectAll();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,14 +330,23 @@ public final class DeudaController {
                 return;
             }
 
-            double monto = Double.parseDouble(view.txtMontoTotal.getText().trim());
+            String montoStr = view.txtMontoTotal.getText().trim();
+            String tasaStr = view.txtTasaInteres.getText().trim();
+            String cuotasStr = view.txtCuotasTotales.getText().trim();
+
+            if (montoStr.isEmpty() || tasaStr.isEmpty() || cuotasStr.isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Debe completar todos los campos del formulario.", "Validación", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            double monto = Double.parseDouble(montoStr);
             if (monto <= 0) {
                 JOptionPane.showMessageDialog(view, "El monto debe ser mayor que 0.", "Validación", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            double tasa = Double.parseDouble(view.txtTasaInteres.getText().trim());
-            int cuotas = Integer.parseInt(view.txtCuotasTotales.getText().trim());
+            double tasa = Double.parseDouble(tasaStr);
+            int cuotas = Integer.parseInt(cuotasStr);
             if (cuotas <= 0) {
                 JOptionPane.showMessageDialog(view, "Las cuotas totales deben ser mayores que 0.", "Validación", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -209,7 +394,13 @@ public final class DeudaController {
                 return;
             }
 
-            double monto = Double.parseDouble(view.txtMontoAbono.getText().trim());
+            String abonoStr = view.txtMontoAbono.getText().trim();
+            if (abonoStr.isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Debe ingresar el monto del abono.", "Validación", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            double monto = Double.parseDouble(abonoStr);
             if (monto <= 0) {
                 JOptionPane.showMessageDialog(view, "El monto de abono debe ser mayor que 0.", "Validación", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -243,63 +434,78 @@ public final class DeudaController {
         }
     }
 
-    public void prepararPagoRapido() {
+    public void exportarCSV() {
         try {
-            Usuario activeUser = Session.getInstance().getUsuarioActivo();
-            int idUsuario = (activeUser != null) ? activeUser.getId() : 1;
-            List<Deuda> deudas = service.listarDeudas(idUsuario);
-            if (deudas.size() > 1) {
-                Deuda d2 = deudas.get(1);
-                int idDeuda = d2.getIdDeuda();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
+            String timestamp = sdf.format(new java.util.Date());
+            String defaultName = "Deudas_y_Prestamos_" + timestamp + ".xlsx";
 
-                // Seleccionar deuda en el combo box
-                for (int i = 0; i < view.cbSeleccionarDeuda.getItemCount(); i++) {
-                    Object item = view.cbSeleccionarDeuda.getItemAt(i);
-                    if (item instanceof ComboItem) {
-                        ComboItem ci = (ComboItem) item;
-                        if (ci.getValue() == idDeuda) {
-                            view.cbSeleccionarDeuda.setSelectedIndex(i);
-                            break;
-                        }
-                    }
-                }
+            javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+            fileChooser.setDialogTitle("Guardar Reporte de Deudas");
+            fileChooser.setSelectedFile(new java.io.File(defaultName));
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de Excel (*.xlsx)", "xlsx"));
 
-                // Calcular cuota sugerida
-                double cuota = 0.0;
-                if (d2.getCuotasTotales() > 0) {
-                    cuota = d2.getMontoTotal() / d2.getCuotasTotales();
+            int userSelection = fileChooser.showSaveDialog(view);
+            if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+                java.io.File fileToSave = fileChooser.getSelectedFile();
+                String filePath = fileToSave.getAbsolutePath();
+                if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                    fileToSave = new java.io.File(filePath + ".xlsx");
                 }
-                if (cuota > d2.getMontoRestante() || cuota <= 0) {
-                    cuota = d2.getMontoRestante();
-                }
-
-                view.txtMontoAbono.setText(String.format(java.util.Locale.US, "%.2f", cuota));
-                view.txtMontoAbono.requestFocus();
-                view.txtMontoAbono.selectAll();
+                service.exportarExcel(view.tblHistorial, fileToSave);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(view, "Error al abrir el selector de archivos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    public void exportarCSV() {
-        service.exportarCSV(view.tblHistorial);
     }
 
     public void limpiarFormularioDeuda() {
         view.txtAcreedor.setText("");
-        view.txtMontoTotal.setText("0.00");
-        view.txtTasaInteres.setText("0.0");
-        view.txtCuotasTotales.setText("12");
+        view.txtMontoTotal.setText("");
+        view.txtTasaInteres.setText("");
+        view.txtCuotasTotales.setText("");
         view.dateFechaInicio.setDate(new Date());
     }
 
     public void limpiarFormularioAbono() {
-        view.txtMontoAbono.setText("0.00");
+        view.txtMontoAbono.setText("");
         view.dateFechaPago.setDate(new Date());
         if (view.cbSeleccionarDeuda.getItemCount() > 0) {
             view.cbSeleccionarDeuda.setSelectedIndex(0);
         }
+        view.txtMontoAbono.setText(""); // Forzar a vacío después de disparar el action listener
+    }
+
+    private void setupListeners() {
+        // cbSeleccionarDeuda index change listener to autocomplete txtMontoAbono
+        for (java.awt.event.ActionListener al : view.cbSeleccionarDeuda.getActionListeners()) {
+            view.cbSeleccionarDeuda.removeActionListener(al);
+        }
+        view.cbSeleccionarDeuda.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Object item = view.cbSeleccionarDeuda.getSelectedItem();
+                if (item instanceof ComboItem) {
+                    ComboItem selected = (ComboItem) item;
+                    int idDeuda = selected.getValue();
+                    double ultimoAbono = service.obtenerUltimoAbono(idDeuda);
+                    view.txtMontoAbono.setText(String.format(java.util.Locale.US, "%.2f", ultimoAbono));
+                }
+            }
+        });
+
+        // Configurar cursor y click listener para Exportar CSV
+        view.lblExportarCSV.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        for (java.awt.event.MouseListener ml : view.lblExportarCSV.getMouseListeners()) {
+            view.lblExportarCSV.removeMouseListener(ml);
+        }
+        view.lblExportarCSV.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exportarCSV();
+            }
+        });
     }
 
     public void mostrarDetalleDeudaTotal() {

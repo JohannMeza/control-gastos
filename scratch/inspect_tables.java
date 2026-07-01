@@ -14,10 +14,17 @@ public class inspect_tables {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement()) {
 
-            System.out.println("=== Definition of CG_EliminarPresupuestoPorId_SP ===");
-            try (ResultSet rs = stmt.executeQuery("exec sp_helptext 'CG_EliminarPresupuestoPorId_SP'")) {
+            System.out.println("=== columns of FINANZAS.GASTOS ===");
+            try (ResultSet rs = stmt.executeQuery("SELECT name FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.GASTOS')")) {
                 while (rs.next()) {
-                    System.out.print(rs.getString(1));
+                    System.out.println(rs.getString("name"));
+                }
+            }
+
+            System.out.println("=== columns and types of FINANZAS.AHORROS ===");
+            try (ResultSet rs = stmt.executeQuery("SELECT c.name, t.name AS type FROM sys.columns c JOIN sys.types t ON c.user_type_id = t.user_type_id WHERE c.object_id = OBJECT_ID('FINANZAS.AHORROS')")) {
+                while (rs.next()) {
+                    System.out.println(rs.getString("name") + " (" + rs.getString("type") + ")");
                 }
             }
 

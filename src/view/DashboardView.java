@@ -23,7 +23,40 @@ public class DashboardView extends javax.swing.JFrame {
         setTitle("Panel de Administración");
         setLocationRelativeTo(null);
         this.controller = new controller.DashboardController(this);
-        this.repaint();
+        
+        // Programmatic addition of the Auditoria button in Sidebar
+        Sidebar.setLayout(null);
+        pnlDashboard.setBounds(0, 10, 200, 35);
+        pnlGasto.setBounds(0, 70, 200, 35);
+        pnlPresupuesto.setBounds(0, 130, 200, 35);
+        pnlAhorros.setBounds(0, 190, 200, 35);
+        pnlDeudas.setBounds(0, 250, 200, 35);
+        pnlUsuarios.setBounds(0, 310, 200, 35);
+
+        javax.swing.JPanel pnlAuditoria = new javax.swing.JPanel();
+        pnlAuditoria.setBackground(new java.awt.Color(248, 250, 252));
+        pnlAuditoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlAuditoria.setBounds(0, 370, 200, 35);
+        javax.swing.JLabel lblAuditoria = new javax.swing.JLabel();
+        lblAuditoria.setFont(new java.awt.Font("Tahoma", 0, 14));
+        lblAuditoria.setForeground(new java.awt.Color(71, 85, 105));
+        lblAuditoria.setText("Auditor\u00eda");
+        lblAuditoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0));
+        try {
+            lblAuditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/auditoria.png")));
+        } catch (Exception ex) {}
+        pnlAuditoria.setLayout(new java.awt.BorderLayout());
+        pnlAuditoria.add(lblAuditoria, java.awt.BorderLayout.CENTER);
+        pnlAuditoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new AuditoriaView().setVisible(true);
+                dispose();
+            }
+        });
+        Sidebar.add(pnlAuditoria);
+        Sidebar.revalidate();
+        Sidebar.repaint();
+        util.MenuHelper.setupUserMenu(this, lblAvatarIcon);
     }
 
     @SuppressWarnings("unchecked")
@@ -638,53 +671,17 @@ public class DashboardView extends javax.swing.JFrame {
         lblUpcomingPayments.setText("PRÓXIMOS PAGOS");
         pnlQuickInsights.add(lblUpcomingPayments, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 155, -1, -1));
 
-        pnlInternetIcon.setBackground(new java.awt.Color(248, 250, 252));
-        pnlInternetIcon.setLayout(new java.awt.BorderLayout());
+        pnlPaymentsList = new javax.swing.JPanel();
+        pnlPaymentsList.setBackground(java.awt.Color.WHITE);
+        pnlPaymentsList.setLayout(new javax.swing.BoxLayout(pnlPaymentsList, javax.swing.BoxLayout.Y_AXIS));
 
-        lblInternetIconSymbol.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblInternetIconSymbol.setText("📶");
-        pnlInternetIcon.add(lblInternetIconSymbol, java.awt.BorderLayout.CENTER);
+        scrollPayments = new javax.swing.JScrollPane(pnlPaymentsList);
+        scrollPayments.setBorder(null);
+        scrollPayments.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPayments.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPayments.getViewport().setBackground(java.awt.Color.WHITE);
 
-        pnlQuickInsights.add(pnlInternetIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 180, 40, 40));
-
-        lblInternetTitle.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        lblInternetTitle.setForeground(new java.awt.Color(11, 28, 48));
-        lblInternetTitle.setText("Proveedor de Internet");
-        pnlQuickInsights.add(lblInternetTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 180, 150, -1));
-
-        lblInternetDate.setForeground(new java.awt.Color(71, 85, 105));
-        lblInternetDate.setText("24 Oct");
-        pnlQuickInsights.add(lblInternetDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 198, 100, -1));
-
-        lblInternetAmount.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        lblInternetAmount.setForeground(new java.awt.Color(11, 28, 48));
-        lblInternetAmount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblInternetAmount.setText("$79.99");
-        pnlQuickInsights.add(lblInternetAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 95, 40));
-
-        pnlHealthIcon.setBackground(new java.awt.Color(248, 250, 252));
-        pnlHealthIcon.setLayout(new java.awt.BorderLayout());
-
-        lblHealthIconSymbol.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHealthIconSymbol.setText("🛡️");
-        pnlHealthIcon.add(lblHealthIconSymbol, java.awt.BorderLayout.CENTER);
-
-        pnlQuickInsights.add(pnlHealthIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 230, 40, 40));
-
-        lblHealthTitle.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        lblHealthTitle.setForeground(new java.awt.Color(11, 28, 48));
-        lblHealthTitle.setText("Seguro de Salud");
-        pnlQuickInsights.add(lblHealthTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 230, 150, -1));
-
-        lblHealthDate.setForeground(new java.awt.Color(71, 85, 105));
-        lblHealthDate.setText("26 Oct");
-        pnlQuickInsights.add(lblHealthDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 248, 100, -1));
-
-        lblHealthAmount.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        lblHealthAmount.setForeground(new java.awt.Color(11, 28, 48));
-        lblHealthAmount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblHealthAmount.setText("$212.00");
-        pnlQuickInsights.add(lblHealthAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, 95, 40));
+        pnlQuickInsights.add(scrollPayments, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 175, 310, 125));
 
         btnViewScheduled.setBackground(new java.awt.Color(255, 255, 255));
         btnViewScheduled.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
@@ -829,5 +826,7 @@ public class DashboardView extends javax.swing.JFrame {
     public javax.swing.JPanel pnlQuickInsights;
     public javax.swing.JPanel pnlSavingsBanner;
     public javax.swing.JPanel pnlUsuarios;
+    public javax.swing.JScrollPane scrollPayments;
+    public javax.swing.JPanel pnlPaymentsList;
     // End of variables declaration//GEN-END:variables
 }

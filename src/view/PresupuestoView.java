@@ -33,6 +33,47 @@ public class PresupuestoView extends javax.swing.JFrame {
         
         controller = new PresupuestoController(this);
         controller.listarCategorias();
+        
+        // Programmatic addition of the Auditoria button in Sidebar
+        Sidebar.setLayout(null);
+        jPanelProducts.setBounds(0, 10, 200, 35);
+        jPanelProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new DashboardView().setVisible(true);
+                dispose();
+            }
+        });
+        pnlGasto.setBounds(0, 70, 200, 35);
+        jPanelCustomers.setBounds(0, 130, 200, 35);
+        jPanelEmployes.setBounds(0, 190, 200, 35);
+        jPanelSupplimers.setBounds(0, 250, 200, 35);
+        jPanelCategories.setBounds(0, 310, 200, 35);
+
+        javax.swing.JPanel pnlAuditoria = new javax.swing.JPanel();
+        pnlAuditoria.setBackground(new java.awt.Color(248, 250, 252));
+        pnlAuditoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlAuditoria.setBounds(0, 370, 200, 35);
+        javax.swing.JLabel lblAuditoria = new javax.swing.JLabel();
+        lblAuditoria.setFont(new java.awt.Font("Tahoma", 0, 14));
+        lblAuditoria.setForeground(new java.awt.Color(71, 85, 105));
+        lblAuditoria.setText("Auditor\u00eda");
+        lblAuditoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0));
+        try {
+            lblAuditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/auditoria.png")));
+        } catch (Exception ex) {}
+        pnlAuditoria.setLayout(new java.awt.BorderLayout());
+        pnlAuditoria.add(lblAuditoria, java.awt.BorderLayout.CENTER);
+        pnlAuditoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new AuditoriaView().setVisible(true);
+                dispose();
+            }
+        });
+        Sidebar.add(pnlAuditoria);
+        Sidebar.revalidate();
+        Sidebar.repaint();
+        util.MenuHelper.addAvatarToHeader(this, Header);
     }
     
     public void limpiarFormularioGasto() {
@@ -149,8 +190,8 @@ public class PresupuestoView extends javax.swing.JFrame {
             .addComponent(jLabelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
-        pnlGasto.setBackground(new java.awt.Color(244, 248, 254));
-        pnlGasto.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(37, 99, 235)));
+        pnlGasto.setBackground(new java.awt.Color(248, 250, 252));
+        pnlGasto.setBorder(null);
         pnlGasto.setForeground(new java.awt.Color(71, 85, 105));
         pnlGasto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlGasto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -178,7 +219,7 @@ public class PresupuestoView extends javax.swing.JFrame {
             .addComponent(jLabelPurchases, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
-        jPanelCustomers.setBackground(new java.awt.Color(248, 250, 252));
+        jPanelCustomers.setBackground(new java.awt.Color(244, 248, 254));
         jPanelCustomers.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 6, 0, 0, new java.awt.Color(37, 99, 235)));
         jPanelCustomers.setForeground(new java.awt.Color(71, 85, 105));
         jPanelCustomers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

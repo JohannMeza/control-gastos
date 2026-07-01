@@ -83,4 +83,25 @@ public class DashboardDAO {
         }
         return lista;
     }
+
+    public List<model.PagoProgramado> obtenerProximosPagos(int idUsuarioOwner) {
+        List<model.PagoProgramado> lista = new ArrayList<>();
+        String sql = "{CALL CG_ObtenerDashboardPagos_SP(?)}";
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement stmt = conn.prepareCall(sql)) {
+            stmt.setInt(1, idUsuarioOwner);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    model.PagoProgramado p = new model.PagoProgramado();
+                    p.setConcepto(rs.getString("concepto"));
+                    p.setMonto(rs.getDouble("monto"));
+                    p.setFechaVencimiento(rs.getString("fechaVencimiento"));
+                    lista.add(p);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
 }
