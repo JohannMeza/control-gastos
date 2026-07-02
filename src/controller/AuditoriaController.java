@@ -242,6 +242,18 @@ public class AuditoriaController {
         
         PilaTransacciones<GastoAuditoria> pila = service.getPilaDeshacer();
         int cant = pila.getCantidad();
+        
+        for (int i = cant - 1; i >= 0; i--) {
+            GastoAuditoria g = pila.get(i);
+            if (g != null) {
+                model.addRow(new Object[]{
+                    g.getDescripcion(),
+                    String.format("%.2f", g.getMonto()),
+                    g.getCategoria()
+                });
+            }
+        }
+        
         view.lblPilaStatus.setText("Asientos en pila: " + cant + " / " + pila.getCapacidad() + " (LIFO)");
         view.btnDeshacer.setEnabled(!pila.isEmpty());
         view.btnRehacer.setEnabled(!service.getPilaRehacer().isEmpty());

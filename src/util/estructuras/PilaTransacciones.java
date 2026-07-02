@@ -51,4 +51,11 @@ public class PilaTransacciones<T> {
     public int getCapacidad() {
         return capacidad;
     }
+
+    public T get(int index) {
+        if (index < 0 || index > tope) {
+            return null;
+        }
+        return elementos[index];
+    }
 }
