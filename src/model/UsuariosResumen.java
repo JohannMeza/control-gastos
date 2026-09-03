@@ -8,7 +8,6 @@ public class UsuariosResumen {
     private int asientosTotales;
     private String ultimaSincronizacion;
     private String mfaActivoStatus;
-    private String logsAuditoriaCount;
 
     public int getAsientosUsados() {
         return asientosUsados;
@@ -40,13 +39,5 @@ public class UsuariosResumen {
 
     public void setMfaActivoStatus(String mfaActivoStatus) {
         this.mfaActivoStatus = mfaActivoStatus;
-    }
-
-    public String getLogsAuditoriaCount() {
-        return logsAuditoriaCount;
-    }
-
-    public void setLogsAuditoriaCount(String logsAuditoriaCount) {
-        this.logsAuditoriaCount = logsAuditoriaCount;
     }
 }

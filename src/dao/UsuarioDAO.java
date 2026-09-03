@@ -141,26 +141,12 @@ public class UsuarioDAO {
                     r.setAsientosTotales(rs.getInt("asientosTotales"));
                     r.setUltimaSincronizacion(rs.getString("ultimaSincronizacion"));
                     r.setMfaActivoStatus(rs.getString("mfaActivoStatus"));
-                    r.setLogsAuditoriaCount(rs.getString("logsAuditoriaCount"));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return r;
-    }
-
-    public void registrarLogAuditoria(int idUsuarioOwner, String accion, String detalle) {
-        String sql = "INSERT INTO FINANZAS.LOGS_AUDITORIA (idUsuarioOwner, cAccion, cDetalle, dFecha) VALUES (?, ?, ?, GETDATE())";
-        try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idUsuarioOwner);
-            stmt.setString(2, accion);
-            stmt.setString(3, detalle);
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public Usuario validarLogin(String email, String password) throws Exception {

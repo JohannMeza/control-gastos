@@ -163,9 +163,6 @@ public class UsuarioService {
                     .replace("'", "&apos;");
     }
 
-    public void registrarLogAuditoria(int idUsuarioOwner, String accion, String detalle) {
-        dao.registrarLogAuditoria(idUsuarioOwner, accion, detalle);
-    }
 
     public Usuario validarLogin(String email, String password) throws Exception {
         return dao.validarLogin(email, password);

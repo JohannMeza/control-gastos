@@ -1,0 +1,172 @@
+<mxfile host="Electron" modified="2026-07-09T06:24:00.000Z" agent="5.0" version="20.0.0" type="device">
+  <diagram id="flujo_dashboard" name="Flujo Dashboard">
+    <mxGraphModel dx="1200" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Elementos del Diagrama de Flujo del Dashboard -->
+        <mxCell id="dash_start" value="Inicio" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="220" y="40" width="80" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_open" value="Usuario abre DashboardView" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="110" width="170" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_check_session" value="Verificar sesión activa&#xa;en Session.getInstance()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="180" width="170" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_check_perms" value="Obtener roles y permisos&#xa;del usuario logueado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="240" width="170" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_req_controller" value="Solicitar datos a&#xa;DashboardController.cargarDatos()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="165" y="310" width="190" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_call_service" value="DashboardController llama a&#xa;DashboardService" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="390" width="170" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_call_dao" value="DashboardService llama a&#xa;DashboardDAO para consultas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="460" width="170" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_db_queries" value="Ejecutar SPs en Azure SQL:&#xa;- CG_ObtenerDashboardResumen_SP&#xa;- CG_ObtenerDashboardGraficos_SP&#xa;- CG_ObtenerDashboardPagos_SP" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="155" y="530" width="210" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Cálculos del SP -->
+        <mxCell id="dash_calc_income" value="Obtener ingresos&#xa;totales del mes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="30" y="660" width="110" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_calc_expense" value="Obtener gastos&#xa;totales del mes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="160" y="660" width="110" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_calc_balance" value="Calcular balance&#xa;y ahorros totales" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="290" y="660" width="110" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_calc_budget" value="Obtener avance de&#xa;presupuestos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="420" y="660" width="110" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_check_alerts" value="Verificar alertas de&#xa;presupuesto crítico" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="740" width="170" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_show_cards" value="Mostrar tarjetas de resumen:&#xa;ingresos, gastos, balance/ahorros" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="170" y="820" width="180" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_show_charts" value="Pintar gráficos de distribución&#xa;e indicadores en UI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="170" y="900" width="180" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_allow_filters" value="Habilitar filtros interactivos&#xa;por colaborador y período" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="980" width="170" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_check_change" value="¿Usuario cambia&#xa;los filtros?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1060" width="120" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash_end" value="Fin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1180" width="80" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones con Flechas Negras Visibles -->
+        <mxCell id="edge_dash_1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_start" target="dash_open">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_open" target="dash_check_session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_check_session" target="dash_check_perms">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_check_perms" target="dash_req_controller">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_req_controller" target="dash_call_service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_call_service" target="dash_call_dao">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_call_dao" target="dash_db_queries">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Bifurcaciones hacia los cálculos paralelos -->
+        <mxCell id="edge_dash_8a" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_db_queries" target="dash_calc_income">
+          <mxGeometry relative="1" as="geometry">
+            <Array points={[260,630],[85,630]} />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dash_8b" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_db_queries" target="dash_calc_expense">
+          <mxGeometry relative="1" as="geometry">
+            <Array points={[260,630],[215,630]} />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dash_8c" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_db_queries" target="dash_calc_balance">
+          <mxGeometry relative="1" as="geometry">
+            <Array points={[260,630],[345,630]} />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dash_8d" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_db_queries" target="dash_calc_budget">
+          <mxGeometry relative="1" as="geometry">
+            <Array points={[260,630],[475,630]} />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Retorno de cálculos a verificar alertas -->
+        <mxCell id="edge_dash_9a" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_calc_income" target="dash_check_alerts">
+          <mxGeometry relative="1" as="geometry">
+            <Array points={[85,720],[260,720]} />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dash_9b" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_calc_expense" target="dash_check_alerts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_9c" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_calc_balance" target="dash_check_alerts">
+          <mxGeometry relative="1" as="geometry">
+            <Array points={[345,720],[260,720]} />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dash_9d" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_calc_budget" target="dash_check_alerts">
+          <mxGeometry relative="1" as="geometry">
+            <Array points={[475,720],[260,720]} />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Siguientes pasos -->
+        <mxCell id="edge_dash_10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_check_alerts" target="dash_show_cards">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_show_cards" target="dash_show_charts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_show_charts" target="dash_allow_filters">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="dash_allow_filters" target="dash_check_change">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dash_14" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="dash_check_change" target="dash_req_controller">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80" y="340" as="targetPoint" />
+            <Array points={[80,1105],[80,335]} />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dash_15" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="dash_check_change" target="dash_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

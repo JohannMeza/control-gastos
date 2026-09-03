@@ -199,7 +199,6 @@ public final class UsuarioController {
                                         JOptionPane.QUESTION_MESSAGE);
                                         
                                     if (confirm == JOptionPane.YES_OPTION) {
-                                        service.registrarLogAuditoria(idUsuarioOwner, "REENVIAR INVITACION", "Invitación reenviada a " + nombreCompleto + " (" + correoStr + ")");
                                         JOptionPane.showMessageDialog(view, "Invitación reenviada correctamente.", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                                         cargarResumen();
                                     }
@@ -318,7 +317,6 @@ public final class UsuarioController {
             
             view.lblCardSincronizacionValue.setText(r.getUltimaSincronizacion());
             view.lblCardMfaValue.setText(r.getMfaActivoStatus());
-            view.lblCardAuditoriaValue.setText(r.getLogsAuditoriaCount());
 
         } catch (Exception e) {
             e.printStackTrace();

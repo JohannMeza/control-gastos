@@ -1,0 +1,127 @@
+<mxfile host="Electron" modified="2026-07-09T06:24:00.000Z" agent="5.0" version="20.0.0" type="device">
+  <diagram id="flujo_autenticacion" name="Flujo Autenticación">
+    <mxGraphModel dx="1000" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Elementos del Diagrama de Flujo de Autenticación -->
+        <mxCell id="auth_start" value="Inicio" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="220" y="40" width="80" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_show_view" value="Mostrar LoginView" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="195" y="110" width="130" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_input_data" value="Ingresar usuario/correo&#xa;y contraseña" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="185" y="180" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_check_empty" value="¿Campos&#xa;vacíos?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="210" y="260" width="100" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_empty_msg" value="Mostrar &quot;Campos Incompletos&quot;&#xa;(JOptionPane)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="400" y="275" width="180" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_send_controller" value="Enviar datos a&#xa;LoginController.procesarLogin()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="380" width="170" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_call_service" value="Llamar a&#xa;UsuarioService.validarLogin()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="460" width="170" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_call_dao" value="Llamar a&#xa;UsuarioDAO.validarLogin()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="540" width="170" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_db_query" value="Ejecutar Stored Procedure&#xa;CG_ValidarLogin_SP en Azure SQL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="170" y="620" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_check_valid" value="¿Credenciales&#xa;válidas?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="210" y="730" width="100" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_error_msg" value="Mostrar &quot;Error de Acceso&quot;&#xa;(JOptionPane)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="400" y="745" width="180" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_create_session" value="Establecer usuario activo&#xa;en Session.getInstance()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="850" width="170" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_audit_log" value="Registrar Log de Auditoría&#xa;en BD (Acción LOGIN)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="170" y="930" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_open_dashboard" value="Cerrar LoginView y&#xa;abrir DashboardView" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="180" y="1030" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auth_end" value="Fin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1110" width="80" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones con Flechas Negras Visibles -->
+        <mxCell id="edge_auth_1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_start" target="auth_show_view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_show_view" target="auth_input_data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_input_data" target="auth_check_empty">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_4" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="auth_check_empty" target="auth_empty_msg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.5;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_empty_msg" target="auth_show_view">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="130" as="targetPoint" />
+            <Array points={[500,130]} />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_auth_6" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="auth_check_empty" target="auth_send_controller">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_send_controller" target="auth_call_service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_call_service" target="auth_call_dao">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_call_dao" target="auth_db_query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_db_query" target="auth_check_valid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_11" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="auth_check_valid" target="auth_error_msg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.5;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_error_msg" target="auth_show_view">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="130" as="targetPoint" />
+            <Array points={[500,600],[610,600],[610,130]} />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_auth_13" value="Sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="auth_check_valid" target="auth_create_session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_create_session" target="auth_audit_log">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_audit_log" target="auth_open_dashboard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_auth_16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endSize=8;" edge="1" parent="1" source="auth_open_dashboard" target="auth_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

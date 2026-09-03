@@ -29,7 +29,7 @@ public class UsuariosView extends javax.swing.JFrame {
         setupTableStyle();
         this.controller = new controller.UsuarioController(this);
         
-        // Programmatic addition of the Auditoria button in Sidebar
+        // Configurar Sidebar y navegación
         Sidebar.setLayout(null);
         jPanelProducts.setBounds(0, 10, 200, 35);
         pnlGasto.setBounds(0, 70, 200, 35);
@@ -38,27 +38,6 @@ public class UsuariosView extends javax.swing.JFrame {
         jPanelSupplimers.setBounds(0, 250, 200, 35);
         jPanelCategories.setBounds(0, 310, 200, 35);
 
-        javax.swing.JPanel pnlAuditoria = new javax.swing.JPanel();
-        pnlAuditoria.setBackground(new java.awt.Color(248, 250, 252));
-        pnlAuditoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlAuditoria.setBounds(0, 370, 200, 35);
-        javax.swing.JLabel lblAuditoria = new javax.swing.JLabel();
-        lblAuditoria.setFont(new java.awt.Font("Tahoma", 0, 14));
-        lblAuditoria.setForeground(new java.awt.Color(71, 85, 105));
-        lblAuditoria.setText("Auditor\u00eda");
-        lblAuditoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0));
-        try {
-            lblAuditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/auditoria.png")));
-        } catch (Exception ex) {}
-        pnlAuditoria.setLayout(new java.awt.BorderLayout());
-        pnlAuditoria.add(lblAuditoria, java.awt.BorderLayout.CENTER);
-        pnlAuditoria.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                new AuditoriaView().setVisible(true);
-                dispose();
-            }
-        });
-        Sidebar.add(pnlAuditoria);
         Sidebar.revalidate();
         Sidebar.repaint();
         util.MenuHelper.addAvatarToHeader(this, Header);
@@ -269,11 +248,6 @@ public class UsuariosView extends javax.swing.JFrame {
         lblCardMfaValue = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        pnlCardAuditoria = new javax.swing.JPanel();
-        lblCardAuditoriaTitle = new javax.swing.JLabel();
-        lblCardAuditoriaValue = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
         Logo = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         Header = new javax.swing.JPanel();
@@ -678,7 +652,7 @@ public class UsuariosView extends javax.swing.JFrame {
 
         pnlCardSincronizacion.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 40, 40));
 
-        jPanelTabUsuarios.add(pnlCardSincronizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 310, 90));
+        jPanelTabUsuarios.add(pnlCardSincronizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 475, 90));
 
         pnlCardMfa.setBackground(new java.awt.Color(255, 255, 255));
         pnlCardMfa.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 234, 241), 1, true));
@@ -708,37 +682,7 @@ public class UsuariosView extends javax.swing.JFrame {
 
         pnlCardMfa.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 40, 40));
 
-        jPanelTabUsuarios.add(pnlCardMfa, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 460, 310, 90));
-
-        pnlCardAuditoria.setBackground(new java.awt.Color(255, 255, 255));
-        pnlCardAuditoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 234, 241), 1, true));
-        pnlCardAuditoria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblCardAuditoriaTitle.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        lblCardAuditoriaTitle.setForeground(new java.awt.Color(100, 116, 139));
-        lblCardAuditoriaTitle.setText("LOGS DE AUDITORÍA");
-        pnlCardAuditoria.add(lblCardAuditoriaTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, -1));
-
-        lblCardAuditoriaValue.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        lblCardAuditoriaValue.setForeground(new java.awt.Color(11, 28, 48));
-        lblCardAuditoriaValue.setText("Ver historial de seguridad completo");
-        pnlCardAuditoria.add(lblCardAuditoriaValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
-
-        jPanel6.setBackground(new java.awt.Color(255, 218, 214));
-        jPanel6.setName(""); // NOI18N
-        jPanel6.setPreferredSize(new java.awt.Dimension(60, 60));
-        jPanel6.setLayout(new java.awt.CardLayout());
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/deudas.png"))); // NOI18N
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel8.setRequestFocusEnabled(false);
-        jPanel6.add(jLabel8, "card2");
-
-        pnlCardAuditoria.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 40, 40));
-
-        jPanelTabUsuarios.add(pnlCardAuditoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 460, 310, 90));
+        jPanelTabUsuarios.add(pnlCardMfa, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 460, 475, 90));
 
         Body.addTab("Usuarios", jPanelTabUsuarios);
 
@@ -837,7 +781,6 @@ public class UsuariosView extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel10;
     public javax.swing.JLabel jLabel13;
     public javax.swing.JLabel jLabel2;
-    public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
     public javax.swing.JLabel jLabelCategories;
     public javax.swing.JLabel jLabelCustomers;
@@ -845,7 +788,6 @@ public class UsuariosView extends javax.swing.JFrame {
     public javax.swing.JLabel jLabelProducts;
     public javax.swing.JLabel jLabelPurchases;
     public javax.swing.JLabel jLabelSupplimers;
-    public javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel7;
     public javax.swing.JPanel jPanel8;
     public javax.swing.JPanel jPanelCategories;
@@ -857,8 +799,6 @@ public class UsuariosView extends javax.swing.JFrame {
     public javax.swing.JScrollPane jScrollPaneUsuarios;
     public javax.swing.JLabel lblAsientosTitle;
     public javax.swing.JLabel lblAsientosValue;
-    public javax.swing.JLabel lblCardAuditoriaTitle;
-    public javax.swing.JLabel lblCardAuditoriaValue;
     public javax.swing.JLabel lblCardMfaTitle;
     public javax.swing.JLabel lblCardMfaValue;
     public javax.swing.JLabel lblCardSincronizacionTitle;
@@ -872,7 +812,6 @@ public class UsuariosView extends javax.swing.JFrame {
     public javax.swing.JLabel lblTabTitle;
     public javax.swing.JLabel lblUsuariosAutorizadosTitle;
     public javax.swing.JProgressBar pbAsientos;
-    public javax.swing.JPanel pnlCardAuditoria;
     public javax.swing.JPanel pnlCardMfa;
     public javax.swing.JPanel pnlCardSincronizacion;
     public javax.swing.JPanel pnlGasto;
