@@ -133,6 +133,15 @@ public class DashboardView extends javax.swing.JFrame {
             }
         };
 
+        // Configurar botones de filtro
+        btnMoreFilters.setIconTextGap(6);
+        btnExportPDF.setIconTextGap(6);
+
+        // Configurar layout vertical para la lista dinámica de pagos
+        if (pnlPaymentsList != null) {
+            pnlPaymentsList.setLayout(new javax.swing.BoxLayout(pnlPaymentsList, javax.swing.BoxLayout.Y_AXIS));
+        }
+
         // Scroll suave
         scrollContent.getVerticalScrollBar().setUnitIncrement(16);
     }
@@ -145,10 +154,10 @@ public class DashboardView extends javax.swing.JFrame {
         headerBar = new view.components.HeaderBar();
         scrollContent = new javax.swing.JScrollPane();
         pnlMainContent = new javax.swing.JPanel();
-        lblTitle = new javax.swing.JLabel();
-        lblSubtitle = new javax.swing.JLabel();
+        cardFilters = new view.components.CardPanel();
         lblTimePeriod = new javax.swing.JLabel();
         cbTimePeriod = new javax.swing.JComboBox<>();
+        lblCollaborator = new javax.swing.JLabel();
         cbCollaborator = new javax.swing.JComboBox<>();
         btnMoreFilters = new javax.swing.JButton();
         btnExportPDF = new javax.swing.JButton();
@@ -195,6 +204,8 @@ public class DashboardView extends javax.swing.JFrame {
         lblHealthDate = new javax.swing.JLabel();
         lblHealthAmount = new javax.swing.JLabel();
         btnViewScheduled = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        lblSubtitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Finandes - Dashboard Principal");
@@ -216,69 +227,70 @@ public class DashboardView extends javax.swing.JFrame {
         pnlMainContent.setPreferredSize(new java.awt.Dimension(1020, 720));
         pnlMainContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(15, 23, 42));
-        lblTitle.setText("Dashboard de Finanzas");
-        pnlMainContent.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 14, 260, 26));
-
-        lblSubtitle.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        lblSubtitle.setForeground(new java.awt.Color(100, 116, 139));
-        lblSubtitle.setText("Resumen general del estado financiero, presupuesto y compromisos mensuales.");
-        pnlMainContent.add(lblSubtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 40, 450, 18));
+        cardFilters.setCornerRadius(10);
+        cardFilters.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTimePeriod.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblTimePeriod.setForeground(new java.awt.Color(100, 116, 139));
-        lblTimePeriod.setText("Período:");
-        pnlMainContent.add(lblTimePeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(465, 18, 45, 28));
+        lblTimePeriod.setText("Período de Tiempo");
+        cardFilters.add(lblTimePeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 8, 130, 16));
 
         cbTimePeriod.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         cbTimePeriod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Octubre 2023", "Septiembre 2023", "Todo el tiempo" }));
-        pnlMainContent.add(cbTimePeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 16, 125, 30));
+        cardFilters.add(cbTimePeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 26, 140, 28));
+
+        lblCollaborator.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        lblCollaborator.setForeground(new java.awt.Color(100, 116, 139));
+        lblCollaborator.setText("Colaborador");
+        cardFilters.add(lblCollaborator, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 8, 130, 16));
 
         cbCollaborator.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         cbCollaborator.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los usuarios" }));
-        pnlMainContent.add(cbCollaborator, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 16, 140, 30));
+        cardFilters.add(cbCollaborator, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 26, 155, 28));
 
         btnMoreFilters.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnMoreFilters.setForeground(new java.awt.Color(51, 65, 85));
-        btnMoreFilters.setText("Más Filtros");
+        btnMoreFilters.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/filtrar.png"))); // NOI18N
+        btnMoreFilters.setText(" Más Filtros");
         btnMoreFilters.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240)));
         btnMoreFilters.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMoreFilters.setFocusPainted(false);
-        pnlMainContent.add(btnMoreFilters, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 16, 90, 30));
+        cardFilters.add(btnMoreFilters, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 16, 105, 32));
 
-        btnExportPDF.setBackground(new java.awt.Color(0, 159, 227));
-        btnExportPDF.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnExportPDF.setForeground(new java.awt.Color(255, 255, 255));
-        btnExportPDF.setText("Exportar PDF");
-        btnExportPDF.setBorderPainted(false);
+        btnExportPDF.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnExportPDF.setForeground(new java.awt.Color(51, 65, 85));
+        btnExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/descargar.png"))); // NOI18N
+        btnExportPDF.setText(" Exportar PDF");
+        btnExportPDF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240)));
         btnExportPDF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExportPDF.setFocusPainted(false);
-        pnlMainContent.add(btnExportPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 16, 95, 30));
+        cardFilters.add(btnExportPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 16, 115, 32));
 
-        kpiIngresos.setColorAcento(new java.awt.Color(16, 185, 129));
-        kpiIngresos.setMonto("$12,450.00");
-        kpiIngresos.setTitulo("INGRESOS TOTALES");
-        kpiIngresos.setVariacion("↑ +12% vs mes anterior");
-        pnlMainContent.add(kpiIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 68, 235, 115));
+        pnlMainContent.add(cardFilters, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 14, 970, 66));
+
+        kpiIngresos.setColorAcento(new java.awt.Color(66, 173, 77));
+        kpiIngresos.setMonto("S/. 12,450.00");
+        kpiIngresos.setTitulo("Ingresos Totales");
+        kpiIngresos.setVariacion("+12% vs mes anterior");
+        pnlMainContent.add(kpiIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 92, 235, 115));
 
         kpiGastos.setColorAcento(new java.awt.Color(0, 159, 227));
-        kpiGastos.setMonto("$5,230.45");
-        kpiGastos.setTitulo("GASTOS TOTALES");
-        kpiGastos.setVariacion("↑ +4% vs mes anterior");
-        pnlMainContent.add(kpiGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 68, 235, 115));
+        kpiGastos.setMonto("S/. 5,230.45");
+        kpiGastos.setTitulo("Gastos Totales");
+        kpiGastos.setVariacion("+4% vs mes anterior");
+        pnlMainContent.add(kpiGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 92, 235, 115));
 
         kpiAhorros.setColorAcento(new java.awt.Color(245, 158, 11));
-        kpiAhorros.setMonto("$2,100.00");
-        kpiAhorros.setTitulo("AHORROS TOTALES");
+        kpiAhorros.setMonto("S/. 2,100.00");
+        kpiAhorros.setTitulo("Ahorros Totales");
         kpiAhorros.setVariacion("84% de la meta mensual");
-        pnlMainContent.add(kpiAhorros, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 68, 235, 115));
+        pnlMainContent.add(kpiAhorros, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 92, 235, 115));
 
-        kpiBalance.setColorAcento(new java.awt.Color(99, 102, 241));
-        kpiBalance.setMonto("$34,819.55");
-        kpiBalance.setTitulo("BALANCE TOTAL");
+        kpiBalance.setColorAcento(new java.awt.Color(148, 163, 184));
+        kpiBalance.setMonto("S/. 34,819.55");
+        kpiBalance.setTitulo("Balance Total");
         kpiBalance.setVariacion("Todas las cuentas sincronizadas");
-        pnlMainContent.add(kpiBalance, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 68, 235, 115));
+        pnlMainContent.add(kpiBalance, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 92, 235, 115));
 
         cardBudgetVsSpending.setCornerRadius(12);
         cardBudgetVsSpending.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -288,10 +300,8 @@ public class DashboardView extends javax.swing.JFrame {
         lblBudgetVsSpendingTitle.setText("Presupuesto vs Gastos");
         cardBudgetVsSpending.add(lblBudgetVsSpendingTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 250, 22));
 
-        lblBudgetSubtitle.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        lblBudgetSubtitle.setForeground(new java.awt.Color(100, 116, 139));
-        lblBudgetSubtitle.setText("Comparativa de consumo mensual frente a los límites establecidos");
-        cardBudgetVsSpending.add(lblBudgetSubtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 38, 380, 16));
+        lblBudgetSubtitle.setText("");
+        cardBudgetVsSpending.add(lblBudgetSubtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
 
         lblViewAllCategories.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblViewAllCategories.setForeground(new java.awt.Color(0, 159, 227));
@@ -309,13 +319,13 @@ public class DashboardView extends javax.swing.JFrame {
 
         lblHousingDesc.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblHousingDesc.setForeground(new java.awt.Color(100, 116, 139));
-        lblHousingDesc.setText("Alquiler, Seguro y Mantenimiento");
+        lblHousingDesc.setText("Alquiler, Seguro, Servicios");
         pnlBudgetVsSpending.add(lblHousingDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 28, 250, 16));
 
         lblHousingValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblHousingValue.setForeground(new java.awt.Color(15, 23, 42));
         lblHousingValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblHousingValue.setText("S/. 1,850 / S/. 2,000");
+        lblHousingValue.setText("S/. 1,850.00 / S/. 2,000.00");
         pnlBudgetVsSpending.add(lblHousingValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 200, 18));
 
         pbHousing.setBackground(new java.awt.Color(234, 241, 255));
@@ -337,35 +347,35 @@ public class DashboardView extends javax.swing.JFrame {
 
         lblFoodTitle.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         lblFoodTitle.setForeground(new java.awt.Color(15, 23, 42));
-        lblFoodTitle.setText("Alimentación");
-        pnlBudgetVsSpending.add(lblFoodTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 95, 200, 18));
+        lblFoodTitle.setText("Alimentación y Restaurantes");
+        pnlBudgetVsSpending.add(lblFoodTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 95, 220, 18));
 
         lblFoodDesc.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblFoodDesc.setForeground(new java.awt.Color(100, 116, 139));
-        lblFoodDesc.setText("Supermercado y Alimentos");
+        lblFoodDesc.setText("Supermercado, Restaurantes");
         pnlBudgetVsSpending.add(lblFoodDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 113, 250, 16));
 
         lblFoodValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblFoodValue.setForeground(new java.awt.Color(186, 26, 26));
+        lblFoodValue.setForeground(new java.awt.Color(239, 68, 68));
         lblFoodValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblFoodValue.setText("S/. 745 / S/. 600");
+        lblFoodValue.setText("<html><b style='color:#EF4444;'>S/. 745.00</b> <span style='color:#64748B;'>/ S/. 600.00</span></html>");
         pnlBudgetVsSpending.add(lblFoodValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 95, 200, 18));
 
-        pbFood.setBackground(new java.awt.Color(234, 241, 255));
-        pbFood.setForeground(new java.awt.Color(186, 26, 26));
+        pbFood.setBackground(new java.awt.Color(254, 226, 226));
+        pbFood.setForeground(new java.awt.Color(239, 68, 68));
         pbFood.setValue(100);
         pbFood.setBorderPainted(false);
         pnlBudgetVsSpending.add(pbFood, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 133, 555, 8));
 
         lblFoodStatus.setFont(new java.awt.Font("Segoe UI", 1, 9)); // NOI18N
-        lblFoodStatus.setForeground(new java.awt.Color(186, 26, 26));
-        lblFoodStatus.setText("EXCEDIDO");
-        pnlBudgetVsSpending.add(lblFoodStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 145, 150, 16));
+        lblFoodStatus.setForeground(new java.awt.Color(239, 68, 68));
+        lblFoodStatus.setText("EXCEDIDO DEL PRESUPUESTO");
+        pnlBudgetVsSpending.add(lblFoodStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 145, 180, 16));
 
-        lblFoodExcess.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        lblFoodExcess.setForeground(new java.awt.Color(186, 26, 26));
+        lblFoodExcess.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblFoodExcess.setForeground(new java.awt.Color(239, 68, 68));
         lblFoodExcess.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblFoodExcess.setText("S/. 145 de exceso");
+        lblFoodExcess.setText("S/. 145.00 de exceso");
         pnlBudgetVsSpending.add(lblFoodExcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 145, 200, 16));
 
         lblTransportTitle.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -375,13 +385,13 @@ public class DashboardView extends javax.swing.JFrame {
 
         lblTransportDesc.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblTransportDesc.setForeground(new java.awt.Color(100, 116, 139));
-        lblTransportDesc.setText("Combustible y Movilidad");
-        pnlBudgetVsSpending.add(lblTransportDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 198, 250, 16));
+        lblTransportDesc.setText("Combustible, Transporte Público, Mantenimiento");
+        pnlBudgetVsSpending.add(lblTransportDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 198, 300, 16));
 
         lblTransportValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTransportValue.setForeground(new java.awt.Color(15, 23, 42));
         lblTransportValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTransportValue.setText("S/. 210 / S/. 450");
+        lblTransportValue.setText("S/. 210.00 / S/. 450.00");
         pnlBudgetVsSpending.add(lblTransportValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 200, 18));
 
         pbTransport.setBackground(new java.awt.Color(234, 241, 255));
@@ -460,7 +470,7 @@ public class DashboardView extends javax.swing.JFrame {
         lblInternetAmount.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblInternetAmount.setForeground(new java.awt.Color(0, 159, 227));
         lblInternetAmount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblInternetAmount.setText("$79.99");
+        lblInternetAmount.setText("S/. 79.99");
         pnlPaymentsList.add(lblInternetAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 90, 18));
 
         lblHealthTitle.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -476,7 +486,7 @@ public class DashboardView extends javax.swing.JFrame {
         lblHealthAmount.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblHealthAmount.setForeground(new java.awt.Color(0, 159, 227));
         lblHealthAmount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblHealthAmount.setText("$212.00");
+        lblHealthAmount.setText("S/. 212.00");
         pnlPaymentsList.add(lblHealthAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 65, 90, 18));
 
         cardQuickInsights.add(pnlPaymentsList, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 190, 315, 205));
@@ -522,6 +532,7 @@ public class DashboardView extends javax.swing.JFrame {
     public javax.swing.JButton btnMoreFilters;
     public javax.swing.JButton btnViewScheduled;
     public view.components.CardPanel cardBudgetVsSpending;
+    public view.components.CardPanel cardFilters;
     public view.components.CardPanel cardQuickInsights;
     public javax.swing.JComboBox<Object> cbCollaborator;
     public javax.swing.JComboBox<String> cbTimePeriod;
@@ -532,6 +543,7 @@ public class DashboardView extends javax.swing.JFrame {
     public view.components.KpiCard kpiIngresos;
     public javax.swing.JLabel lblBudgetSubtitle;
     public javax.swing.JLabel lblBudgetVsSpendingTitle;
+    public javax.swing.JLabel lblCollaborator;
     public javax.swing.JLabel lblFoodDesc;
     public javax.swing.JLabel lblFoodExcess;
     public javax.swing.JLabel lblFoodStatus;

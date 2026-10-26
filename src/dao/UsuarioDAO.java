@@ -28,6 +28,7 @@ public class UsuarioDAO {
                 usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
                 usuario.setNombre(rs.getString("nombre"));
+                try { usuario.setApellidos(rs.getString("apellidos")); } catch (Exception ignored) {}
                 usuario.setEmail(rs.getString("email"));
                 usuario.setRol(rs.getString("rol"));
             }
@@ -165,6 +166,7 @@ public class UsuarioDAO {
                     usuario = new Usuario();
                     usuario.setId(rs.getInt("id"));
                     usuario.setNombre(rs.getString("nombre"));
+                    try { usuario.setApellidos(rs.getString("apellidos")); } catch (Exception ignored) {}
                     usuario.setEmail(rs.getString("email"));
                     usuario.setRol(rs.getString("rol"));
                 }
@@ -174,7 +176,11 @@ public class UsuarioDAO {
     }
 
     public String registrarUsuario(String nombre, String email, String password) throws Exception {
-        String sql = "{CALL CG_RegistrarUsuario_SP(?, ?, ?)}";
+        return registrarUsuario(nombre, null, email, password);
+    }
+
+    public String registrarUsuario(String nombre, String apellidos, String email, String password) throws Exception {
+        String sql = "{CALL CG_RegistrarUsuario_SP(?, ?, ?, ?)}";
         
         try (
             Connection conn = ConexionDB.getConnection();
@@ -183,6 +189,7 @@ public class UsuarioDAO {
             stmt.setString(1, nombre);
             stmt.setString(2, email);
             stmt.setString(3, password);
+            stmt.setString(4, apellidos);
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {

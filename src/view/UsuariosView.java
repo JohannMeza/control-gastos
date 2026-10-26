@@ -1,21 +1,17 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Cursor;
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.table.DefaultTableModel;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import controller.UsuarioController;
+import view.components.ModernTableHelper;
 
 /**
- * Vista de Control de Usuarios y Acceso Colaborativo.
+ * Vista de Control de Usuarios y Acceso Colaborativo con soporte para NetBeans GUI Builder.
  */
 public class UsuariosView extends javax.swing.JFrame {
 
@@ -23,71 +19,69 @@ public class UsuariosView extends javax.swing.JFrame {
 
     public UsuariosView() {
         initComponents();
+        initCustomStyles();
+        setSize(1260, 780);
         setResizable(false);
-        setTitle("Panel de Administración");
+        setTitle("Finandes - Gestión de Usuarios Colaborativos");
         setLocationRelativeTo(null);
-        setupTableStyle();
-        this.controller = new controller.UsuarioController(this);
-        
-        // Configurar Sidebar y navegación
-        Sidebar.setLayout(null);
-        jPanelProducts.setBounds(0, 10, 200, 35);
-        pnlGasto.setBounds(0, 70, 200, 35);
-        jPanelCustomers.setBounds(0, 130, 200, 35);
-        jPanelEmployes.setBounds(0, 190, 200, 35);
-        jPanelSupplimers.setBounds(0, 250, 200, 35);
-        jPanelCategories.setBounds(0, 310, 200, 35);
 
-        Sidebar.revalidate();
-        Sidebar.repaint();
-        util.MenuHelper.addAvatarToHeader(this, Header);
+        this.controller = new controller.UsuarioController(this);
+    }
+
+    private void initCustomStyles() {
+        ModernTableHelper.styleTable(tblUsuarios);
+        ModernTableHelper.styleScrollPane(jScrollPaneUsuarios);
+        scrollContent.getVerticalScrollBar().setUnitIncrement(16);
+
+        setupTableStyle();
+
+        headerBar.getBtnAccion().addActionListener(evt -> {
+            txtCorreo.requestFocus();
+            txtCorreo.selectAll();
+        });
     }
 
     private void setupTableStyle() {
-        tblUsuarios.setRowHeight(50); // Tall row height for avatar + name/email
-        tblUsuarios.getTableHeader().setFont(new Font("Dialog", Font.BOLD, 12));
-        tblUsuarios.getTableHeader().setBackground(new Color(248, 250, 252));
-        tblUsuarios.getTableHeader().setForeground(new Color(71, 85, 105));
-        
-        // Column 0 (Usuario) - Avatar circle + Name & Email
+        tblUsuarios.setRowHeight(48);
+
+        // Columna 0 (Usuario) - Avatar circular + Nombre y Correo
+        tblUsuarios.getColumnModel().getColumn(0).setPreferredWidth(260);
         tblUsuarios.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+                    boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 String valStr = (value != null) ? value.toString() : "";
-                
-                // Parse initials, name, email
-                // Format: "Initials|Name|Email"
+
                 if (valStr.contains("|")) {
                     String[] parts = valStr.split("\\|");
                     String initials = parts[0];
                     String name = parts[1];
                     String email = parts[2];
-                    
-                    String avatarColor = "#dbeafe"; // Light blue for avatar bg
-                    String avatarText = "#1e40af";  // Dark blue for avatar fg
-                    
+
+                    String avatarBg = "#E0F2FE";
+                    String avatarFg = "#0369A1";
+
                     if (initials.equals("❓")) {
-                        avatarColor = "#f1f5f9";
-                        avatarText = "#64748b";
+                        avatarBg = "#FEF3C7";
+                        avatarFg = "#D97706";
                     } else if (initials.equals("MS")) {
-                        avatarColor = "#d1fae5";
-                        avatarText = "#065f46";
+                        avatarBg = "#ECFDF5";
+                        avatarFg = "#047857";
                     } else if (initials.equals("LW")) {
-                        avatarColor = "#ffedd5";
-                        avatarText = "#9a3412";
+                        avatarBg = "#FFEDD5";
+                        avatarFg = "#9A3412";
                     }
-                    
-                    label.setText("<html><table style='margin: 4px; padding: 0;'><tr>"
-                        + "<td><div style='background-color:" + avatarColor + "; color:" + avatarText 
-                        + "; border-radius:14px; width:28px; height:28px; text-align:center; line-height:28px; font-weight:bold; font-size:11px;'>" 
-                        + initials + "</div></td>"
-                        + "<td style='padding-left:8px;'><b style='color:#0b1c30; font-size:11px;'>" + name + "</b><br/>"
-                        + "<span style='color:#64748b; font-size:9px;'>" + email + "</span></td>"
-                        + "</tr></table></html>");
+
+                    label.setText("<html><table style='margin: 2px 4px; padding: 0;'><tr>"
+                            + "<td><div style='background-color:" + avatarBg + "; color:" + avatarFg
+                            + "; border-radius:14px; width:28px; height:28px; text-align:center; line-height:28px; font-weight:bold; font-size:10px; font-family: Segoe UI;'>"
+                            + initials + "</div></td>"
+                            + "<td style='padding-left:10px;'><b style='color:#0F172A; font-size:11px; font-family: Segoe UI;'>" + name + "</b><br/>"
+                            + "<span style='color:#64748B; font-size:10px; font-family: Segoe UI;'>" + email + "</span></td>"
+                            + "</tr></table></html>");
                 }
-                
+
                 if (isSelected) {
                     label.setBackground(table.getSelectionBackground());
                 } else {
@@ -96,32 +90,33 @@ public class UsuariosView extends javax.swing.JFrame {
                 return label;
             }
         });
-        
-        // Column 1 (Rol) - Capsule Pill
+
+        // Columna 1 (Rol) - Badge tipo cápsula
+        tblUsuarios.getColumnModel().getColumn(1).setPreferredWidth(100);
         tblUsuarios.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+                    boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 label.setHorizontalAlignment(SwingConstants.CENTER);
                 String valStr = (value != null) ? value.toString() : "";
-                
-                String bg = "#f1f5f9";
-                String fg = "#334155";
-                
-                if (valStr.equals("ADMIN")) {
-                    bg = "#e0e7ff";
-                    fg = "#3730a3";
-                } else if (valStr.equals("EDITOR")) {
-                    bg = "#d1fae5";
-                    fg = "#065f46";
-                } else if (valStr.equals("VIEWER")) {
-                    bg = "#f1f5f9";
-                    fg = "#334155";
+
+                String bg = "#F1F5F9";
+                String fg = "#475569";
+
+                if (valStr.equalsIgnoreCase("ADMIN") || valStr.equalsIgnoreCase("ADMINISTRADOR")) {
+                    bg = "#E0F2FE";
+                    fg = "#0369A1";
+                } else if (valStr.equalsIgnoreCase("EDITOR")) {
+                    bg = "#ECFDF5";
+                    fg = "#047857";
+                } else if (valStr.equalsIgnoreCase("VIEWER") || valStr.equalsIgnoreCase("LECTOR")) {
+                    bg = "#F1F5F9";
+                    fg = "#475569";
                 }
-                
-                label.setText("<html><body style='padding: 2px 8px; background-color:" + bg + "; color:" + fg + "; border-radius:10px; font-weight:bold; font-size:9px;'>" + valStr + "</body></html>");
-                
+
+                label.setText("<html><body style='padding: 3px 10px; background-color:" + bg + "; color:" + fg + "; border-radius:10px; font-weight:bold; font-size:9px; font-family: Segoe UI;'>" + valStr + "</body></html>");
+
                 if (isSelected) {
                     label.setBackground(table.getSelectionBackground());
                 } else {
@@ -130,26 +125,27 @@ public class UsuariosView extends javax.swing.JFrame {
                 return label;
             }
         });
-        
-        // Column 2 (Estado) - Colored bullet dot
+
+        // Columna 2 (Estado) - Viñeta semafórica
+        tblUsuarios.getColumnModel().getColumn(2).setPreferredWidth(90);
         tblUsuarios.getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+                    boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 label.setHorizontalAlignment(SwingConstants.CENTER);
                 String valStr = (value != null) ? value.toString() : "";
-                
-                String dotColor = "#10b981"; // Green for Active
+
+                String dotColor = "#10B981";
                 String text = "Activo";
-                
+
                 if (valStr.equalsIgnoreCase("Pending") || valStr.equalsIgnoreCase("Pendiente")) {
-                    dotColor = "#f59e0b"; // Orange for Pending
+                    dotColor = "#D97706";
                     text = "Pendiente";
                 }
-                
-                label.setText("<html><span style='color:" + dotColor + "; font-size:12px;'>&#9679;</span> <span style='color:#334155; font-size:11px;'>" + text + "</span></html>");
-                
+
+                label.setText("<html><span style='color:" + dotColor + "; font-size:12px;'>&#9679;</span> <span style='color:#334155; font-size:11px; font-family: Segoe UI;'>" + text + "</span></html>");
+
                 if (isSelected) {
                     label.setBackground(table.getSelectionBackground());
                 } else {
@@ -158,26 +154,25 @@ public class UsuariosView extends javax.swing.JFrame {
                 return label;
             }
         });
-        
-        // Column 3 (Acciones) - Text Links or icon
+
+        // Columna 3 (Acciones) - Enlace de acción
+        tblUsuarios.getColumnModel().getColumn(3).setPreferredWidth(90);
         tblUsuarios.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+                    boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 label.setHorizontalAlignment(SwingConstants.CENTER);
                 String valStr = (value != null) ? value.toString() : "";
-                
+
                 if (valStr.equals("SETTINGS")) {
-                    label.setText("<html><span style='font-size:16px; color:#64748b;'>&#9881;</span></html>"); // Gear emoji/symbol
-                } else if (valStr.equals("CHANGE_REMOVE")) {
-                    label.setText("<html><a href='#' style='color:#2563eb; text-decoration:none; font-size:11px; font-weight:bold;'>Opciones</a></html>");
-                } else if (valStr.equals("RESEND_REVOKE")) {
-                    label.setText("<html><a href='#' style='color:#2563eb; text-decoration:none; font-size:11px; font-weight:bold;'>Opciones</a></html>");
+                    label.setText("<html><span style='font-size:14px; color:#64748B;'>&#9881;</span></html>");
+                } else if (valStr.equals("CHANGE_REMOVE") || valStr.equals("RESEND_REVOKE")) {
+                    label.setText("<html><a href='#' style='color:#009FE3; text-decoration:none; font-size:11px; font-weight:bold; font-family: Segoe UI;'>Opciones</a></html>");
                 } else {
                     label.setText(valStr);
                 }
-                
+
                 if (isSelected) {
                     label.setBackground(table.getSelectionBackground());
                 } else {
@@ -186,52 +181,36 @@ public class UsuariosView extends javax.swing.JFrame {
                 return label;
             }
         });
-    }
-
-    private void addMockData() {
-        DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
-        model.addRow(new Object[]{"JD|Jane Doe (Propietario)|jane.doe@company.com", "ADMIN", "Activo", "SETTINGS"});
-        model.addRow(new Object[]{"MS|Mark Smith|m.smith@finance.dev", "EDITOR", "Activo", "CHANGE_REMOVE"});
-        model.addRow(new Object[]{"LW|Lucas Wright|lucas.w@partners.net", "VIEWER", "Activo", "CHANGE_REMOVE"});
-        model.addRow(new Object[]{"❓|pending.invite@acme.com|Invitado hace 2 días", "VIEWER", "Pendiente", "RESEND_REVOKE"});
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Sidebar = new javax.swing.JPanel();
-        jPanelProducts = new javax.swing.JPanel();
-        jLabelProducts = new javax.swing.JLabel();
-        pnlGasto = new javax.swing.JPanel();
-        jLabelPurchases = new javax.swing.JLabel();
-        jPanelCustomers = new javax.swing.JPanel();
-        jLabelCustomers = new javax.swing.JLabel();
-        jPanelEmployes = new javax.swing.JPanel();
-        jLabelEmployes = new javax.swing.JLabel();
-        jPanelSupplimers = new javax.swing.JPanel();
-        jLabelSupplimers = new javax.swing.JLabel();
-        jPanelCategories = new javax.swing.JPanel();
-        jLabelCategories = new javax.swing.JLabel();
-        Body = new javax.swing.JTabbedPane();
-        jPanelTabUsuarios = new javax.swing.JPanel();
-        lblTabTitle = new javax.swing.JLabel();
-        lblTabDesc = new javax.swing.JLabel();
-        btnExportar = new javax.swing.JButton();
+        sidebarPanel = new view.components.SidebarPanel();
+        headerBar = new view.components.HeaderBar();
+        scrollContent = new javax.swing.JScrollPane();
+        pnlMainContent = new javax.swing.JPanel();
         pnlInvitarUsuario = new javax.swing.JPanel();
         lblInvitarUsuarioTitle = new javax.swing.JLabel();
+        lblBadgeInvitar = new javax.swing.JLabel();
+        lblInvitarSub = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         lblRol = new javax.swing.JLabel();
-        cbRol = new javax.swing.JComboBox();
+        cbRol = new javax.swing.JComboBox<>();
         btnEnviarInvitacion = new javax.swing.JButton();
+        pnlLicencias = new javax.swing.JPanel();
         lblAsientosTitle = new javax.swing.JLabel();
         lblAsientosValue = new javax.swing.JLabel();
         pbAsientos = new javax.swing.JProgressBar();
         lblLicenciaDesc = new javax.swing.JLabel();
+        lblAsientosBadge = new javax.swing.JLabel();
         pnlUsuariosAutorizados = new javax.swing.JPanel();
         lblUsuariosAutorizadosTitle = new javax.swing.JLabel();
+        lblTotalBadge = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        btnExportar = new javax.swing.JButton();
         jScrollPaneUsuarios = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
         lblConexionesCount = new javax.swing.JLabel();
@@ -239,316 +218,169 @@ public class UsuariosView extends javax.swing.JFrame {
         btnPagActive = new javax.swing.JButton();
         btnPagNext = new javax.swing.JButton();
         pnlCardSincronizacion = new javax.swing.JPanel();
+        lblIconSincr = new javax.swing.JLabel();
         lblCardSincronizacionTitle = new javax.swing.JLabel();
         lblCardSincronizacionValue = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        lblCardSincronizacionSub = new javax.swing.JLabel();
         pnlCardMfa = new javax.swing.JPanel();
+        lblIconMfa = new javax.swing.JLabel();
         lblCardMfaTitle = new javax.swing.JLabel();
         lblCardMfaValue = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        Logo = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        Header = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblCardMfaSub = new javax.swing.JLabel();
+        pnlCardAuditoria = new javax.swing.JPanel();
+        lblIconAuditoria = new javax.swing.JLabel();
+        lblCardAuditoriaTitle = new javax.swing.JLabel();
+        lblCardAuditoriaValue = new javax.swing.JLabel();
+        lblCardAuditoriaSub = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Finandes - Gestión de Usuarios Colaborativos");
+        setBackground(new java.awt.Color(248, 250, 252));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Sidebar.setBackground(new java.awt.Color(248, 250, 252));
-        Sidebar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(234, 241, 255)));
+        sidebarPanel.setActiveModule("Usuarios");
+        getContentPane().add(sidebarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 750));
 
-        jPanelProducts.setBackground(new java.awt.Color(248, 250, 252));
-        jPanelProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelProducts.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelProductsMouseClicked(evt);
-            }
-        });
+        headerBar.setAccionBoton("+ Transacción");
+        headerBar.setModuloActual("Gestión de Usuarios Colaborativos");
+        getContentPane().add(headerBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 1040, 60));
 
-        jLabelProducts.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelProducts.setForeground(new java.awt.Color(71, 85, 105));
-        jLabelProducts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/aplicaciones.png"))); // NOI18N
-        jLabelProducts.setText("Dashboard");
+        scrollContent.setBorder(null);
+        scrollContent.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        javax.swing.GroupLayout jPanelProductsLayout = new javax.swing.GroupLayout(jPanelProducts);
-        jPanelProducts.setLayout(jPanelProductsLayout);
-        jPanelProductsLayout.setHorizontalGroup(
-            jPanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelProductsLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabelProducts)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelProductsLayout.setVerticalGroup(
-            jPanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
-
-        pnlGasto.setBackground(new java.awt.Color(248, 250, 252));
-        pnlGasto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlGasto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlGastoMouseClicked(evt);
-            }
-        });
-
-        jLabelPurchases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelPurchases.setForeground(new java.awt.Color(71, 85, 105));
-        jLabelPurchases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/gastos.png"))); // NOI18N
-        jLabelPurchases.setText("Gastos");
-
-        javax.swing.GroupLayout pnlGastoLayout = new javax.swing.GroupLayout(pnlGasto);
-        pnlGasto.setLayout(pnlGastoLayout);
-        pnlGastoLayout.setHorizontalGroup(
-            pnlGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGastoLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabelPurchases)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnlGastoLayout.setVerticalGroup(
-            pnlGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelPurchases, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
-
-        jPanelCustomers.setBackground(new java.awt.Color(248, 250, 252));
-        jPanelCustomers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelCustomers.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelCustomersMouseClicked(evt);
-            }
-        });
-
-        jLabelCustomers.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelCustomers.setForeground(new java.awt.Color(71, 85, 105));
-        jLabelCustomers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/presupuesto.png"))); // NOI18N
-        jLabelCustomers.setText("Presupuesto");
-
-        javax.swing.GroupLayout jPanelCustomersLayout = new javax.swing.GroupLayout(jPanelCustomers);
-        jPanelCustomers.setLayout(jPanelCustomersLayout);
-        jPanelCustomersLayout.setHorizontalGroup(
-            jPanelCustomersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCustomersLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabelCustomers)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelCustomersLayout.setVerticalGroup(
-            jPanelCustomersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelCustomers, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
-
-        jPanelEmployes.setBackground(new java.awt.Color(248, 250, 252));
-        jPanelEmployes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelEmployes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelEmployesMouseClicked(evt);
-            }
-        });
-
-        jLabelEmployes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelEmployes.setForeground(new java.awt.Color(71, 85, 105));
-        jLabelEmployes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/ahorros.png"))); // NOI18N
-        jLabelEmployes.setText("Ahorros");
-
-        javax.swing.GroupLayout jPanelEmployesLayout = new javax.swing.GroupLayout(jPanelEmployes);
-        jPanelEmployes.setLayout(jPanelEmployesLayout);
-        jPanelEmployesLayout.setHorizontalGroup(
-            jPanelEmployesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelEmployesLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabelEmployes)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelEmployesLayout.setVerticalGroup(
-            jPanelEmployesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelEmployes, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
-
-        jPanelSupplimers.setBackground(new java.awt.Color(248, 250, 252));
-        jPanelSupplimers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelSupplimers.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelSupplimersMouseClicked(evt);
-            }
-        });
-
-        jLabelSupplimers.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelSupplimers.setForeground(new java.awt.Color(71, 85, 105));
-        jLabelSupplimers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/deudas.png"))); // NOI18N
-        jLabelSupplimers.setText("Deudas");
-
-        javax.swing.GroupLayout jPanelSupplimersLayout = new javax.swing.GroupLayout(jPanelSupplimers);
-        jPanelSupplimers.setLayout(jPanelSupplimersLayout);
-        jPanelSupplimersLayout.setHorizontalGroup(
-            jPanelSupplimersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelSupplimersLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabelSupplimers)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelSupplimersLayout.setVerticalGroup(
-            jPanelSupplimersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelSupplimers, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
-
-        jPanelCategories.setBackground(new java.awt.Color(244, 248, 254));
-        jPanelCategories.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 6, 0, 0, new java.awt.Color(37, 99, 235)));
-
-        jLabelCategories.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelCategories.setForeground(new java.awt.Color(37, 99, 235));
-        jLabelCategories.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/usuario.png"))); // NOI18N
-        jLabelCategories.setText("Usuarios");
-
-        javax.swing.GroupLayout jPanelCategoriesLayout = new javax.swing.GroupLayout(jPanelCategories);
-        jPanelCategories.setLayout(jPanelCategoriesLayout);
-        jPanelCategoriesLayout.setHorizontalGroup(
-            jPanelCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCategoriesLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabelCategories)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelCategoriesLayout.setVerticalGroup(
-            jPanelCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelCategories, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
-        Sidebar.setLayout(SidebarLayout);
-        SidebarLayout.setHorizontalGroup(
-            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelCustomers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelEmployes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelSupplimers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelCategories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        SidebarLayout.setVerticalGroup(
-            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanelProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(pnlGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jPanelCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jPanelEmployes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jPanelSupplimers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jPanelCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(230, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(Sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 200, 600));
-
-        Body.setBackground(new java.awt.Color(248, 249, 255));
-
-        jPanelTabUsuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblTabTitle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblTabTitle.setForeground(new java.awt.Color(11, 28, 48));
-        lblTabTitle.setText("Acceso Colaborativo");
-        jPanelTabUsuarios.add(lblTabTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
-        lblTabDesc.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        lblTabDesc.setForeground(new java.awt.Color(100, 116, 139));
-        lblTabDesc.setText("Gestiona quién puede ver y editar este espacio de trabajo financiero.");
-        jPanelTabUsuarios.add(lblTabDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 45, -1, -1));
-
-        btnExportar.setBackground(new java.awt.Color(255, 255, 255));
-        btnExportar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnExportar.setForeground(new java.awt.Color(71, 85, 105));
-        btnExportar.setText("Exportar Lista");
-        btnExportar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        btnExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportarActionPerformed(evt);
-            }
-        });
-        jPanelTabUsuarios.add(btnExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 20, 140, 28));
+        pnlMainContent.setBackground(new java.awt.Color(248, 250, 252));
+        pnlMainContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlInvitarUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        pnlInvitarUsuario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 234, 241), 1, true));
+        pnlInvitarUsuario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
         pnlInvitarUsuario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblInvitarUsuarioTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblInvitarUsuarioTitle.setForeground(new java.awt.Color(11, 28, 48));
-        lblInvitarUsuarioTitle.setText("Invitar Nuevo Usuario");
-        pnlInvitarUsuario.add(lblInvitarUsuarioTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 15, -1, -1));
+        lblInvitarUsuarioTitle.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        lblInvitarUsuarioTitle.setForeground(new java.awt.Color(15, 23, 42));
+        lblInvitarUsuarioTitle.setText("INVITAR NUEVO USUARIO");
+        pnlInvitarUsuario.add(lblInvitarUsuarioTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 14, 200, 16));
 
-        lblCorreo.setForeground(new java.awt.Color(71, 85, 105));
-        lblCorreo.setText("Correo Electrónico");
-        pnlInvitarUsuario.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 45, -1, -1));
+        lblBadgeInvitar.setBackground(new java.awt.Color(224, 242, 254));
+        lblBadgeInvitar.setFont(new java.awt.Font("Segoe UI", 1, 9)); // NOI18N
+        lblBadgeInvitar.setForeground(new java.awt.Color(3, 105, 161));
+        lblBadgeInvitar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBadgeInvitar.setText("ACCESO");
+        lblBadgeInvitar.setOpaque(true);
+        pnlInvitarUsuario.add(lblBadgeInvitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 12, 64, 18));
 
+        lblInvitarSub.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        lblInvitarSub.setForeground(new java.awt.Color(100, 116, 139));
+        lblInvitarSub.setText("Comparte el acceso a tus finanzas");
+        pnlInvitarUsuario.add(lblInvitarSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 32, 280, 14));
+
+        lblCorreo.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        lblCorreo.setForeground(new java.awt.Color(100, 116, 139));
+        lblCorreo.setText("Correo Electrónico *");
+        pnlInvitarUsuario.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 62, 280, 14));
+
+        txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txtCorreo.setText("colega@ejemplo.com");
-        txtCorreo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 226, 226), 1, true));
-        pnlInvitarUsuario.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 63, 280, 28));
+        txtCorreo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(203, 213, 225), 1, true));
+        pnlInvitarUsuario.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 78, 283, 30));
 
-        lblRol.setForeground(new java.awt.Color(71, 85, 105));
-        lblRol.setText("Rol de Acceso");
-        pnlInvitarUsuario.add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 105, -1, -1));
+        lblRol.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        lblRol.setForeground(new java.awt.Color(100, 116, 139));
+        lblRol.setText("Rol Asignado *");
+        pnlInvitarUsuario.add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 118, 280, 14));
 
-        cbRol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Lector (Solo Lectura)", "Editor (Modificar)", "Administrador (Acceso Total)" }));
-        pnlInvitarUsuario.add(cbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 123, 280, 28));
+        cbRol.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lector (Sólo Lectura)", "Editor (Lectura y Edición)", "Administrador (Control Total)" }));
+        pnlInvitarUsuario.add(cbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 134, 283, 30));
 
-        btnEnviarInvitacion.setBackground(new java.awt.Color(37, 99, 235));
-        btnEnviarInvitacion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnEnviarInvitacion.setBackground(new java.awt.Color(0, 159, 227));
+        btnEnviarInvitacion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEnviarInvitacion.setForeground(new java.awt.Color(255, 255, 255));
         btnEnviarInvitacion.setText("Enviar Invitación");
+        btnEnviarInvitacion.setBorder(null);
         btnEnviarInvitacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEnviarInvitacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEnviarInvitacionActionPerformed(evt);
             }
         });
-        pnlInvitarUsuario.add(btnEnviarInvitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 175, 280, 34));
+        pnlInvitarUsuario.add(btnEnviarInvitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 180, 283, 34));
 
-        lblAsientosTitle.setForeground(new java.awt.Color(71, 85, 105));
-        lblAsientosTitle.setText("Usuarios compartidos");
-        pnlInvitarUsuario.add(lblAsientosTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 235, -1, -1));
+        pnlLicencias.setBackground(new java.awt.Color(248, 250, 252));
+        pnlLicencias.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        pnlLicencias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblAsientosValue.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        lblAsientosValue.setForeground(new java.awt.Color(11, 28, 48));
+        lblAsientosTitle.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblAsientosTitle.setForeground(new java.awt.Color(100, 116, 139));
+        lblAsientosTitle.setText("LICENCIAS USADAS");
+        pnlLicencias.add(lblAsientosTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 16, 150, 14));
+
+        lblAsientosValue.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblAsientosValue.setForeground(new java.awt.Color(15, 23, 42));
         lblAsientosValue.setText("4 / 10");
-        pnlInvitarUsuario.add(lblAsientosValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 235, -1, -1));
+        pnlLicencias.add(lblAsientosValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 34, 250, 24));
 
-        pbAsientos.setForeground(new java.awt.Color(37, 99, 235));
+        pbAsientos.setForeground(new java.awt.Color(0, 159, 227));
         pbAsientos.setValue(40);
-        pbAsientos.setBorderPainted(false);
-        pnlInvitarUsuario.add(pbAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 255, 280, 8));
+        pnlLicencias.add(pbAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 66, 255, 8));
 
-        lblLicenciaDesc.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        lblLicenciaDesc.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         lblLicenciaDesc.setForeground(new java.awt.Color(100, 116, 139));
-        lblLicenciaDesc.setText("<html><body style='width: 250px;'>La licencia estándar incluye hasta 10 asientos colaborativos.</body></html>");
-        pnlInvitarUsuario.add(lblLicenciaDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 275, -1, -1));
+        lblLicenciaDesc.setText("<html>Plan Profesional Finandes.<br/><b style='color:#10b981;'>6 asientos disponibles</b> para tu equipo de trabajo.</html>");
+        pnlLicencias.add(lblLicenciaDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 86, 255, 45));
 
-        jPanelTabUsuarios.add(pnlInvitarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 310, 360));
+        lblAsientosBadge.setBackground(new java.awt.Color(209, 250, 229));
+        lblAsientosBadge.setFont(new java.awt.Font("Segoe UI", 1, 9)); // NOI18N
+        lblAsientosBadge.setForeground(new java.awt.Color(16, 185, 129));
+        lblAsientosBadge.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAsientosBadge.setText("ACTIVO");
+        lblAsientosBadge.setOpaque(true);
+        pnlLicencias.add(lblAsientosBadge, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 14, 58, 16));
+
+        pnlInvitarUsuario.add(pnlLicencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 240, 283, 220));
+
+        pnlMainContent.add(pnlInvitarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 15, 315, 480));
 
         pnlUsuariosAutorizados.setBackground(new java.awt.Color(255, 255, 255));
-        pnlUsuariosAutorizados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 234, 241), 1, true));
+        pnlUsuariosAutorizados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
         pnlUsuariosAutorizados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblUsuariosAutorizadosTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblUsuariosAutorizadosTitle.setForeground(new java.awt.Color(11, 28, 48));
-        lblUsuariosAutorizadosTitle.setText("Usuarios Autorizados");
-        pnlUsuariosAutorizados.add(lblUsuariosAutorizadosTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 15, -1, -1));
+        lblUsuariosAutorizadosTitle.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        lblUsuariosAutorizadosTitle.setForeground(new java.awt.Color(15, 23, 42));
+        lblUsuariosAutorizadosTitle.setText("USUARIOS AUTORIZADOS");
+        pnlUsuariosAutorizados.add(lblUsuariosAutorizadosTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 14, 200, 18));
 
+        lblTotalBadge.setBackground(new java.awt.Color(241, 245, 249));
+        lblTotalBadge.setFont(new java.awt.Font("Segoe UI", 1, 9)); // NOI18N
+        lblTotalBadge.setForeground(new java.awt.Color(71, 85, 105));
+        lblTotalBadge.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalBadge.setText("4 en Total");
+        lblTotalBadge.setOpaque(true);
+        pnlUsuariosAutorizados.add(lblTotalBadge, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 12, 76, 18));
+
+        txtBuscar.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(158, 158, 158));
         txtBuscar.setText("Buscar usuarios...");
-        txtBuscar.setToolTipText("");
-        txtBuscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 226, 226), 1, true));
-        pnlUsuariosAutorizados.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 12, 195, 26));
+        txtBuscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(203, 213, 225), 1, true));
+        pnlUsuariosAutorizados.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 42, 485, 30));
 
+        btnExportar.setBackground(new java.awt.Color(255, 255, 255));
+        btnExportar.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnExportar.setForeground(new java.awt.Color(71, 85, 105));
+        btnExportar.setText("Exportar CSV");
+        btnExportar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        btnExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
+        pnlUsuariosAutorizados.add(btnExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 42, 131, 30));
+
+        jScrollPaneUsuarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 232, 226)));
+
+        tblUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
+            new Object [][] {},
             new String [] {
                 "USUARIO", "ROL", "ESTADO", "ACCIONES"
             }
@@ -561,262 +393,208 @@ public class UsuariosView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblUsuarios.setSelectionBackground(new java.awt.Color(234, 241, 255));
-        tblUsuarios.setSelectionForeground(new java.awt.Color(11, 28, 48));
+        tblUsuarios.setGridColor(new java.awt.Color(226, 232, 240));
+        tblUsuarios.setRowHeight(48);
+        tblUsuarios.setSelectionBackground(new java.awt.Color(224, 240, 250));
+        tblUsuarios.setSelectionForeground(new java.awt.Color(15, 23, 42));
         jScrollPaneUsuarios.setViewportView(tblUsuarios);
-        if (tblUsuarios.getColumnModel().getColumnCount() > 0) {
-            tblUsuarios.getColumnModel().getColumn(0).setMinWidth(200);
-            tblUsuarios.getColumnModel().getColumn(0).setPreferredWidth(260);
-            tblUsuarios.getColumnModel().getColumn(1).setResizable(false);
-            tblUsuarios.getColumnModel().getColumn(1).setMinWidth(80);
-            tblUsuarios.getColumnModel().getColumn(1).setPreferredWidth(80);
-            tblUsuarios.getColumnModel().getColumn(2).setResizable(false);
-            tblUsuarios.getColumnModel().getColumn(2).setMinWidth(90);
-            tblUsuarios.getColumnModel().getColumn(2).setPreferredWidth(90);
-            tblUsuarios.getColumnModel().getColumn(3).setResizable(false);
-            tblUsuarios.getColumnModel().getColumn(3).setMinWidth(150);
-            tblUsuarios.getColumnModel().getColumn(3).setPreferredWidth(160);
-        }
 
-        pnlUsuariosAutorizados.add(jScrollPaneUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 55, 610, 255));
+        pnlUsuariosAutorizados.add(jScrollPaneUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 84, 625, 345));
 
+        lblConexionesCount.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         lblConexionesCount.setForeground(new java.awt.Color(100, 116, 139));
         lblConexionesCount.setText("Mostrando 4 de 4 conexiones activas");
-        pnlUsuariosAutorizados.add(lblConexionesCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 320, -1, -1));
+        pnlUsuariosAutorizados.add(lblConexionesCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 440, 300, 24));
 
         btnPagPrev.setBackground(new java.awt.Color(255, 255, 255));
-        btnPagPrev.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnPagPrev.setForeground(new java.awt.Color(100, 116, 139));
+        btnPagPrev.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnPagPrev.setForeground(new java.awt.Color(71, 85, 105));
         btnPagPrev.setText("<");
-        btnPagPrev.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        btnPagPrev.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPagPrev.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
         btnPagPrev.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPagPrevActionPerformed(evt);
             }
         });
-        pnlUsuariosAutorizados.add(btnPagPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 318, 22, 22));
+        pnlUsuariosAutorizados.add(btnPagPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 440, 30, 24));
 
-        btnPagActive.setBackground(new java.awt.Color(37, 99, 235));
-        btnPagActive.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnPagActive.setBackground(new java.awt.Color(0, 159, 227));
+        btnPagActive.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btnPagActive.setForeground(new java.awt.Color(255, 255, 255));
         btnPagActive.setText("1");
-        btnPagActive.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPagActive.setBorder(null);
         btnPagActive.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPagActiveActionPerformed(evt);
             }
         });
-        pnlUsuariosAutorizados.add(btnPagActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 318, 22, 22));
+        pnlUsuariosAutorizados.add(btnPagActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 440, 30, 24));
 
         btnPagNext.setBackground(new java.awt.Color(255, 255, 255));
-        btnPagNext.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnPagNext.setForeground(new java.awt.Color(100, 116, 139));
+        btnPagNext.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnPagNext.setForeground(new java.awt.Color(71, 85, 105));
         btnPagNext.setText(">");
-        btnPagNext.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        btnPagNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPagNext.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
         btnPagNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPagNextActionPerformed(evt);
             }
         });
-        pnlUsuariosAutorizados.add(btnPagNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(589, 318, 22, 22));
+        pnlUsuariosAutorizados.add(btnPagNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 440, 30, 24));
 
-        jPanelTabUsuarios.add(pnlUsuariosAutorizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 640, 360));
+        pnlMainContent.add(pnlUsuariosAutorizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(347, 15, 657, 480));
 
-        pnlCardSincronizacion.setBackground(new java.awt.Color(255, 255, 255));
-        pnlCardSincronizacion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 234, 241), 1, true));
+        pnlCardSincronizacion.setBackground(new java.awt.Color(240, 249, 255));
+        pnlCardSincronizacion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(186, 230, 253), 1, true));
         pnlCardSincronizacion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblCardSincronizacionTitle.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        lblCardSincronizacionTitle.setForeground(new java.awt.Color(100, 116, 139));
+        lblIconSincr.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIconSincr.setText("🕒");
+        pnlCardSincronizacion.add(lblIconSincr, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 24, 24));
+
+        lblCardSincronizacionTitle.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblCardSincronizacionTitle.setForeground(new java.awt.Color(3, 105, 161));
         lblCardSincronizacionTitle.setText("ÚLTIMA SINCRONIZACIÓN");
-        pnlCardSincronizacion.add(lblCardSincronizacionTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, -1));
+        pnlCardSincronizacion.add(lblCardSincronizacionTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 14, 250, 14));
 
-        lblCardSincronizacionValue.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        lblCardSincronizacionValue.setForeground(new java.awt.Color(11, 28, 48));
+        lblCardSincronizacionValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblCardSincronizacionValue.setForeground(new java.awt.Color(15, 23, 42));
         lblCardSincronizacionValue.setText("Hace 2 minutos por Jane Doe");
-        pnlCardSincronizacion.add(lblCardSincronizacionValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
+        pnlCardSincronizacion.add(lblCardSincronizacionValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 32, 250, 18));
 
-        jPanel8.setBackground(new java.awt.Color(108, 248, 187));
-        jPanel8.setName(""); // NOI18N
-        jPanel8.setPreferredSize(new java.awt.Dimension(60, 60));
-        jPanel8.setLayout(new java.awt.CardLayout());
+        lblCardSincronizacionSub.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblCardSincronizacionSub.setForeground(new java.awt.Color(100, 116, 139));
+        lblCardSincronizacionSub.setText("Datos actualizados en tiempo real");
+        pnlCardSincronizacion.add(lblCardSincronizacionSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 52, 250, 14));
 
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
-        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel10.setRequestFocusEnabled(false);
-        jPanel8.add(jLabel10, "card2");
+        pnlMainContent.add(pnlCardSincronizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 510, 315, 95));
 
-        pnlCardSincronizacion.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 40, 40));
-
-        jPanelTabUsuarios.add(pnlCardSincronizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 475, 90));
-
-        pnlCardMfa.setBackground(new java.awt.Color(255, 255, 255));
-        pnlCardMfa.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 234, 241), 1, true));
+        pnlCardMfa.setBackground(new java.awt.Color(236, 253, 245));
+        pnlCardMfa.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(167, 243, 208), 1, true));
         pnlCardMfa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblCardMfaTitle.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        lblCardMfaTitle.setForeground(new java.awt.Color(100, 116, 139));
-        lblCardMfaTitle.setText("MFA ACTIVADO");
-        pnlCardMfa.add(lblCardMfaTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, -1));
+        lblIconMfa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIconMfa.setText("🛡️");
+        pnlCardMfa.add(lblIconMfa, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 24, 24));
 
-        lblCardMfaValue.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        lblCardMfaValue.setForeground(new java.awt.Color(11, 28, 48));
+        lblCardMfaTitle.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblCardMfaTitle.setForeground(new java.awt.Color(4, 120, 87));
+        lblCardMfaTitle.setText("AUTENTICACIÓN MFA");
+        pnlCardMfa.add(lblCardMfaTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 14, 250, 14));
+
+        lblCardMfaValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblCardMfaValue.setForeground(new java.awt.Color(15, 23, 42));
         lblCardMfaValue.setText("100% del equipo protegido");
-        pnlCardMfa.add(lblCardMfaValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
+        pnlCardMfa.add(lblCardMfaValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 32, 250, 18));
 
-        jPanel7.setBackground(new java.awt.Color(211, 228, 254));
-        jPanel7.setName(""); // NOI18N
-        jPanel7.setPreferredSize(new java.awt.Dimension(60, 60));
-        jPanel7.setLayout(new java.awt.CardLayout());
+        lblCardMfaSub.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblCardMfaSub.setForeground(new java.awt.Color(100, 116, 139));
+        lblCardMfaSub.setText("Políticas de seguridad activas");
+        pnlCardMfa.add(lblCardMfaSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 52, 250, 14));
 
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/usuario.png"))); // NOI18N
-        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel9.setRequestFocusEnabled(false);
-        jPanel7.add(jLabel9, "card2");
+        pnlMainContent.add(pnlCardMfa, new org.netbeans.lib.awtextra.AbsoluteConstraints(347, 510, 315, 95));
 
-        pnlCardMfa.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 40, 40));
+        pnlCardAuditoria.setBackground(new java.awt.Color(238, 242, 255));
+        pnlCardAuditoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(199, 210, 254), 1, true));
+        pnlCardAuditoria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanelTabUsuarios.add(pnlCardMfa, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 460, 475, 90));
+        lblIconAuditoria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIconAuditoria.setText("🔒");
+        pnlCardAuditoria.add(lblIconAuditoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 24, 24));
 
-        Body.addTab("Usuarios", jPanelTabUsuarios);
+        lblCardAuditoriaTitle.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblCardAuditoriaTitle.setForeground(new java.awt.Color(55, 48, 163));
+        lblCardAuditoriaTitle.setText("REGISTROS DE AUDITORÍA");
+        pnlCardAuditoria.add(lblCardAuditoriaTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 14, 250, 14));
 
-        getContentPane().add(Body, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 1010, 640));
+        lblCardAuditoriaValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblCardAuditoriaValue.setForeground(new java.awt.Color(67, 56, 202));
+        lblCardAuditoriaValue.setText("Ver historial de seguridad →");
+        lblCardAuditoriaValue.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlCardAuditoria.add(lblCardAuditoriaValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 32, 250, 18));
 
-        Logo.setBackground(new java.awt.Color(248, 250, 252));
-        Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(234, 241, 255)));
-        Logo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        lblCardAuditoriaSub.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblCardAuditoriaSub.setForeground(new java.awt.Color(100, 116, 139));
+        lblCardAuditoriaSub.setText("Control total de accesos y cambios");
+        pnlCardAuditoria.add(lblCardAuditoriaSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 52, 250, 14));
 
-        jLabel13.setBackground(new java.awt.Color(248, 250, 252));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logotipo.png"))); // NOI18N
-        Logo.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 80));
+        pnlMainContent.add(pnlCardAuditoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(678, 510, 326, 95));
 
-        getContentPane().add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 80));
+        scrollContent.setViewportView(pnlMainContent);
 
-        Header.setBackground(new java.awt.Color(255, 255, 255));
-        Header.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(234, 241, 255)));
-        Header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel2.setText("Usuarios");
-        Header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, -1, 39));
-
-        getContentPane().add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 40));
+        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 1040, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
         if (controller != null) {
             controller.exportarCSV();
         }
-    }
+    }//GEN-LAST:event_btnExportarActionPerformed
 
-    private void btnEnviarInvitacionActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnEnviarInvitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarInvitacionActionPerformed
         if (controller != null) {
             controller.enviarInvitacion();
         }
-    }
+    }//GEN-LAST:event_btnEnviarInvitacionActionPerformed
 
-    private void btnPagPrevActionPerformed(java.awt.event.ActionEvent evt) {}
-    private void btnPagActiveActionPerformed(java.awt.event.ActionEvent evt) {}
-    private void btnPagNextActionPerformed(java.awt.event.ActionEvent evt) {}
+    private void btnPagPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagPrevActionPerformed
+    }//GEN-LAST:event_btnPagPrevActionPerformed
 
-    private void pnlGastoMouseClicked(java.awt.event.MouseEvent evt) {
-        SystemView viewSystem = new SystemView();
-        viewSystem.setVisible(true);
-        dispose();
-    }
+    private void btnPagActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagActiveActionPerformed
+    }//GEN-LAST:event_btnPagActiveActionPerformed
 
-    private void jPanelProductsMouseClicked(java.awt.event.MouseEvent evt) {
-        DashboardView viewDashboard = new DashboardView();
-        viewDashboard.setVisible(true);
-        dispose();
-    }
-
-    private void jPanelCustomersMouseClicked(java.awt.event.MouseEvent evt) {
-        PresupuestoView viewPresupuesto = new PresupuestoView();
-        viewPresupuesto.setVisible(true);
-        dispose();
-    }
-
-    private void jPanelEmployesMouseClicked(java.awt.event.MouseEvent evt) {
-        AhorrosView viewAhorros = new AhorrosView();
-        viewAhorros.setVisible(true);
-        dispose();
-    }
-
-    private void jPanelSupplimersMouseClicked(java.awt.event.MouseEvent evt) {
-        DeudasView viewDeudas = new DeudasView();
-        viewDeudas.setVisible(true);
-        dispose();
-    }
+    private void btnPagNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagNextActionPerformed
+    }//GEN-LAST:event_btnPagNextActionPerformed
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UsuariosView().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new UsuariosView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTabbedPane Body;
-    public javax.swing.JPanel Header;
-    public javax.swing.JPanel Logo;
-    public javax.swing.JPanel Sidebar;
     public javax.swing.JButton btnEnviarInvitacion;
     public javax.swing.JButton btnExportar;
     public javax.swing.JButton btnPagActive;
     public javax.swing.JButton btnPagNext;
     public javax.swing.JButton btnPagPrev;
-    public javax.swing.JComboBox cbRol;
-    public javax.swing.JLabel jLabel10;
-    public javax.swing.JLabel jLabel13;
-    public javax.swing.JLabel jLabel2;
-    public javax.swing.JLabel jLabel9;
-    public javax.swing.JLabel jLabelCategories;
-    public javax.swing.JLabel jLabelCustomers;
-    public javax.swing.JLabel jLabelEmployes;
-    public javax.swing.JLabel jLabelProducts;
-    public javax.swing.JLabel jLabelPurchases;
-    public javax.swing.JLabel jLabelSupplimers;
-    public javax.swing.JPanel jPanel7;
-    public javax.swing.JPanel jPanel8;
-    public javax.swing.JPanel jPanelCategories;
-    public javax.swing.JPanel jPanelCustomers;
-    public javax.swing.JPanel jPanelEmployes;
-    public javax.swing.JPanel jPanelProducts;
-    public javax.swing.JPanel jPanelSupplimers;
-    public javax.swing.JPanel jPanelTabUsuarios;
+    public javax.swing.JComboBox<String> cbRol;
+    private view.components.HeaderBar headerBar;
     public javax.swing.JScrollPane jScrollPaneUsuarios;
+    private javax.swing.JLabel lblAsientosBadge;
     public javax.swing.JLabel lblAsientosTitle;
     public javax.swing.JLabel lblAsientosValue;
+    private javax.swing.JLabel lblBadgeInvitar;
+    private javax.swing.JLabel lblCardAuditoriaSub;
+    private javax.swing.JLabel lblCardAuditoriaTitle;
+    private javax.swing.JLabel lblCardAuditoriaValue;
+    private javax.swing.JLabel lblCardMfaSub;
     public javax.swing.JLabel lblCardMfaTitle;
     public javax.swing.JLabel lblCardMfaValue;
+    private javax.swing.JLabel lblCardSincronizacionSub;
     public javax.swing.JLabel lblCardSincronizacionTitle;
     public javax.swing.JLabel lblCardSincronizacionValue;
     public javax.swing.JLabel lblConexionesCount;
     public javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblIconAuditoria;
+    private javax.swing.JLabel lblIconMfa;
+    private javax.swing.JLabel lblIconSincr;
+    public javax.swing.JLabel lblInvitarSub;
     public javax.swing.JLabel lblInvitarUsuarioTitle;
     public javax.swing.JLabel lblLicenciaDesc;
     public javax.swing.JLabel lblRol;
-    public javax.swing.JLabel lblTabDesc;
-    public javax.swing.JLabel lblTabTitle;
+    private javax.swing.JLabel lblTotalBadge;
     public javax.swing.JLabel lblUsuariosAutorizadosTitle;
     public javax.swing.JProgressBar pbAsientos;
+    private javax.swing.JPanel pnlCardAuditoria;
     public javax.swing.JPanel pnlCardMfa;
     public javax.swing.JPanel pnlCardSincronizacion;
-    public javax.swing.JPanel pnlGasto;
     public javax.swing.JPanel pnlInvitarUsuario;
+    private javax.swing.JPanel pnlLicencias;
+    public javax.swing.JPanel pnlMainContent;
     public javax.swing.JPanel pnlUsuariosAutorizados;
+    private javax.swing.JScrollPane scrollContent;
+    private view.components.SidebarPanel sidebarPanel;
     public javax.swing.JTable tblUsuarios;
     public javax.swing.JTextField txtBuscar;
     public javax.swing.JTextField txtCorreo;

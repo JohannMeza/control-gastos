@@ -1,381 +1,396 @@
 package view;
 
 import controller.PresupuestoController;
-import java.util.Date;
-import java.util.Calendar;
-import javax.swing.JOptionPane;
-import model.ComboItem;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import model.ComboItem;
+import view.components.ModernTableHelper;
+import view.components.SidebarPanel;
+import view.components.HeaderBar;
+import view.components.ThemeColor;
 
 public class PresupuestoView extends javax.swing.JFrame {
+
     private PresupuestoController controller;
     public int idPresupuestoSeleccionado = 0;
-    
+
     public PresupuestoView() {
         initComponents();
+        initCustomStyles();
+        setSize(1260, 780);
         setResizable(false);
-        setTitle("Panel de Administración");
+        setTitle("Finandes - Control de Presupuesto");
         setLocationRelativeTo(null);
-        setupTableStyle();
-        this.repaint();
-        
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, 1);
 
-        Date inicioMes = cal.getTime();
-        
         controller = new PresupuestoController(this);
-        controller.listarCategorias();
-        
-        // Configurar Sidebar y navegación
-        Sidebar.setLayout(null);
-        jPanelProducts.setBounds(0, 10, 200, 35);
-        jPanelProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelProducts.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                new DashboardView().setVisible(true);
-                dispose();
+
+        setupEventListeners();
+    }
+
+    private void initCustomStyles() {
+        ModernTableHelper.styleTable(tblPresupuestos);
+        ModernTableHelper.styleScrollPane(jScrollPane1);
+        scrollContent.getVerticalScrollBar().setUnitIncrement(16);
+
+        setupTableRenderers();
+
+        headerBar.getBtnAccion().addActionListener(evt -> {
+            limpiarFormularioGasto();
+            txtPresupuestoMensual.requestFocus();
+        });
+    }
+
+    private void setupTableRenderers() {
+        tblPresupuestos.setRowHeight(38);
+
+        // Col 0: ID (oculto)
+        tblPresupuestos.getColumnModel().getColumn(0).setMinWidth(0);
+        tblPresupuestos.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tblPresupuestos.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        // Col 2: Monto Asignado
+        tblPresupuestos.getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                JLabel lbl = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                lbl.setHorizontalAlignment(SwingConstants.RIGHT);
+                lbl.setFont(new Font("Segoe UI", Font.BOLD, 12));
+                lbl.setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 12));
+                if (value instanceof Number) {
+                    lbl.setText(String.format("S/. %,.2f", ((Number) value).doubleValue()));
+                } else if (value != null) {
+                    try {
+                        lbl.setText(String.format("S/. %,.2f", Double.parseDouble(value.toString())));
+                    } catch (Exception e) {}
+                }
+                return lbl;
             }
         });
-        pnlGasto.setBounds(0, 70, 200, 35);
-        jPanelCustomers.setBounds(0, 130, 200, 35);
-        jPanelEmployes.setBounds(0, 190, 200, 35);
-        jPanelSupplimers.setBounds(0, 250, 200, 35);
-        jPanelCategories.setBounds(0, 310, 200, 35);
 
-        Sidebar.revalidate();
-        Sidebar.repaint();
-        util.MenuHelper.addAvatarToHeader(this, Header);
+        // Col 3: Monto Gastado
+        tblPresupuestos.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                JLabel lbl = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                lbl.setHorizontalAlignment(SwingConstants.RIGHT);
+                lbl.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                lbl.setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 12));
+                if (value instanceof Number) {
+                    lbl.setText(String.format("S/. %,.2f", ((Number) value).doubleValue()));
+                } else if (value != null) {
+                    try {
+                        lbl.setText(String.format("S/. %,.2f", Double.parseDouble(value.toString())));
+                    } catch (Exception e) {}
+                }
+                return lbl;
+            }
+        });
+
+        // Col 4: Estado (Badges semafóricos Finandes)
+        tblPresupuestos.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setHorizontalAlignment(SwingConstants.CENTER);
+                String text = (value != null) ? value.toString().trim() : "";
+
+                if (text.equalsIgnoreCase("EXCEDIDO")) {
+                    label.setText("<html><body style='padding: 2px 10px; background-color: #fee2e2; color: #ef4444; border-radius: 10px; font-weight: bold;'>EXCEDIDO</body></html>");
+                } else if (text.equalsIgnoreCase("ADVERTENCIA") || text.equalsIgnoreCase("ALERTA")) {
+                    label.setText("<html><body style='padding: 2px 10px; background-color: #fef3c7; color: #d97706; border-radius: 10px; font-weight: bold;'>ALERTA</body></html>");
+                } else if (text.equalsIgnoreCase("BAJO") || text.equalsIgnoreCase("BAJO LÍMITE") || text.equalsIgnoreCase("BAJO LIMITE")) {
+                    label.setText("<html><body style='padding: 2px 10px; background-color: #e6fffa; color: #0d9488; border-radius: 10px; font-weight: bold;'>BAJO LÍMITE</body></html>");
+                } else {
+                    label.setText("<html><body style='padding: 2px 10px; background-color: #d1fae5; color: #10b981; border-radius: 10px; font-weight: bold;'>EN REGLA</body></html>");
+                }
+                label.setOpaque(true);
+                label.setBackground(isSelected ? ThemeColor.TABLA_ROW_SELECTED : ThemeColor.FONDO_CARD);
+                return label;
+            }
+        });
+
+        // Col 5: Barra de Progreso
+        tblPresupuestos.getColumnModel().getColumn(5).setCellRenderer(new ProgressBarRenderer());
     }
-    
+
+    private void setupEventListeners() {
+        tblPresupuestos.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int fila = tblPresupuestos.getSelectedRow();
+                if (fila != -1) {
+                    try {
+                        idPresupuestoSeleccionado = Integer.parseInt(tblPresupuestos.getValueAt(fila, 0).toString());
+                        String catNombre = tblPresupuestos.getValueAt(fila, 1).toString();
+                        Object valAsig = tblPresupuestos.getValueAt(fila, 2);
+                        txtPresupuestoMensual.setText(valAsig != null ? valAsig.toString() : "");
+
+                        lblRegistro.setText("EDITAR PRESUPUESTO");
+                        btnAgregarEditarPresupuesto.setText("Actualizar Presupuesto");
+
+                        for (int i = 0; i < cbCategoria.getItemCount(); i++) {
+                            if (cbCategoria.getItemAt(i).toString().equalsIgnoreCase(catNombre)) {
+                                cbCategoria.setSelectedIndex(i);
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {}
+                }
+            }
+        });
+    }
+
     public void limpiarFormularioGasto() {
         txtPresupuestoMensual.setText("");
-        cbCategoria.setSelectedIndex(0);
-        cbPeriodo.setSelectedIndex(3);
         txtUmbral.setText("");
+        if (cbCategoria.getItemCount() > 0) cbCategoria.setSelectedIndex(0);
+        if (cbPeriodo.getItemCount() > 0) cbPeriodo.setSelectedIndex(0);
+        idPresupuestoSeleccionado = 0;
+        lblRegistro.setText("EDITAR PRESUPUESTO");
+        btnAgregarEditarPresupuesto.setText("Actualizar Presupuesto");
     }
 
     private void guardarGasto() {
         controller.guardarPresupuesto();
     }
-    
+
     private void actualizarGasto() {
         controller.actualizarPresupuesto();
         idPresupuestoSeleccionado = 0;
-        lblRegistro.setText("REGISTRAR NUEVO GASTO");
-        btnAgregarEditarPresupuesto.setText("Agregar Transacción");
+        lblRegistro.setText("EDITAR PRESUPUESTO");
+        btnAgregarEditarPresupuesto.setText("Actualizar Presupuesto");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Sidebar = new javax.swing.JPanel();
-        jPanelProducts = new javax.swing.JPanel();
-        jLabelProducts = new javax.swing.JLabel();
-        pnlGasto = new javax.swing.JPanel();
-        jLabelPurchases = new javax.swing.JLabel();
-        jPanelCustomers = new javax.swing.JPanel();
-        jLabelCustomers = new javax.swing.JLabel();
-        jPanelEmployes = new javax.swing.JPanel();
-        jLabelEmployes = new javax.swing.JLabel();
-        jPanelSupplimers = new javax.swing.JPanel();
-        jLabelSupplimers = new javax.swing.JLabel();
-        jPanelCategories = new javax.swing.JPanel();
-        jLabelCategories = new javax.swing.JLabel();
-        Logo = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        Header = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        Body = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        sidebarPanel = new view.components.SidebarPanel();
+        headerBar = new view.components.HeaderBar();
+        scrollContent = new javax.swing.JScrollPane();
+        pnlMainContent = new javax.swing.JPanel();
+        lblTitle = new javax.swing.JLabel();
+        lblSubtitle = new javax.swing.JLabel();
+        btnExportarExcel = new javax.swing.JButton();
+        btnFiltrar = new javax.swing.JButton();
+        jPanelTotalGastos = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jPanelTotalGastos1 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jPanelTotalGastos2 = new javax.swing.JPanel();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblPresupuestos = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPresupuestos = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         lblRegistro = new javax.swing.JLabel();
+        lblBadgeForm = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        cbCategoria = new javax.swing.JComboBox<ComboItem>();
         jLabel7 = new javax.swing.JLabel();
         txtPresupuestoMensual = new javax.swing.JTextField();
-        btnAgregarEditarPresupuesto = new javax.swing.JButton();
         jLabel37 = new javax.swing.JLabel();
         txtUmbral = new javax.swing.JTextField();
         jLabel38 = new javax.swing.JLabel();
+        cbPeriodo = new javax.swing.JComboBox<ComboItem>();
+        btnAgregarEditarPresupuesto = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        cbCategoria = new javax.swing.JComboBox<>();
-        cbPeriodo = new javax.swing.JComboBox<>();
-        jPanelTotalGastos = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jPanelStatus = new javax.swing.JPanel();
-        lblRegistro2 = new javax.swing.JLabel();
         jPanelPeriodoSiguiente1 = new javax.swing.JPanel();
         jLabel39 = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
-        jPanelTotalGastos1 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        lblRegistro1 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        btnFiltrar = new javax.swing.JButton();
-        btnExportarExcel = new javax.swing.JButton();
-        jPanelTotalGastos2 = new javax.swing.JPanel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
+        jPanelStatus = new javax.swing.JPanel();
+        lblRegistro2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Finandes - Control de Presupuesto");
+        setBackground(new java.awt.Color(248, 250, 252));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Sidebar.setBackground(new java.awt.Color(248, 250, 252));
-        Sidebar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(234, 241, 255)));
+        sidebarPanel.setActiveModule("Presupuesto");
+        getContentPane().add(sidebarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 750));
 
-        jPanelProducts.setBackground(new java.awt.Color(248, 250, 252));
-        jPanelProducts.setForeground(new java.awt.Color(71, 85, 105));
+        headerBar.setAccionBoton("+ Nuevo Presupuesto");
+        headerBar.setModuloActual("Control de Presupuesto");
+        getContentPane().add(headerBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 1040, 60));
 
-        jLabelProducts.setBackground(new java.awt.Color(255, 255, 255));
-        jLabelProducts.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelProducts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aplicaciones.png"))); // NOI18N
-        jLabelProducts.setText("Dashboard");
+        scrollContent.setBorder(null);
+        scrollContent.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        javax.swing.GroupLayout jPanelProductsLayout = new javax.swing.GroupLayout(jPanelProducts);
-        jPanelProducts.setLayout(jPanelProductsLayout);
-        jPanelProductsLayout.setHorizontalGroup(
-            jPanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelProductsLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabelProducts)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelProductsLayout.setVerticalGroup(
-            jPanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
+        pnlMainContent.setBackground(new java.awt.Color(248, 250, 252));
+        pnlMainContent.setPreferredSize(new java.awt.Dimension(1020, 715));
+        pnlMainContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlGasto.setBackground(new java.awt.Color(248, 250, 252));
-        pnlGasto.setBorder(null);
-        pnlGasto.setForeground(new java.awt.Color(71, 85, 105));
-        pnlGasto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlGasto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlGastoMouseClicked(evt);
-            }
-        });
+        lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(15, 23, 42));
+        lblTitle.setText("Control de Presupuesto");
+        pnlMainContent.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 14, 280, 26));
 
-        jLabelPurchases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelPurchases.setForeground(new java.awt.Color(71, 85, 105));
-        jLabelPurchases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/gastos.png"))); // NOI18N
-        jLabelPurchases.setText("Gastos");
+        lblSubtitle.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lblSubtitle.setForeground(new java.awt.Color(100, 116, 139));
+        lblSubtitle.setText("Monitoreo y asignación de límites financieros por categoría.");
+        pnlMainContent.add(lblSubtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 40, 420, 18));
 
-        javax.swing.GroupLayout pnlGastoLayout = new javax.swing.GroupLayout(pnlGasto);
-        pnlGasto.setLayout(pnlGastoLayout);
-        pnlGastoLayout.setHorizontalGroup(
-            pnlGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGastoLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabelPurchases)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnlGastoLayout.setVerticalGroup(
-            pnlGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelPurchases, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
+        btnExportarExcel.setBackground(new java.awt.Color(255, 255, 255));
+        btnExportarExcel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnExportarExcel.setForeground(new java.awt.Color(71, 85, 105));
+        btnExportarExcel.setText("Exportar Informe");
+        btnExportarExcel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        btnExportarExcel.setFocusPainted(false);
+        pnlMainContent.add(btnExportarExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 16, 135, 32));
 
-        jPanelCustomers.setBackground(new java.awt.Color(244, 248, 254));
-        jPanelCustomers.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 6, 0, 0, new java.awt.Color(37, 99, 235)));
-        jPanelCustomers.setForeground(new java.awt.Color(71, 85, 105));
-        jPanelCustomers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFiltrar.setBackground(new java.awt.Color(0, 159, 227));
+        btnFiltrar.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btnFiltrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnFiltrar.setText("Filtros");
+        btnFiltrar.setBorderPainted(false);
+        btnFiltrar.setFocusPainted(false);
+        pnlMainContent.add(btnFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(865, 16, 130, 32));
 
-        jLabelCustomers.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelCustomers.setForeground(new java.awt.Color(37, 99, 235));
-        jLabelCustomers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/presupuesto.png"))); // NOI18N
-        jLabelCustomers.setText("Presupuesto");
+        jPanelTotalGastos.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelTotalGastos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        jPanelTotalGastos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanelCustomersLayout = new javax.swing.GroupLayout(jPanelCustomers);
-        jPanelCustomers.setLayout(jPanelCustomersLayout);
-        jPanelCustomersLayout.setHorizontalGroup(
-            jPanelCustomersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCustomersLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabelCustomers)
-                .addContainerGap(62, Short.MAX_VALUE))
-        );
-        jPanelCustomersLayout.setVerticalGroup(
-            jPanelCustomersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelCustomers, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
+        jPanel6.setBackground(new java.awt.Color(239, 246, 254));
+        jPanel6.setLayout(new java.awt.CardLayout());
 
-        jPanelEmployes.setBackground(new java.awt.Color(248, 250, 252));
-        jPanelEmployes.setForeground(new java.awt.Color(71, 85, 105));
-        jPanelEmployes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelEmployes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelEmployesMouseClicked(evt);
-            }
-        });
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/presupuesto.png"))); // NOI18N
+        jPanel6.add(jLabel8, "card2");
 
-        jLabelEmployes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelEmployes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ahorros.png"))); // NOI18N
-        jLabelEmployes.setText("Ahorros");
+        jPanelTotalGastos.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 22, 50, 50));
 
-        javax.swing.GroupLayout jPanelEmployesLayout = new javax.swing.GroupLayout(jPanelEmployes);
-        jPanelEmployes.setLayout(jPanelEmployesLayout);
-        jPanelEmployesLayout.setHorizontalGroup(
-            jPanelEmployesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelEmployesLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabelEmployes)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelEmployesLayout.setVerticalGroup(
-            jPanelEmployesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelEmployes, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel20.setText("PRESUPUESTO TOTAL");
+        jPanelTotalGastos.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 18, 225, 16));
 
-        jPanelSupplimers.setBackground(new java.awt.Color(248, 250, 252));
-        jPanelSupplimers.setForeground(new java.awt.Color(71, 85, 105));
-        jPanelSupplimers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelSupplimers.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelSupplimersMouseClicked(evt);
-            }
-        });
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(15, 23, 42));
+        jLabel21.setText("S/. 0.00");
+        jPanelTotalGastos.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 38, 225, 26));
 
-        jLabelSupplimers.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelSupplimers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/deudas.png"))); // NOI18N
-        jLabelSupplimers.setText("Deudas");
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(4, 120, 87));
+        jLabel31.setText("0 presupuestos activos");
+        jPanelTotalGastos.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 66, 225, 16));
 
-        javax.swing.GroupLayout jPanelSupplimersLayout = new javax.swing.GroupLayout(jPanelSupplimers);
-        jPanelSupplimers.setLayout(jPanelSupplimersLayout);
-        jPanelSupplimersLayout.setHorizontalGroup(
-            jPanelSupplimersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelSupplimersLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabelSupplimers)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelSupplimersLayout.setVerticalGroup(
-            jPanelSupplimersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelSupplimers, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
+        pnlMainContent.add(jPanelTotalGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 66, 315, 95));
 
-        jPanelCategories.setBackground(new java.awt.Color(248, 250, 252));
-        jPanelCategories.setForeground(new java.awt.Color(71, 85, 105));
-        jPanelCategories.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelCategories.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelCategoriesMouseClicked(evt);
-            }
-        });
+        jPanelTotalGastos1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelTotalGastos1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        jPanelTotalGastos1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelCategories.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelCategories.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/usuario.png"))); // NOI18N
-        jLabelCategories.setText("Usuarios");
+        jPanel12.setBackground(new java.awt.Color(254, 226, 226));
+        jPanel12.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout jPanelCategoriesLayout = new javax.swing.GroupLayout(jPanelCategories);
-        jPanelCategories.setLayout(jPanelCategoriesLayout);
-        jPanelCategoriesLayout.setHorizontalGroup(
-            jPanelCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCategoriesLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabelCategories)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelCategoriesLayout.setVerticalGroup(
-            jPanelCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelCategories, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/chat-flecha-abajo.png"))); // NOI18N
+        jPanel12.add(jLabel19, "card2");
 
-        javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
-        Sidebar.setLayout(SidebarLayout);
-        SidebarLayout.setHorizontalGroup(
-            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelCustomers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelEmployes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelSupplimers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelCategories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        SidebarLayout.setVerticalGroup(
-            SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanelProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(pnlGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jPanelCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jPanelEmployes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jPanelSupplimers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jPanelCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(230, Short.MAX_VALUE))
-        );
+        jPanelTotalGastos1.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 22, 50, 50));
 
-        getContentPane().add(Sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 200, 600));
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel22.setText("GASTADO A LA FECHA");
+        jPanelTotalGastos1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 18, 225, 16));
 
-        Logo.setBackground(new java.awt.Color(248, 250, 252));
-        Logo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(234, 241, 255)));
-        Logo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(15, 23, 42));
+        jLabel23.setText("S/. 0.00");
+        jPanelTotalGastos1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 38, 225, 26));
 
-        jLabel13.setBackground(new java.awt.Color(248, 250, 252));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logotipo.png"))); // NOI18N
-        Logo.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 80));
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(239, 68, 68));
+        jLabel32.setText("0.0% de total usado");
+        jPanelTotalGastos1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 66, 225, 16));
 
-        getContentPane().add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 80));
+        pnlMainContent.add(jPanelTotalGastos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 66, 315, 95));
 
-        Header.setBackground(new java.awt.Color(255, 255, 255));
-        Header.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(234, 241, 255)));
-        Header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelTotalGastos2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelTotalGastos2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        jPanelTotalGastos2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel2.setText("Presupuesto");
-        Header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, -1, 39));
+        jPanel14.setBackground(new java.awt.Color(209, 250, 229));
+        jPanel14.setLayout(new java.awt.CardLayout());
 
-        getContentPane().add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 40));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
+        jPanel14.add(jLabel35, "card2");
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelTotalGastos2.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 22, 50, 50));
+
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel33.setText("RESTANTE");
+        jPanelTotalGastos2.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 18, 225, 16));
+
+        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(0, 108, 73));
+        jLabel34.setText("S/. 0.00");
+        jPanelTotalGastos2.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 38, 225, 26));
+
+        jLabel36.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel36.setText("Quedan días en el período");
+        jPanelTotalGastos2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 66, 225, 16));
+
+        pnlMainContent.add(jPanelTotalGastos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 66, 315, 95));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
+        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(15, 23, 42));
+        jLabel14.setText("RENDIMIENTO POR CATEGORÍAS");
+        jPanel7.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 14, 250, 22));
+
+        jLabel1.setBackground(new java.awt.Color(224, 243, 254));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(2, 132, 199));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("SEPTIEMBRE 2023");
+        jLabel1.setOpaque(true);
+        jPanel7.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 15, 130, 20));
 
         jScrollPane1.setBorder(null);
 
-        tblPresupuestos.setBackground(new java.awt.Color(255, 255, 255));
-        tblPresupuestos.setForeground(new java.awt.Color(51, 51, 51));
         tblPresupuestos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "CATEGORIA", "ASIGNADO", "GASTADO", "ESTADO", "PROGRESO"
+                "ID", "CATEGORIA", "ASIGNADO", "GASTADO", "ESTADO", "CONSUMO"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -389,472 +404,163 @@ public class PresupuestoView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblPresupuestos.setDoubleBuffered(true);
-        tblPresupuestos.setDragEnabled(true);
-        tblPresupuestos.setGridColor(new java.awt.Color(255, 255, 255));
-        tblPresupuestos.setSelectionBackground(new java.awt.Color(0, 74, 198));
-        tblPresupuestos.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tblPresupuestos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblPresupuestos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblPresupuestos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPresupuestos);
         if (tblPresupuestos.getColumnModel().getColumnCount() > 0) {
             tblPresupuestos.getColumnModel().getColumn(0).setMinWidth(0);
             tblPresupuestos.getColumnModel().getColumn(0).setPreferredWidth(0);
             tblPresupuestos.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblPresupuestos.getColumnModel().getColumn(1).setPreferredWidth(140);
+            tblPresupuestos.getColumnModel().getColumn(2).setResizable(false);
+            tblPresupuestos.getColumnModel().getColumn(2).setPreferredWidth(95);
+            tblPresupuestos.getColumnModel().getColumn(3).setResizable(false);
+            tblPresupuestos.getColumnModel().getColumn(3).setPreferredWidth(95);
+            tblPresupuestos.getColumnModel().getColumn(4).setResizable(false);
+            tblPresupuestos.getColumnModel().getColumn(4).setPreferredWidth(110);
+            tblPresupuestos.getColumnModel().getColumn(5).setPreferredWidth(165);
         }
 
-        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 640, 230));
+        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 46, 606, 455));
 
-        jLabel14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/historial.png"))); // NOI18N
-        jLabel14.setText("PRESUPUESTO DE LAS CATEGORIAS");
-        jPanel7.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 15, 270, 20));
-
-        jLabel1.setBackground(new java.awt.Color(220, 233, 255));
-        jLabel1.setForeground(new java.awt.Color(67, 70, 85));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("SETIEMBRE 2023");
-        jPanel7.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 120, 30));
-
-        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 640, 280));
+        pnlMainContent.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 173, 642, 520));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblRegistro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblRegistro.setForeground(new java.awt.Color(11, 28, 48));
-        lblRegistro.setText("Agregar Presupuesto");
+        lblRegistro.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lblRegistro.setForeground(new java.awt.Color(15, 23, 42));
+        lblRegistro.setText("EDITAR PRESUPUESTO");
+        jPanel2.add(lblRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 12, 190, 20));
 
-        jLabel3.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel3.setText("Seleccionar Categoria");
+        lblBadgeForm.setBackground(new java.awt.Color(239, 246, 255));
+        lblBadgeForm.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblBadgeForm.setForeground(new java.awt.Color(2, 132, 199));
+        lblBadgeForm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBadgeForm.setText("CATEGORÍA");
+        lblBadgeForm.setOpaque(true);
+        jPanel2.add(lblBadgeForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 13, 85, 18));
 
-        jLabel7.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel7.setText("Límite de presupuesto mensual");
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel3.setText("Categoría *");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 34, 280, 14));
 
-        txtPresupuestoMensual.setBackground(new java.awt.Color(255, 255, 255));
-        txtPresupuestoMensual.setPreferredSize(new java.awt.Dimension(15, 25));
+        cbCategoria.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jPanel2.add(cbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 50, 283, 30));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel7.setText("Límite Mensual (S/.) *");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 84, 135, 14));
+
+        txtPresupuestoMensual.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        txtPresupuestoMensual.setForeground(new java.awt.Color(15, 23, 42));
+        txtPresupuestoMensual.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(203, 213, 225), 1, true));
         txtPresupuestoMensual.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPresupuestoMensualKeyTyped(evt);
             }
         });
+        jPanel2.add(txtPresupuestoMensual, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 100, 135, 30));
 
-        btnAgregarEditarPresupuesto.setBackground(new java.awt.Color(37, 99, 235));
-        btnAgregarEditarPresupuesto.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLabel37.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel37.setText("Umbral Alerta (%) *");
+        jPanel2.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 84, 135, 14));
+
+        txtUmbral.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        txtUmbral.setForeground(new java.awt.Color(15, 23, 42));
+        txtUmbral.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(203, 213, 225), 1, true));
+        jPanel2.add(txtUmbral, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 139, 30));
+
+        jLabel38.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel38.setText("Período *");
+        jPanel2.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 134, 280, 14));
+
+        cbPeriodo.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jPanel2.add(cbPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 150, 283, 30));
+
+        btnAgregarEditarPresupuesto.setBackground(new java.awt.Color(0, 159, 227));
+        btnAgregarEditarPresupuesto.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btnAgregarEditarPresupuesto.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarEditarPresupuesto.setText("Agregar Presupuesto");
-        btnAgregarEditarPresupuesto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAgregarEditarPresupuesto.setPreferredSize(new java.awt.Dimension(131, 25));
+        btnAgregarEditarPresupuesto.setText("Actualizar Presupuesto");
+        btnAgregarEditarPresupuesto.setBorderPainted(false);
+        btnAgregarEditarPresupuesto.setFocusPainted(false);
         btnAgregarEditarPresupuesto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarEditarPresupuestoActionPerformed(evt);
             }
         });
-
-        jLabel37.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel37.setText("Umbral de Alerta");
-
-        txtUmbral.setBackground(new java.awt.Color(255, 255, 255));
-        txtUmbral.setPreferredSize(new java.awt.Dimension(15, 25));
-
-        jLabel38.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel38.setText("Periodo");
+        jPanel2.add(btnAgregarEditarPresupuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 186, 230, 30));
 
         btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(186, 26, 26));
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/limpio.png"))); // NOI18N
-        btnEliminar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
-        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(239, 68, 68));
+        btnEliminar.setText("×");
+        btnEliminar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        btnEliminar.setFocusPainted(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
+        jPanel2.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 186, 44, 30));
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<ComboItem>());
+        pnlMainContent.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 173, 315, 225));
 
-        cbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<ComboItem>());
+        jPanelPeriodoSiguiente1.setBackground(new java.awt.Color(15, 23, 42));
+        jPanelPeriodoSiguiente1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(30, 41, 59), 1, true));
+        jPanelPeriodoSiguiente1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtUmbral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnAgregarEditarPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel3)
-                            .addComponent(lblRegistro)
-                            .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPresupuestoMensual, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                            .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 18, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(lblRegistro)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPresupuestoMensual, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel38)
-                    .addComponent(jLabel37))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbPeriodo)
-                    .addComponent(txtUmbral, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAgregarEditarPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
+        jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(56, 189, 248));
+        jLabel39.setText("RECOMENDACIÓN DE IA");
+        jPanelPeriodoSiguiente1.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 12, 280, 16));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, 330, 340));
+        jLabel41.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(148, 163, 184));
+        jLabel41.setText("<html>Ahorra hasta S/. 150 este mes optimizando tus suscripciones de comida.</html>");
+        jPanelPeriodoSiguiente1.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 30, 280, 36));
 
-        jPanelTotalGastos.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelTotalGastos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(195, 198, 215), 1, true));
+        jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(0, 159, 227));
+        jLabel42.setText("Ver detalles →");
+        jLabel42.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelPeriodoSiguiente1.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 70, 150, 18));
 
-        jLabel20.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel20.setText("Total Presupuesto");
-
-        jLabel21.setFont(new java.awt.Font("Dialog", 1, 28)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel21.setText("S/. 0.00");
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/gastos.png"))); // NOI18N
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel8.setRequestFocusEnabled(false);
-
-        jLabel31.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(0, 108, 73));
-        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
-        jLabel31.setText("2.4% vs mes anterior");
-
-        javax.swing.GroupLayout jPanelTotalGastosLayout = new javax.swing.GroupLayout(jPanelTotalGastos);
-        jPanelTotalGastos.setLayout(jPanelTotalGastosLayout);
-        jPanelTotalGastosLayout.setHorizontalGroup(
-            jPanelTotalGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTotalGastosLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanelTotalGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addGroup(jPanelTotalGastosLayout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel20))
-                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(36, Short.MAX_VALUE))
-        );
-        jPanelTotalGastosLayout.setVerticalGroup(
-            jPanelTotalGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTotalGastosLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanelTotalGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel21)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanelTotalGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 200, 200));
+        pnlMainContent.add(jPanelPeriodoSiguiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 408, 315, 100));
 
         jPanelStatus.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelStatus.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
+        jPanelStatus.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        jPanelStatus.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblRegistro2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblRegistro2.setForeground(new java.awt.Color(11, 28, 48));
-        lblRegistro2.setText("ACTIVIDAD PRESUPUESTO RECIENTE");
+        lblRegistro2.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        lblRegistro2.setForeground(new java.awt.Color(15, 23, 42));
+        lblRegistro2.setText("ACTIVIDAD RECIENTE DEL PRESUPUESTO");
+        jPanelStatus.add(lblRegistro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 12, 280, 18));
 
-        jPanelPeriodoSiguiente1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelPeriodoSiguiente1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
+        pnlMainContent.add(jPanelStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 518, 315, 175));
 
-        jLabel39.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel39.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel39.setText("Presupuesto Excedido");
+        scrollContent.setViewportView(pnlMainContent);
 
-        jPanel14.setBackground(new java.awt.Color(108, 248, 187));
-        jPanel14.setName(""); // NOI18N
-        jPanel14.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanel14.setLayout(new java.awt.CardLayout());
-
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
-        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel11.setMaximumSize(new java.awt.Dimension(9, 9));
-        jLabel11.setMinimumSize(new java.awt.Dimension(9, 9));
-        jLabel11.setPreferredSize(new java.awt.Dimension(9, 9));
-        jLabel11.setRequestFocusEnabled(false);
-        jPanel14.add(jLabel11, "card2");
-
-        jLabel41.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        jLabel41.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel41.setText("Food & Dinning went over limit by 142.30");
-
-        jLabel42.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel42.setText("hace 2 horas");
-
-        javax.swing.GroupLayout jPanelPeriodoSiguiente1Layout = new javax.swing.GroupLayout(jPanelPeriodoSiguiente1);
-        jPanelPeriodoSiguiente1.setLayout(jPanelPeriodoSiguiente1Layout);
-        jPanelPeriodoSiguiente1Layout.setHorizontalGroup(
-            jPanelPeriodoSiguiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelPeriodoSiguiente1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelPeriodoSiguiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel42)
-                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel41))
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
-        jPanelPeriodoSiguiente1Layout.setVerticalGroup(
-            jPanelPeriodoSiguiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelPeriodoSiguiente1Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(jPanelPeriodoSiguiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelPeriodoSiguiente1Layout.createSequentialGroup()
-                        .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel41)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel42))
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanelStatusLayout = new javax.swing.GroupLayout(jPanelStatus);
-        jPanelStatus.setLayout(jPanelStatusLayout);
-        jPanelStatusLayout.setHorizontalGroup(
-            jPanelStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelStatusLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanelStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblRegistro2)
-                    .addComponent(jPanelPeriodoSiguiente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-        jPanelStatusLayout.setVerticalGroup(
-            jPanelStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelStatusLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(lblRegistro2)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelPeriodoSiguiente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 17, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanelStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 440, 330, 140));
-
-        jPanelTotalGastos1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelTotalGastos1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(195, 198, 215), 1, true));
-
-        jLabel22.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel22.setText("Gastado hasta hoy");
-
-        jLabel23.setFont(new java.awt.Font("Dialog", 1, 28)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel23.setText("S/. 0.00");
-
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
-        jLabel19.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel19.setRequestFocusEnabled(false);
-
-        jLabel32.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel32.setText("57% de total usado");
-
-        javax.swing.GroupLayout jPanelTotalGastos1Layout = new javax.swing.GroupLayout(jPanelTotalGastos1);
-        jPanelTotalGastos1.setLayout(jPanelTotalGastos1Layout);
-        jPanelTotalGastos1Layout.setHorizontalGroup(
-            jPanelTotalGastos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTotalGastos1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanelTotalGastos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTotalGastos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                    .addGroup(jPanelTotalGastos1Layout.createSequentialGroup()
-                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel22)))
-                .addContainerGap(36, Short.MAX_VALUE))
-        );
-        jPanelTotalGastos1Layout.setVerticalGroup(
-            jPanelTotalGastos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTotalGastos1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanelTotalGastos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel23)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanelTotalGastos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 200, 200));
-
-        lblRegistro1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblRegistro1.setForeground(new java.awt.Color(11, 28, 48));
-        lblRegistro1.setText("Resumen del Presupuesto");
-        jPanel1.add(lblRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        jLabel30.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel30.setText("Gestiona tus límites de gasto mensuales y realiza un seguimiento del rendimiento de cada categoría.");
-        jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
-
-        btnFiltrar.setBackground(new java.awt.Color(255, 255, 255));
-        btnFiltrar.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        btnFiltrar.setForeground(new java.awt.Color(11, 28, 48));
-        btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/filtrar.png"))); // NOI18N
-        btnFiltrar.setText("Filtros");
-        btnFiltrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
-        btnFiltrar.setBorderPainted(false);
-        btnFiltrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(btnFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 20, 100, 35));
-
-        btnExportarExcel.setBackground(new java.awt.Color(255, 255, 255));
-        btnExportarExcel.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        btnExportarExcel.setForeground(new java.awt.Color(11, 28, 48));
-        btnExportarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/grey/descargar.png"))); // NOI18N
-        btnExportarExcel.setText("Exportar Reporte");
-        btnExportarExcel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
-        btnExportarExcel.setBorderPainted(false);
-        btnExportarExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(btnExportarExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, 140, 35));
-
-        jPanelTotalGastos2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelTotalGastos2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(195, 198, 215), 1, true));
-        jPanelTotalGastos2.setForeground(new java.awt.Color(11, 28, 48));
-
-        jLabel33.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel33.setText("Restante");
-
-        jLabel34.setFont(new java.awt.Font("Dialog", 1, 28)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel34.setText("S/. 0.00");
-
-        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/brown/calendario.png"))); // NOI18N
-        jLabel35.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel35.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel35.setRequestFocusEnabled(false);
-
-        jLabel36.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(11, 28, 48));
-        jLabel36.setText(" Quedan 12 días en el período");
-
-        javax.swing.GroupLayout jPanelTotalGastos2Layout = new javax.swing.GroupLayout(jPanelTotalGastos2);
-        jPanelTotalGastos2.setLayout(jPanelTotalGastos2Layout);
-        jPanelTotalGastos2Layout.setHorizontalGroup(
-            jPanelTotalGastos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTotalGastos2Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanelTotalGastos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                    .addGroup(jPanelTotalGastos2Layout.createSequentialGroup()
-                        .addGroup(jPanelTotalGastos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelTotalGastos2Layout.createSequentialGroup()
-                                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel33))
-                            .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanelTotalGastos2Layout.setVerticalGroup(
-            jPanelTotalGastos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTotalGastos2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanelTotalGastos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel34)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanelTotalGastos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, 200, 200));
-
-        Body.addTab("Presupuesto", jPanel1);
-
-        getContentPane().add(Body, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 1010, 640));
+        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 1040, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pnlGastoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlGastoMouseClicked
-        SystemView viewSystem = new SystemView();
-        viewSystem.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_pnlGastoMouseClicked
-
-    private void jPanelProductsMouseClicked(java.awt.event.MouseEvent evt) {
-        DashboardView viewDashboard = new DashboardView();
-        viewDashboard.setVisible(true);
-        dispose();
-    }
-
-    private void jPanelEmployesMouseClicked(java.awt.event.MouseEvent evt) {
-        AhorrosView viewAhorros = new AhorrosView();
-        viewAhorros.setVisible(true);
-        dispose();
-    }
-
     private void txtPresupuestoMensualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPresupuestoMensualKeyTyped
-
+        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtPresupuestoMensualKeyTyped
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int fila = tblPresupuestos.getSelectedRow();
-
         if (fila == -1) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Aún no ha seleccionado ninguna fila",
-                "Aviso",
-                JOptionPane.WARNING_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Aún no ha seleccionado ninguna fila", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -877,16 +583,11 @@ public class PresupuestoView extends javax.swing.JFrame {
         ComboItem categoria = (ComboItem) cbCategoria.getSelectedItem();
         ComboItem tipo = (ComboItem) cbPeriodo.getSelectedItem();
 
-        if (categoria.getValue() == 0) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Debe seleccionar una categoría",
-                "Campo requerido",
-                JOptionPane.WARNING_MESSAGE
-            );
+        if (categoria == null || categoria.getValue() == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una categoría", "Campo requerido", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         if (txtPresupuestoMensual.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese presupuesto");
             return;
@@ -897,13 +598,8 @@ public class PresupuestoView extends javax.swing.JFrame {
             return;
         }
 
-        if (tipo.getValue() == 0) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Debe seleccionar una tipo de periodo",
-                "Campo requerido",
-                JOptionPane.WARNING_MESSAGE
-            );
+        if (tipo == null || tipo.getValue() == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de período", "Campo requerido", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -917,190 +613,12 @@ public class PresupuestoView extends javax.swing.JFrame {
         limpiarFormularioGasto();
     }//GEN-LAST:event_btnAgregarEditarPresupuestoActionPerformed
 
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PresupuestoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PresupuestoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PresupuestoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PresupuestoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PresupuestoView().setVisible(true);
-            }
-        });
+    public SidebarPanel getSidebarPanel() {
+        return sidebarPanel;
     }
 
-        private void jPanelSupplimersMouseClicked(java.awt.event.MouseEvent evt) {
-        DeudasView viewDeudas = new DeudasView();
-        viewDeudas.setVisible(true);
-        this.dispose();
-    }
-
-        private void jPanelCategoriesMouseClicked(java.awt.event.MouseEvent evt) {
-        UsuariosView viewUsuarios = new UsuariosView();
-        viewUsuarios.setVisible(true);
-        this.dispose();
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane Body;
-    private javax.swing.JPanel Header;
-    private javax.swing.JPanel Logo;
-    private javax.swing.JPanel Sidebar;
-    public javax.swing.JButton btnAgregarEditarPresupuesto;
-    public javax.swing.JButton btnEliminar;
-    public javax.swing.JButton btnExportarExcel;
-    public javax.swing.JButton btnFiltrar;
-    public javax.swing.JComboBox<ComboItem> cbCategoria;
-    public javax.swing.JComboBox<ComboItem> cbPeriodo;
-    public javax.swing.JLabel jLabel1;
-    public javax.swing.JLabel jLabel11;
-    public javax.swing.JLabel jLabel13;
-    public javax.swing.JLabel jLabel14;
-    public javax.swing.JLabel jLabel19;
-    public javax.swing.JLabel jLabel2;
-    public javax.swing.JLabel jLabel20;
-    public javax.swing.JLabel jLabel21;
-    public javax.swing.JLabel jLabel22;
-    public javax.swing.JLabel jLabel23;
-    public javax.swing.JLabel jLabel3;
-    public javax.swing.JLabel jLabel30;
-    public javax.swing.JLabel jLabel31;
-    public javax.swing.JLabel jLabel32;
-    public javax.swing.JLabel jLabel33;
-    public javax.swing.JLabel jLabel34;
-    public javax.swing.JLabel jLabel35;
-    public javax.swing.JLabel jLabel36;
-    public javax.swing.JLabel jLabel37;
-    public javax.swing.JLabel jLabel38;
-    public javax.swing.JLabel jLabel39;
-    public javax.swing.JLabel jLabel41;
-    public javax.swing.JLabel jLabel42;
-    public javax.swing.JLabel jLabel7;
-    public javax.swing.JLabel jLabel8;
-    public javax.swing.JLabel jLabelCategories;
-    public javax.swing.JLabel jLabelCustomers;
-    public javax.swing.JLabel jLabelEmployes;
-    public javax.swing.JLabel jLabelProducts;
-    public javax.swing.JLabel jLabelPurchases;
-    public javax.swing.JLabel jLabelSupplimers;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanelCategories;
-    private javax.swing.JPanel jPanelCustomers;
-    private javax.swing.JPanel jPanelEmployes;
-    private javax.swing.JPanel jPanelPeriodoSiguiente1;
-    private javax.swing.JPanel jPanelProducts;
-    public javax.swing.JPanel jPanelStatus;
-    private javax.swing.JPanel jPanelSupplimers;
-    private javax.swing.JPanel jPanelTotalGastos;
-    private javax.swing.JPanel jPanelTotalGastos1;
-    private javax.swing.JPanel jPanelTotalGastos2;
-    private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JLabel lblRegistro;
-    public javax.swing.JLabel lblRegistro1;
-    public javax.swing.JLabel lblRegistro2;
-    private javax.swing.JPanel pnlGasto;
-    public javax.swing.JTable tblPresupuestos;
-    public javax.swing.JTextField txtPresupuestoMensual;
-    public javax.swing.JTextField txtUmbral;
-    // End of variables declaration//GEN-END:variables
-
-    private void setupTableStyle() {
-        tblPresupuestos.setRowHeight(30);
-        tblPresupuestos.getTableHeader().setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12));
-        tblPresupuestos.getTableHeader().setBackground(new java.awt.Color(248, 250, 252));
-        tblPresupuestos.getTableHeader().setForeground(new java.awt.Color(71, 85, 105));
-        
-        // Columna 4 (ESTADO) - Pill badges
-        tblPresupuestos.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-                String text = (value != null) ? value.toString() : "";
-                
-                // Color badges matching AhorrosView estilo y colores:
-                // Red for EXCEDIDO, Orange for ADVERTENCIA, Green for BAJO, Blue for EN CAMINO
-                if (text.equalsIgnoreCase("EXCEDIDO")) {
-                    label.setText("<html><body style='padding: 3px 10px; background-color: #fee2e2; color: #991b1b; border-radius: 12px; font-weight: bold;'>EXCEDIDO</body></html>");
-                } else if (text.equalsIgnoreCase("ADVERTENCIA")) {
-                    label.setText("<html><body style='padding: 3px 10px; background-color: #ffedd5; color: #9a3412; border-radius: 12px; font-weight: bold;'>ADVERTENCIA</body></html>");
-                } else if (text.equalsIgnoreCase("BAJO")) {
-                    label.setText("<html><body style='padding: 3px 10px; background-color: #d1fae5; color: #065f46; border-radius: 12px; font-weight: bold;'>BAJO</body></html>");
-                } else if (text.equalsIgnoreCase("EN CAMINO")) {
-                    label.setText("<html><body style='padding: 3px 10px; background-color: #dbeafe; color: #1e40af; border-radius: 12px; font-weight: bold;'>EN CAMINO</body></html>");
-                } else {
-                    label.setText("<html><body style='padding: 3px 10px; background-color: #f1f5f9; color: #334155; border-radius: 12px; font-weight: bold;'>" + text + "</body></html>");
-                }
-                label.setOpaque(true);
-                if (isSelected) {
-                    label.setBackground(table.getSelectionBackground());
-                } else {
-                    label.setBackground(Color.WHITE);
-                }
-                return label;
-            }
-        });
-        
-        // Columna 5 (PROGRESO) - ProgressBarRenderer
-        tblPresupuestos.getColumnModel().getColumn(5).setCellRenderer(new ProgressBarRenderer());
-
-        // Columna 0 (ID) - Center aligned
-        tblPresupuestos.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            { setHorizontalAlignment(SwingConstants.CENTER); }
-        });
-        
-        // Align amounts right and format to Soles S/.
-        tblPresupuestos.getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
-            { setHorizontalAlignment(SwingConstants.RIGHT); setFont(new Font("Dialog", Font.BOLD, 12)); }
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-                if (value instanceof Double) {
-                    setText("S/. " + String.format("%.2f", (Double)value));
-                } else if (value != null) {
-                    try {
-                        double val = Double.parseDouble(value.toString());
-                        setText("S/. " + String.format("%.2f", val));
-                    } catch (Exception e) {}
-                }
-                return c;
-            }
-        });
-        tblPresupuestos.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
-            { setHorizontalAlignment(SwingConstants.RIGHT); setFont(new Font("Dialog", Font.BOLD, 12)); }
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-                if (value instanceof Double) {
-                    setText("S/. " + String.format("%.2f", (Double)value));
-                } else if (value != null) {
-                    try {
-                        double val = Double.parseDouble(value.toString());
-                        setText("S/. " + String.format("%.2f", val));
-                    } catch (Exception e) {}
-                }
-                return c;
-            }
-        });
+    public HeaderBar getHeaderBar() {
+        return headerBar;
     }
 
     public static class ProgressBarRenderer extends JProgressBar implements javax.swing.table.TableCellRenderer {
@@ -1108,7 +626,8 @@ public class PresupuestoView extends javax.swing.JFrame {
             super(0, 100);
             setStringPainted(true);
             setBorderPainted(false);
-            setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 11));
+            setFont(new Font("Segoe UI", Font.BOLD, 11));
+            setBackground(new Color(241, 245, 249));
         }
 
         @Override
@@ -1129,21 +648,76 @@ public class PresupuestoView extends javax.swing.JFrame {
             setValue((int) Math.round(pct));
             setString(String.format("%.1f%%", pct));
 
-            // Color logic:
-            // Exceeded (> 100%) = Red
-            // Low (<= 30%) = Green
-            // Normal (30% - 100%) = Blue
+            // Semáforo Finandes:
+            // Excedido (> 100%) = Rojo #EF4444
+            // Alerta (70% - 100%) = Ámbar #F59E0B
+            // En orden (< 70%) = Verde #10B981
             if (pct > 100.0) {
-                setForeground(new Color(186, 26, 26));
-            } else if (pct <= 30.0) {
-                setForeground(new Color(34, 197, 94));
+                setForeground(new Color(239, 68, 68));
+            } else if (pct >= 70.0) {
+                setForeground(new Color(245, 158, 11));
             } else {
-                setForeground(new Color(37, 99, 235));
+                setForeground(new Color(16, 185, 129));
             }
-
-            setBackground(new Color(241, 245, 249));
 
             return this;
         }
     }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> new PresupuestoView().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnAgregarEditarPresupuesto;
+    public javax.swing.JButton btnEliminar;
+    public javax.swing.JButton btnExportarExcel;
+    public javax.swing.JButton btnFiltrar;
+    public javax.swing.JComboBox<ComboItem> cbCategoria;
+    public javax.swing.JComboBox<ComboItem> cbPeriodo;
+    private view.components.HeaderBar headerBar;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    public javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    public javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel31;
+    public javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    public javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    public javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    public javax.swing.JLabel jLabel39;
+    public javax.swing.JLabel jLabel41;
+    public javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    public javax.swing.JPanel jPanelPeriodoSiguiente1;
+    public javax.swing.JPanel jPanelStatus;
+    public javax.swing.JPanel jPanelTotalGastos;
+    public javax.swing.JPanel jPanelTotalGastos1;
+    public javax.swing.JPanel jPanelTotalGastos2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBadgeForm;
+    public javax.swing.JLabel lblRegistro;
+    public javax.swing.JLabel lblRegistro2;
+    private javax.swing.JLabel lblSubtitle;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JPanel pnlMainContent;
+    private javax.swing.JScrollPane scrollContent;
+    private view.components.SidebarPanel sidebarPanel;
+    public javax.swing.JTable tblPresupuestos;
+    public javax.swing.JTextField txtPresupuestoMensual;
+    public javax.swing.JTextField txtUmbral;
+    // End of variables declaration//GEN-END:variables
 }

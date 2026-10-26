@@ -43,6 +43,14 @@ public class PresupuestoController {
         view.btnFiltrar.addActionListener(e -> {
             mostrarFiltrosAvanzados();
         });
+
+        // "Exportar Informe" button click
+        view.btnExportarExcel.addActionListener(e -> {
+            exportarInforme();
+        });
+
+        // Restricción RBAC para rol LECTOR
+        util.RbacUtil.aplicarRestriccionBotones(view.btnAgregarEditarPresupuesto, view.btnEliminar);
     }
     
     public void listarPresupuesto() {
@@ -361,6 +369,9 @@ public class PresupuestoController {
     }
     
     public void guardarPresupuesto() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "guardar o modificar presupuestos")) {
+            return;
+        }
         try {
             ComboItem categoria = (ComboItem) view.cbCategoria.getSelectedItem();
             ComboItem periodo = (ComboItem) view.cbPeriodo.getSelectedItem();
@@ -433,18 +444,34 @@ public class PresupuestoController {
         try {
             view.cbPeriodo.removeAllItems();
             List<ComboItem> periodo = service.listarPeriodo();
-            periodo.forEach(item -> {
-                view.cbPeriodo.addItem(item);
-            });
+            if (periodo != null && !periodo.isEmpty()) {
+                periodo.forEach(item -> {
+                    view.cbPeriodo.addItem(item);
+                });
+            } else {
+                view.cbPeriodo.addItem(new ComboItem(0, "-- Seleccione --"));
+                view.cbPeriodo.addItem(new ComboItem(1, "Mensual"));
+                view.cbPeriodo.addItem(new ComboItem(2, "Quincenal"));
+                view.cbPeriodo.addItem(new ComboItem(3, "Semanal"));
+                view.cbPeriodo.addItem(new ComboItem(4, "Anual"));
+            }
             
             if (view.cbPeriodo.getItemCount() > 0) {
-                view.cbPeriodo.setSelectedIndex(3);
+                int indexToSelect = 0;
+                for (int i = 0; i < view.cbPeriodo.getItemCount(); i++) {
+                    ComboItem item = view.cbPeriodo.getItemAt(i);
+                    if (item != null && ("Mensual".equalsIgnoreCase(item.getLabel()) || item.getValue() == 1)) {
+                        indexToSelect = i;
+                        break;
+                    }
+                }
+                view.cbPeriodo.setSelectedIndex(indexToSelect);
             }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(
                 view,
-                "Ocurrió un error al obtener los períodos",
+                "Ocurrió un error al obtener los períodos: " + e.getMessage(),
                 "Error",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -452,6 +479,9 @@ public class PresupuestoController {
     }
     
     public void eliminarPresupuestoSeleccionado() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "eliminar presupuestos")) {
+            return;
+        }
         try {
             int fila = view.tblPresupuestos.getSelectedRow();
             int idPresupuesto = Integer.parseInt(
@@ -474,6 +504,47 @@ public class PresupuestoController {
                 "Error",
                 JOptionPane.ERROR_MESSAGE
             );
+        }
+    }
+
+    public void exportarInforme() {
+        String[] opciones = {"Excel (*.xlsx)", "PDF (*.pdf)", "CSV (*.csv)", "Cancelar"};
+        int seleccion = JOptionPane.showOptionDialog(
+            view,
+            "Seleccione el formato para exportar el informe de presupuestos:",
+            "Exportar Informe de Presupuesto",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opciones,
+            opciones[0]
+        );
+
+        String periodo = (selectionPeriod != null && !selectionPeriod.trim().isEmpty()) ? selectionPeriod : "General";
+        String prefijo = "Presupuestos_" + periodo.replace(" ", "_");
+
+        if (seleccion == 0) {
+            util.ExportUtil.exportarTablaExcel(view, view.tblPresupuestos, "Rendimiento Presupuesto", prefijo);
+        } else if (seleccion == 1) {
+            Usuario activeUser = Session.getInstance().getUsuarioActivo();
+            String usuario = (activeUser != null) ? activeUser.getNombre() : "Usuario";
+            String totalP = view.jLabel21.getText();
+            String totalG = view.jLabel23.getText();
+            String restante = view.jLabel34.getText();
+
+            List<String[]> detalles = new ArrayList<>();
+            DefaultTableModel model = (DefaultTableModel) view.tblPresupuestos.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                detalles.add(new String[]{
+                    String.valueOf(model.getValueAt(i, 1)),
+                    String.valueOf(model.getValueAt(i, 2)),
+                    String.valueOf(model.getValueAt(i, 3)),
+                    String.valueOf(model.getValueAt(i, 4))
+                });
+            }
+            util.ExportUtil.exportarPdfFinanciero(view, periodo, usuario, totalP, totalG, "S/. 0.00", restante, detalles, prefijo);
+        } else if (seleccion == 2) {
+            util.ExportUtil.exportarTablaCSV(view, view.tblPresupuestos, prefijo);
         }
     }
 }

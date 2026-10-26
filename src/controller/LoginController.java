@@ -94,7 +94,7 @@ public class LoginController {
         }
 
         try {
-            String cMsje = service.registrarUsuario(nombreCompleto, email, password);
+            String cMsje = service.registrarUsuario(nombre, apellido, email, password);
             JOptionPane.showMessageDialog(regView, 
                 cMsje, 
                 "Registro Exitoso", 

@@ -26,6 +26,9 @@ public final class UsuarioController {
     }
 
     private void setupListeners() {
+        // Restricción RBAC para rol LECTOR
+        util.RbacUtil.aplicarRestriccionBotones(view.btnEnviarInvitacion);
+
         // Handle search placeholder
         view.txtBuscar.setForeground(new java.awt.Color(156, 163, 175));
         view.txtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -324,6 +327,9 @@ public final class UsuarioController {
     }
 
     public void enviarInvitacion() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "invitar nuevos usuarios o modificar permisos")) {
+            return;
+        }
         try {
             if (idEditando > 0) {
                 // Modo Edición
@@ -381,6 +387,9 @@ public final class UsuarioController {
     }
 
     public void cambiarRol(int idCompartido) {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "cambiar roles de usuarios")) {
+            return;
+        }
         try {
             String[] roles = {"Lector (Solo Lectura)", "Editor (Modificar)", "Administrador (Acceso Total)"};
             String selection = (String) JOptionPane.showInputDialog(
@@ -411,6 +420,9 @@ public final class UsuarioController {
     }
 
     public void confirmAndRevoke(int idCompartido) {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "revocar acceso de usuarios")) {
+            return;
+        }
         try {
             int confirm = JOptionPane.showConfirmDialog(
                 view,
@@ -434,28 +446,21 @@ public final class UsuarioController {
     }
 
     public void exportarCSV() {
-        try {
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
-            String timestamp = sdf.format(new java.util.Date());
-            String defaultName = "Usuarios_" + timestamp + ".xlsx";
-
-            javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
-            fileChooser.setDialogTitle("Guardar Reporte de Usuarios");
-            fileChooser.setSelectedFile(new java.io.File(defaultName));
-            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de Excel (*.xlsx)", "xlsx"));
-
-            int userSelection = fileChooser.showSaveDialog(view);
-            if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
-                java.io.File fileToSave = fileChooser.getSelectedFile();
-                String filePath = fileToSave.getAbsolutePath();
-                if (!filePath.toLowerCase().endsWith(".xlsx")) {
-                    fileToSave = new java.io.File(filePath + ".xlsx");
-                }
-                service.exportarExcel(view.tblUsuarios, fileToSave);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(view, "Error al abrir el selector de archivos.", "Error", JOptionPane.ERROR_MESSAGE);
+        String[] opciones = {"CSV (*.csv)", "Excel (*.xlsx)", "Cancelar"};
+        int sel = JOptionPane.showOptionDialog(
+            view,
+            "Seleccione el formato para exportar el listado de usuarios:",
+            "Exportar Usuarios Colaborativos",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opciones,
+            opciones[0]
+        );
+        if (sel == 0) {
+            util.ExportUtil.exportarTablaCSV(view, view.tblUsuarios, "Usuarios_Colaborativos");
+        } else if (sel == 1) {
+            util.ExportUtil.exportarTablaExcel(view, view.tblUsuarios, "Usuarios Colaborativos", "Usuarios_Colaborativos");
         }
     }
 

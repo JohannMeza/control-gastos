@@ -22,7 +22,7 @@ import javax.swing.table.TableColumnModel;
  */
 public final class ModernTableHelper {
 
-    private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("$#,##0.00", new DecimalFormatSymbols(Locale.US));
+    private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("'S/.' #,##0.00", new DecimalFormatSymbols(Locale.US));
 
     private ModernTableHelper() {}
 
@@ -147,10 +147,20 @@ public final class ModernTableHelper {
                             if (value instanceof Number) {
                                 lbl.setText(MONEY_FORMAT.format(((Number) value).doubleValue()));
                             } else if (value != null) {
-                                String str = value.toString().replace("$", "").replace(",", "").trim();
+                                String raw = value.toString().trim();
+                                boolean isPositive = raw.startsWith("+");
+                                boolean isNegative = raw.startsWith("-");
+                                String str = raw.replace("S/.", "").replace("S/", "").replace("$", "").replace("+", "").replace("-", "").replace(",", "").trim();
                                 try {
                                     double val = Double.parseDouble(str);
-                                    lbl.setText(MONEY_FORMAT.format(val));
+                                    String formatted = MONEY_FORMAT.format(val);
+                                    if (isPositive) {
+                                        lbl.setText("+" + formatted);
+                                    } else if (isNegative) {
+                                        lbl.setText("-" + formatted);
+                                    } else {
+                                        lbl.setText(formatted);
+                                    }
                                 } catch (NumberFormatException ignored) {
                                     lbl.setText(value.toString());
                                 }

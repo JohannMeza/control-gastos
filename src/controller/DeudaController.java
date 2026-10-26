@@ -28,6 +28,9 @@ public final class DeudaController {
         cargarResumenYDeudas();
         
         setupListeners();
+
+        // Restricción RBAC para rol LECTOR
+        util.RbacUtil.aplicarRestriccionBotones(view.btnRegistrarDeuda, view.btnConfirmarPago);
     }
 
     public void listarDeudasCombo() {
@@ -323,6 +326,9 @@ public final class DeudaController {
     }
 
     public void guardarDeuda() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "registrar nuevas deudas")) {
+            return;
+        }
         try {
             String acreedor = view.txtAcreedor.getText().trim();
             if (acreedor.isEmpty()) {
@@ -387,6 +393,9 @@ public final class DeudaController {
     }
 
     public void registrarAbono() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "registrar abonos a deudas")) {
+            return;
+        }
         try {
             ComboItem selectedDebt = (ComboItem) view.cbSeleccionarDeuda.getSelectedItem();
             if (selectedDebt == null) {
@@ -435,28 +444,21 @@ public final class DeudaController {
     }
 
     public void exportarCSV() {
-        try {
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
-            String timestamp = sdf.format(new java.util.Date());
-            String defaultName = "Deudas_y_Prestamos_" + timestamp + ".xlsx";
-
-            javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
-            fileChooser.setDialogTitle("Guardar Reporte de Deudas");
-            fileChooser.setSelectedFile(new java.io.File(defaultName));
-            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de Excel (*.xlsx)", "xlsx"));
-
-            int userSelection = fileChooser.showSaveDialog(view);
-            if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
-                java.io.File fileToSave = fileChooser.getSelectedFile();
-                String filePath = fileToSave.getAbsolutePath();
-                if (!filePath.toLowerCase().endsWith(".xlsx")) {
-                    fileToSave = new java.io.File(filePath + ".xlsx");
-                }
-                service.exportarExcel(view.tblHistorial, fileToSave);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(view, "Error al abrir el selector de archivos.", "Error", JOptionPane.ERROR_MESSAGE);
+        String[] opciones = {"CSV (*.csv)", "Excel (*.xlsx)", "Cancelar"};
+        int sel = JOptionPane.showOptionDialog(
+            view,
+            "Seleccione el formato para exportar el historial de pagos y deudas:",
+            "Exportar Historial de Deudas",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opciones,
+            opciones[0]
+        );
+        if (sel == 0) {
+            util.ExportUtil.exportarTablaCSV(view, view.tblHistorial, "Deudas_Historial");
+        } else if (sel == 1) {
+            util.ExportUtil.exportarTablaExcel(view, view.tblHistorial, "Historial de Abonos", "Deudas_Historial");
         }
     }
 

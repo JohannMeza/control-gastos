@@ -192,6 +192,10 @@ public class PaginationBar extends JPanel {
         }
     }
 
+    public void addPaginationListener(PageChangeListener listener) {
+        addPageChangeListener(listener);
+    }
+
     public void removePageChangeListener(PageChangeListener listener) {
         listeners.remove(listener);
     }

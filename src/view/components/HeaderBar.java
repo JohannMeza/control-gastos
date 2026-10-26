@@ -149,6 +149,9 @@ public class HeaderBar extends JPanel {
         pnlAcciones.add(lblAvatar);
 
         add(pnlAcciones, BorderLayout.EAST);
+
+        // Restricción RBAC para rol LECTOR
+        util.RbacUtil.aplicarRestriccionBotones(btnAccion);
     }
 
     private JLabel crearIconoCabecera(String icono) {
@@ -198,6 +201,10 @@ public class HeaderBar extends JPanel {
         if (btnAccion != null) {
             btnAccion.addActionListener(l);
         }
+    }
+
+    public void addAccionBotonListener(ActionListener l) {
+        addActionButtonListener(l);
     }
 
     public JButton getBtnAccion() {

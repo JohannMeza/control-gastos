@@ -55,6 +55,15 @@ public class PresupuestoDAO {
             e.printStackTrace();
         }
 
+        if (lista.isEmpty() || (lista.size() == 1 && lista.get(0).getValue() == 0)) {
+            lista.clear();
+            lista.add(new ComboItem(0, "-- Seleccione --"));
+            lista.add(new ComboItem(1, "Mensual"));
+            lista.add(new ComboItem(2, "Quincenal"));
+            lista.add(new ComboItem(3, "Semanal"));
+            lista.add(new ComboItem(4, "Anual"));
+        }
+
         return lista;
     }
     

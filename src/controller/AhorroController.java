@@ -28,6 +28,9 @@ public final class AhorroController {
         listarMetas();
         listarAhorros();
         cargarResumenYMetas();
+
+        // Restricción RBAC para rol LECTOR
+        util.RbacUtil.aplicarRestriccionBotones(view.btnRegistrarAhorro);
     }
 
     public void listarMetas() {
@@ -313,6 +316,9 @@ public final class AhorroController {
     }
 
     public void guardar() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "registrar o modificar ahorros")) {
+            return;
+        }
         try {
             ComboItem meta = (ComboItem) view.cbMetaFondo.getSelectedItem();
             if (meta == null) {
@@ -455,28 +461,21 @@ public final class AhorroController {
     }
 
     public void exportarCSV() {
-        try {
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
-            String timestamp = sdf.format(new java.util.Date());
-            String defaultName = "Ahorros_" + timestamp + ".xlsx";
-
-            javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
-            fileChooser.setDialogTitle("Guardar Reporte de Ahorros");
-            fileChooser.setSelectedFile(new java.io.File(defaultName));
-            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de Excel (*.xlsx)", "xlsx"));
-
-            int userSelection = fileChooser.showSaveDialog(view);
-            if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
-                java.io.File fileToSave = fileChooser.getSelectedFile();
-                String filePath = fileToSave.getAbsolutePath();
-                if (!filePath.toLowerCase().endsWith(".xlsx")) {
-                    fileToSave = new java.io.File(filePath + ".xlsx");
-                }
-                service.exportarExcel(view.tblAhorros, fileToSave);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(view, "Error al abrir el selector de archivos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        String[] opciones = {"CSV (*.csv)", "Excel (*.xlsx)", "Cancelar"};
+        int sel = javax.swing.JOptionPane.showOptionDialog(
+            view,
+            "Seleccione el formato para exportar el historial de ahorros:",
+            "Exportar Ahorros",
+            javax.swing.JOptionPane.DEFAULT_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            opciones,
+            opciones[0]
+        );
+        if (sel == 0) {
+            util.ExportUtil.exportarTablaCSV(view, view.tblAhorros, "Ahorros_Historial");
+        } else if (sel == 1) {
+            util.ExportUtil.exportarTablaExcel(view, view.tblAhorros, "Historial de Ahorros", "Ahorros_Historial");
         }
     }
 

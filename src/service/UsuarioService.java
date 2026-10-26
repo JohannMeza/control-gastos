@@ -171,4 +171,8 @@ public class UsuarioService {
     public String registrarUsuario(String nombre, String email, String password) throws Exception {
         return dao.registrarUsuario(nombre, email, password);
     }
+
+    public String registrarUsuario(String nombre, String apellidos, String email, String password) throws Exception {
+        return dao.registrarUsuario(nombre, apellidos, email, password);
+    }
 }

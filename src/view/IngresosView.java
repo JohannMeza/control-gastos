@@ -28,12 +28,14 @@ import view.components.ThemeColor;
 public class IngresosView extends javax.swing.JFrame {
 
     private ButtonGroup grupoTipoFlujo;
+    private controller.IngresoController controller;
 
     public IngresosView() {
         initComponents();
         initCustomStyles();
         setSize(1260, 780);
         setLocationRelativeTo(null);
+        this.controller = new controller.IngresoController(this);
     }
 
     private void initCustomStyles() {
@@ -43,22 +45,13 @@ public class IngresosView extends javax.swing.JFrame {
         grupoTipoFlujo.add(rbVariable);
         rbFijo.setSelected(true);
 
-        // 2. Configurar barra segmentada de distribución de fuentes
-        progressBarFuentes.limpiarSegmentos();
-        progressBarFuentes.agregarSegmento(68.2, ThemeColor.VERDE_PRIMARIO); // Nómina 68.2%
-        progressBarFuentes.agregarSegmento(21.1, ThemeColor.CIAN_ACCION);    // Freelance 21.1%
-        progressBarFuentes.agregarSegmento(10.7, new Color(245, 158, 11));   // Dividendos 10.7%
-
-        // 3. Estilizar Tabla con ModernTableHelper
+        // 2. Estilizar Tabla con ModernTableHelper
         ModernTableHelper.styleTable(tblIngresos);
         ModernTableHelper.setBadgeColumn(tblIngresos, 2, 4, 6);
         ModernTableHelper.setMoneyColumn(tblIngresos, 5);
         ModernTableHelper.styleScrollPane(scrollTabla);
 
-        // 4. Configurar barra de paginación inicial
-        paginationBar.updatePagination(1, 48, 6);
-
-        // 5. Ajustar velocidad de scroll vertical suave
+        // 3. Ajustar velocidad de scroll vertical suave
         scrollContent.getVerticalScrollBar().setUnitIncrement(16);
     }
 
@@ -143,7 +136,7 @@ public class IngresosView extends javax.swing.JFrame {
         lblProxLiqTitle = new javax.swing.JLabel();
         lblProxLiqFecha = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Finandes - Gestión de Ingresos");
         setBackground(new java.awt.Color(248, 250, 252));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -165,20 +158,19 @@ public class IngresosView extends javax.swing.JFrame {
         lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(15, 23, 42));
         lblTitle.setText("Gestión de Ingresos");
-        pnlMainContent.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 14, 200, 26));
+        pnlMainContent.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 200, 26));
 
         lblBadgeCiclo.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblBadgeCiclo.setForeground(new java.awt.Color(4, 120, 87));
         lblBadgeCiclo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBadgeCiclo.setText("Ciclo Octubre 2023");
         lblBadgeCiclo.setOpaque(true);
-        lblBadgeCiclo.setBackground(new java.awt.Color(209, 250, 229));
-        pnlMainContent.add(lblBadgeCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 16, 130, 22));
+        pnlMainContent.add(lblBadgeCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 130, 22));
 
         lblSubtitle.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lblSubtitle.setForeground(new java.awt.Color(100, 116, 139));
         lblSubtitle.setText("Control de entradas de capital, flujos salariales, cobros freelance y retornos de inversión.");
-        pnlMainContent.add(lblSubtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 550, 18));
+        pnlMainContent.add(lblSubtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 550, 18));
 
         btnFiltroOct.setBackground(new java.awt.Color(0, 159, 227));
         btnFiltroOct.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
@@ -213,25 +205,24 @@ public class IngresosView extends javax.swing.JFrame {
         pnlMainContent.add(btnAjustarVista, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 16, 84, 30));
 
         kpiTotales.setColorAcento(new java.awt.Color(66, 173, 77));
-        kpiTotales.setMonto("$12,450.00");
+        kpiTotales.setMonto("S/. 12,450.00");
         kpiTotales.setTitulo("INGRESOS TOTALES DEL MES");
-        kpiTotales.setVariacion("↑ +12.4% vs mes anterior ($11,075.00)");
+        kpiTotales.setVariacion("↑ +12.4% vs mes anterior (S/. 11,075.00)");
         pnlMainContent.add(kpiTotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 68, 235, 115));
 
-        kpiFijo.setColorAcento(new java.awt.Color(0, 159, 227));
-        kpiFijo.setMonto("$8,500.00");
+        kpiFijo.setMonto("S/. 8,500.00");
         kpiFijo.setTitulo("INGRESO FIJO / SALARIO");
         kpiFijo.setVariacion("68.2% del volumen total (Garantizado)");
         pnlMainContent.add(kpiFijo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 68, 235, 115));
 
         kpiVariable.setColorAcento(new java.awt.Color(245, 158, 11));
-        kpiVariable.setMonto("$3,950.00");
+        kpiVariable.setMonto("S/. 3,950.00");
         kpiVariable.setTitulo("INGRESOS VARIABLES / EXTRA");
         kpiVariable.setVariacion("● Freelance, Dividendos y Bonos");
         pnlMainContent.add(kpiVariable, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 68, 235, 115));
 
         kpiPromedio.setColorAcento(new java.awt.Color(126, 34, 206));
-        kpiPromedio.setMonto("$11,800.00");
+        kpiPromedio.setMonto("S/. 11,800.00");
         kpiPromedio.setTitulo("PROMEDIO MENSUAL");
         kpiPromedio.setVariacion("Últimos 6 meses (+5.5% YoY)");
         pnlMainContent.add(kpiPromedio, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 68, 240, 115));
@@ -248,12 +239,11 @@ public class IngresosView extends javax.swing.JFrame {
         lblBadgeManual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBadgeManual.setText("ENTRADA MANUAL");
         lblBadgeManual.setOpaque(true);
-        lblBadgeManual.setBackground(new java.awt.Color(241, 245, 249));
         cardFormulario.add(lblBadgeManual, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 18, 120, 20));
 
         lblMonto.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lblMonto.setForeground(new java.awt.Color(71, 85, 105));
-        lblMonto.setText("Monto del Ingreso ($) *");
+        lblMonto.setText("Monto del Ingreso (S/.) *");
         cardFormulario.add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 52, 260, 18));
 
         txtMonto.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -349,21 +339,21 @@ public class IngresosView extends javax.swing.JFrame {
         lblResetFiltro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cardFiltroRapido.add(lblResetFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 16, 90, 20));
 
-        txtRangoDesde.setFont(new java.awt.Font("Segoe UI", 11, 0)); // NOI18N
+        txtRangoDesde.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         txtRangoDesde.setText("10/01/2023");
-        txtRangoDesde.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(225, 213, 203)));
+        txtRangoDesde.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 225)));
         cardFiltroRapido.add(txtRangoDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 44, 145, 30));
 
-        txtRangoHasta.setFont(new java.awt.Font("Segoe UI", 11, 0)); // NOI18N
+        txtRangoHasta.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         txtRangoHasta.setText("10/31/2023");
-        txtRangoHasta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(225, 213, 203)));
+        txtRangoHasta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 225)));
         cardFiltroRapido.add(txtRangoHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 44, 145, 30));
 
-        cbFiltroCategoria.setFont(new java.awt.Font("Segoe UI", 11, 0)); // NOI18N
+        cbFiltroCategoria.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         cbFiltroCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas las categorías", "Salario", "Freelance" }));
         cardFiltroRapido.add(cbFiltroCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 82, 145, 30));
 
-        cbFiltroCuenta.setFont(new java.awt.Font("Segoe UI", 11, 0)); // NOI18N
+        cbFiltroCuenta.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         cbFiltroCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas las cuentas", "BBVA Nómina", "Santander" }));
         cardFiltroRapido.add(cbFiltroCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 82, 145, 30));
 
@@ -375,7 +365,7 @@ public class IngresosView extends javax.swing.JFrame {
         lblTotalDist.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lblTotalDist.setForeground(new java.awt.Color(71, 85, 105));
         lblTotalDist.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTotalDist.setText("Total: $12,450.00");
+        lblTotalDist.setText("Total: S/. 12,450.00");
         cardFiltroRapido.add(lblTotalDist, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 132, 120, 20));
         cardFiltroRapido.add(progressBarFuentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 158, 312, 12));
 
@@ -387,7 +377,7 @@ public class IngresosView extends javax.swing.JFrame {
         lblNominaVal.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblNominaVal.setForeground(new java.awt.Color(15, 23, 42));
         lblNominaVal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNominaVal.setText("$8,500.00  (68.2%)");
+        lblNominaVal.setText("S/. 8,500.00  (68.2%)");
         cardFiltroRapido.add(lblNominaVal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 140, 22));
 
         lblFreelanceItem.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
@@ -398,7 +388,7 @@ public class IngresosView extends javax.swing.JFrame {
         lblFreelanceVal.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblFreelanceVal.setForeground(new java.awt.Color(15, 23, 42));
         lblFreelanceVal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblFreelanceVal.setText("$2,630.00  (21.1%)");
+        lblFreelanceVal.setText("S/. 2,630.00  (21.1%)");
         cardFiltroRapido.add(lblFreelanceVal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 206, 140, 22));
 
         lblRendItem.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
@@ -409,7 +399,7 @@ public class IngresosView extends javax.swing.JFrame {
         lblRendVal.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblRendVal.setForeground(new java.awt.Color(15, 23, 42));
         lblRendVal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblRendVal.setText("$1,320.00  (10.7%)");
+        lblRendVal.setText("S/. 1,320.00  (10.7%)");
         cardFiltroRapido.add(lblRendVal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 232, 140, 22));
 
         pnlMainContent.add(cardFiltroRapido, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 200, 350, 300));
@@ -426,7 +416,6 @@ public class IngresosView extends javax.swing.JFrame {
         lblBadgeRegistros.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBadgeRegistros.setText("48 registros");
         lblBadgeRegistros.setOpaque(true);
-        lblBadgeRegistros.setBackground(new java.awt.Color(241, 245, 249));
         cardHistorial.add(lblBadgeRegistros, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 18, 95, 20));
 
         btnTabTodos.setBackground(new java.awt.Color(0, 159, 227));
@@ -481,12 +470,7 @@ public class IngresosView extends javax.swing.JFrame {
 
         tblIngresos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"28 Oct, 2023", "Nómina Quincenal Empresa Tech", "Salario", "BBVA Nómina", "Fijo", "+$4,250.00", "Confirmado", "Editar  Eliminar"},
-                {"25 Oct, 2023", "Consultoría UX/UI Cliente USA", "Freelance", "Cuenta Dólares", "Variable", "+$1,850.00", "Confirmado", "Editar  Eliminar"},
-                {"20 Oct, 2023", "Rentabilidad Fondo Indexado S&P", "Inversiones", "Santander", "Variable", "+$320.00", "Confirmado", "Editar  Eliminar"},
-                {"15 Oct, 2023", "Nómina Quincenal Empresa Tech", "Salario", "BBVA Nómina", "Fijo", "+$4,250.00", "Confirmado", "Editar  Eliminar"},
-                {"12 Oct, 2023", "Venta de Curso / Asesoría", "Servicios", "Stripe / Banco", "Variable", "+$780.00", "Confirmado", "Editar  Eliminar"},
-                {"05 Oct, 2023", "Reembolso de Gastos de Viaje", "Reembolso", "BBVA", "Variable", "+$1,000.00", "Confirmado", "Editar  Eliminar"}
+
             },
             new String [] {
                 "FECHA", "DESCRIPCIÓN / ORIGEN", "CATEGORÍA", "CUENTA DESTINO", "TIPO", "MONTO", "ESTADO", "ACCIONES"
@@ -522,7 +506,7 @@ public class IngresosView extends javax.swing.JFrame {
 
         lblProyMonto.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lblProyMonto.setForeground(new java.awt.Color(15, 23, 42));
-        lblProyMonto.setText("$13,200.00");
+        lblProyMonto.setText("S/. 13,200.00");
         cardProyeccion.add(lblProyMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 34, 120, 28));
 
         lblProyBadge.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
@@ -592,6 +576,7 @@ public class IngresosView extends javax.swing.JFrame {
         getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 1040, 690));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
@@ -713,4 +698,35 @@ public class IngresosView extends javax.swing.JFrame {
     public KpiCard getKpiPromedio() { return kpiPromedio; }
     public JPanel getPnlMainContent() { return pnlMainContent; }
     public JScrollPane getScrollContent() { return scrollContent; }
+
+    public JButton getBtnExportarCsv() { return btnExportarCsv; }
+    public JButton getBtnExportarExcel() { return btnExportarExcel; }
+    public JButton getBtnFiltroOct() { return btnFiltroOct; }
+    public JButton getBtnFiltroSep() { return btnFiltroSep; }
+    public JButton getBtnFiltroAnual() { return btnFiltroAnual; }
+    public JButton getBtnAjustarVista() { return btnAjustarVista; }
+    public JButton getBtnTabTodos() { return btnTabTodos; }
+    public JButton getBtnTabFijos() { return btnTabFijos; }
+    public JButton getBtnTabVariables() { return btnTabVariables; }
+    public JButton getBtnTabPendientes() { return btnTabPendientes; }
+    public JTextField getTxtRangoDesde() { return txtRangoDesde; }
+    public JTextField getTxtRangoHasta() { return txtRangoHasta; }
+    public JComboBox<String> getCbFiltroCategoria() { return cbFiltroCategoria; }
+    public JComboBox<String> getCbFiltroCuenta() { return cbFiltroCuenta; }
+    public JLabel getLblResetFiltro() { return lblResetFiltro; }
+    public JLabel getLblBadgeCiclo() { return lblBadgeCiclo; }
+    public JLabel getLblBadgeRegistros() { return lblBadgeRegistros; }
+    public JLabel getLblTotalDist() { return lblTotalDist; }
+    public JLabel getLblNominaVal() { return lblNominaVal; }
+    public JLabel getLblFreelanceVal() { return lblFreelanceVal; }
+    public JLabel getLblRendVal() { return lblRendVal; }
+    public JLabel getLblProyMonto() { return lblProyMonto; }
+    public JLabel getLblProyBadge() { return lblProyBadge; }
+    public JLabel getLblProySub() { return lblProySub; }
+    public JButton getBtnProyDetalles() { return btnProyDetalles; }
+    public JLabel getLblCicloCobrado() { return lblCicloCobrado; }
+    public JLabel getLblCicloSub() { return lblCicloSub; }
+    public JLabel getLblCicloPendiente() { return lblCicloPendiente; }
+    public JLabel getLblProxLiqFecha() { return lblProxLiqFecha; }
+    public controller.IngresoController getController() { return controller; }
 }

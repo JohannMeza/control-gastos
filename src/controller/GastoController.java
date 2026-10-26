@@ -20,7 +20,6 @@ import service.UsuarioService;
 import view.SystemView;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import service.SqsService;
 
 /**
  *
@@ -29,24 +28,42 @@ import service.SqsService;
 public final class GastoController {
     private SystemView view;
     private GastoService service;
-    private SqsService serviceSQS;
     
     public GastoController(SystemView view) {
         this.view = view;
         this.service = new GastoService();
-        this.serviceSQS = new SqsService();
         
-        //listarGastos();
         listarCategorias();
         listarTipoGastos();
         listarUsuarios();
+
+        // Restricción RBAC para rol LECTOR
+        util.RbacUtil.aplicarRestriccionBotones(view.btnAgregarGasto);
     }
     
     public void exportarExcel() {
-        service.exportarExcel(view.tblGastos);
+        String[] opciones = {"CSV (*.csv)", "Excel (*.xlsx)", "Cancelar"};
+        int sel = javax.swing.JOptionPane.showOptionDialog(
+            view,
+            "Seleccione el formato para exportar el historial de gastos:",
+            "Exportar Historial de Gastos",
+            javax.swing.JOptionPane.DEFAULT_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            opciones,
+            opciones[0]
+        );
+        if (sel == 0) {
+            util.ExportUtil.exportarTablaCSV(view, view.tblGastos, "Gastos_Historial");
+        } else if (sel == 1) {
+            util.ExportUtil.exportarTablaExcel(view, view.tblGastos, "Historial de Gastos", "Gastos_Historial");
+        }
     }
     
     public void guardar() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "registrar nuevos gastos")) {
+            return;
+        }
         try {
             Object selected = view.cbCategoria.getSelectedItem();
             System.out.println(selected);
@@ -76,6 +93,9 @@ public final class GastoController {
     }
     
     public void actualizar() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "actualizar gastos")) {
+            return;
+        }
         try {
             ComboItem categoria = (ComboItem) view.cbCategoria.getSelectedItem();
             ComboItem tipo = (ComboItem) view.cbTipoGastos.getSelectedItem();
@@ -326,6 +346,9 @@ public final class GastoController {
     }
     
     public void eliminarGastoSeleccionado() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "eliminar gastos")) {
+            return;
+        }
         try {
             int fila = view.tblGastos.getSelectedRow();
 
@@ -351,24 +374,6 @@ public final class GastoController {
                 "Error",
                 JOptionPane.ERROR_MESSAGE
             );
-        }
-    }
-
-    public void registrarGastoSQS() {
-        if (serviceSQS != null) {
-            try {
-                int expenseId = view.idGastoSeleccionado;
-                double amount = Double.parseDouble(view.txtMonto.getText());
-                ComboItem categoria = (ComboItem) view.cbCategoria.getSelectedItem();
-                String categoryName = categoria != null ? categoria.toString() : "Sin Categoría";
-                Usuario usuarioActivo = Session.getInstance().getUsuarioActivo();
-                
-                serviceSQS.enviarEventoGasto(expenseId, amount, categoryName, usuarioActivo);
-            } catch (Exception e) {
-                System.err.println("Error al preparar datos dinámicos para SQS: " + e.getMessage());
-            }
-        } else {
-            System.err.println("SQS service no está inicializado. No se puede enviar el evento.");
         }
     }
 }
