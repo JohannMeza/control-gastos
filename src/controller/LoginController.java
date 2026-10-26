@@ -71,6 +71,8 @@ public class LoginController {
 
     public void procesarRegistro(RegisterView regView) {
         String nombre = regView.getTxtNombre().getText().trim();
+        String apellido = regView.getTxtApellido() != null ? regView.getTxtApellido().getText().trim() : "";
+        String nombreCompleto = apellido.isEmpty() ? nombre : (nombre + " " + apellido).trim();
         String email = regView.getTxtEmail().getText().trim();
         String password = new String(regView.getTxtPassword().getPassword());
         String confirmPassword = new String(regView.getTxtConfirmPassword().getPassword());
@@ -92,7 +94,7 @@ public class LoginController {
         }
 
         try {
-            String cMsje = service.registrarUsuario(nombre, email, password);
+            String cMsje = service.registrarUsuario(nombreCompleto, email, password);
             JOptionPane.showMessageDialog(regView, 
                 cMsje, 
                 "Registro Exitoso", 
