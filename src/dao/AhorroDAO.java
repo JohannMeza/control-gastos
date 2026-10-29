@@ -11,7 +11,7 @@ import model.MetaAhorro;
 import model.MetasResumen;
 import util.XmlUtil;
 
-public class AhorroDAO {
+public class AhorroDAO implements IAhorroDAO {
 
     public List<ComboItem> listarMetas(int idUsuario) {
         List<ComboItem> lista = new ArrayList<>();

@@ -2,6 +2,7 @@ package controller;
 
 import model.Usuario;
 import model.Session;
+import service.IUsuarioService;
 import service.UsuarioService;
 import view.LoginView;
 import view.RegisterView;
@@ -11,11 +12,15 @@ import javax.swing.JOptionPane;
 public class LoginController {
 
     private LoginView loginView;
-    private UsuarioService service;
+    private IUsuarioService service;
 
     public LoginController(LoginView loginView) {
+        this(loginView, new UsuarioService());
+    }
+
+    public LoginController(LoginView loginView, IUsuarioService service) {
         this.loginView = loginView;
-        this.service = new UsuarioService();
+        this.service = service;
     }
 
     public void procesarLogin() {

@@ -11,18 +11,23 @@ import model.MetasResumen;
 import model.Session;
 import model.Usuario;
 import service.AhorroService;
+import service.IAhorroService;
 import view.AhorrosView;
 import view.NuevaMetaDialog;
 
 public final class AhorroController {
     private AhorrosView view;
-    private AhorroService service;
+    private IAhorroService service;
     private javax.swing.JPanel pnlMetasContenedor;
     private List<MetaAhorro> currentMetas;
 
     public AhorroController(AhorrosView view) {
+        this(view, new AhorroService());
+    }
+
+    public AhorroController(AhorrosView view, IAhorroService service) {
         this.view = view;
-        this.service = new AhorroService();
+        this.service = service;
 
         setupContenedorMetas();
         listarMetas();

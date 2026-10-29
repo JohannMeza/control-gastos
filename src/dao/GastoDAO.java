@@ -9,7 +9,7 @@ import model.ComboItem;
 import model.Gasto;
 import util.XmlUtil;
 
-public class GastoDAO {
+public class GastoDAO implements IGastoDAO {
 
     public String guardar(Gasto gasto) {
         String sql = "{CALL CG_GuardaGastoIngresado_SP(?)}";

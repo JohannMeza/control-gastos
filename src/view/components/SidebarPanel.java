@@ -119,8 +119,31 @@ public class SidebarPanel extends JPanel {
         pnlDivider.setPreferredSize(new Dimension(200, 1));
         pnlDivider.setOpaque(false);
 
-        JLabel lblPerfil = crearItemSecundario("👤  Perfil");
-        JLabel lblConfig = crearItemSecundario("⚙  Configuración");
+        JLabel lblPerfil = crearItemSecundario("perfil", "Perfil");
+        JLabel lblConfig = crearItemSecundario("configuracion", "Configuración");
+
+        lblPerfil.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(SidebarPanel.this);
+                if (currentFrame != null) {
+                    JOptionPane.showMessageDialog(currentFrame, "Perfil del usuario: " + 
+                        (model.Session.getInstance().getUsuarioActivo() != null ? model.Session.getInstance().getUsuarioActivo().getNombre() : "Usuario"), 
+                        "Mi Perfil", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
+        lblConfig.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(SidebarPanel.this);
+                if (currentFrame != null) {
+                    JOptionPane.showMessageDialog(currentFrame, "Panel de preferencias y configuración del sistema.", 
+                        "Configuración", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
 
         JLabel lblVersion = new JLabel("Java Desktop v1.0");
         lblVersion.setFont(new Font("Consolas", Font.PLAIN, 10));
@@ -208,10 +231,11 @@ public class SidebarPanel extends JPanel {
         return item;
     }
 
-    private JLabel crearItemSecundario(String texto) {
-        JLabel lbl = new JLabel(texto);
+    private JLabel crearItemSecundario(String iconKey, String texto) {
+        JLabel lbl = new JLabel(" " + texto);
+        lbl.setIcon(new MenuIcon(iconKey, new Color(226, 232, 240)));
         lbl.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lbl.setForeground(Color.WHITE);
+        lbl.setForeground(new Color(241, 245, 249));
         lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
         lbl.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
         return lbl;
@@ -277,6 +301,19 @@ public class SidebarPanel extends JPanel {
                     g2.fillArc(x, y + 7, 12, 10, 0, 180);
                     g2.fillOval(x + 10, y + 2, 5, 5);
                     g2.fillArc(x + 8, y + 8, 9, 8, 0, 180);
+                    break;
+                case "perfil":
+                    g2.fillOval(x + 5, y + 1, 6, 6);
+                    g2.fillArc(x + 2, y + 8, 12, 10, 0, 180);
+                    break;
+                case "configuracion":
+                    g2.setStroke(new java.awt.BasicStroke(1.5f));
+                    g2.drawOval(x + 3, y + 2, 10, 10);
+                    g2.drawLine(x + 8, y, x + 8, y + 14);
+                    g2.drawLine(x + 1, y + 7, x + 15, y + 7);
+                    g2.drawLine(x + 3, y + 2, x + 13, y + 12);
+                    g2.drawLine(x + 3, y + 12, x + 13, y + 2);
+                    g2.fillOval(x + 6, y + 5, 4, 4);
                     break;
                 default:
                     g2.fillOval(x + 4, y + 4, 7, 7);

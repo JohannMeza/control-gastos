@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,7 +17,73 @@ import model.ComboItem;
 import model.Ingreso;
 import model.IngresoResumen;
 
-public class IngresoDAO {
+public class IngresoDAO implements IIngresoDAO {
+
+    private void ensureColumnsExist(Connection conn) {
+        try (Statement s = conn.createStatement()) {
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'idCategoria') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD idCategoria INT NULL;");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'cCategoria') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD cCategoria NVARCHAR(100) NULL;");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'idCuentaDestino') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD idCuentaDestino INT NULL;");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'cCuentaDestino') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD cCuentaDestino NVARCHAR(100) NULL;");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'cTipoFlujo') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD cTipoFlujo NVARCHAR(20) DEFAULT 'Fijo';");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'cEstado') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD cEstado NVARCHAR(20) DEFAULT 'Confirmado';");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'lEsRecurrente') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD lEsRecurrente BIT DEFAULT 0;");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'idUsuReg') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD idUsuReg INT NULL;");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'dFecReg') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD dFecReg DATETIME DEFAULT GETDATE();");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'idUsuMod') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD idUsuMod INT NULL;");
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('FINANZAS.INGRESOS') AND name = 'dFecMod') " +
+                      "ALTER TABLE FINANZAS.INGRESOS ADD dFecMod DATETIME NULL;");
+
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.tables t JOIN sys.schemas s ON t.schema_id = s.schema_id " +
+                      "WHERE t.name = 'CATEGORIAS_INGRESOS' AND s.name = 'FINANZAS') " +
+                      "BEGIN " +
+                      "CREATE TABLE FINANZAS.CATEGORIAS_INGRESOS (" +
+                      "    idCategoria INT IDENTITY(1,1) PRIMARY KEY," +
+                      "    cNombre NVARCHAR(100) NOT NULL," +
+                      "    cDescripcion NVARCHAR(255) NULL," +
+                      "    lEsActivo BIT DEFAULT 1," +
+                      "    idUsuario INT DEFAULT 1" +
+                      "); " +
+                      "INSERT INTO FINANZAS.CATEGORIAS_INGRESOS (cNombre, cDescripcion, lEsActivo, idUsuario) VALUES " +
+                      "(N'Salario / N\u00f3mina Directa', N'Ingreso por planilla o relaci\u00f3n de dependencia laboral', 1, 1)," +
+                      "(N'Proyectos Freelance & Tech', N'Servicios independientes de desarrollo y consultor\u00eda t\u00e9cnica', 1, 1)," +
+                      "(N'Rendimientos & Dividendos', N'Rendimientos de inversiones, dep\u00f3sitos a plazo o bolsa', 1, 1)," +
+                      "(N'Consultor\u00eda & Asesor\u00eda', N'Servicios profesionales y asesoramiento externo', 1, 1)," +
+                      "(N'Alquileres & Rentas', N'Arrendamiento de inmuebles o activos', 1, 1)," +
+                      "(N'Reembolsos & Bonos', N'Devoluciones, gratificaciones o premios', 1, 1)," +
+                      "(N'Otros Ingresos', N'Ingresos varios no clasificados', 1, 1); " +
+                      "END;");
+
+            s.execute("IF NOT EXISTS (SELECT 1 FROM sys.tables t JOIN sys.schemas s ON t.schema_id = s.schema_id " +
+                      "WHERE t.name = 'CUENTAS_DESTINO' AND s.name = 'FINANZAS') " +
+                      "BEGIN " +
+                      "CREATE TABLE FINANZAS.CUENTAS_DESTINO (" +
+                      "    idCuenta INT IDENTITY(1,1) PRIMARY KEY," +
+                      "    cNombre NVARCHAR(100) NOT NULL," +
+                      "    cBanco NVARCHAR(100) NULL," +
+                      "    lEsActivo BIT DEFAULT 1," +
+                      "    idUsuario INT DEFAULT 1" +
+                      "); " +
+                      "INSERT INTO FINANZAS.CUENTAS_DESTINO (cNombre, cBanco, lEsActivo, idUsuario) VALUES " +
+                      "(N'Cuenta Corriente BBVA (N\u00f3mina)', 'BBVA', 1, 1)," +
+                      "(N'Cuenta D\u00f3lares', 'BCP', 1, 1)," +
+                      "(N'Santander', 'Santander', 1, 1)," +
+                      "(N'Stripe / Banco', 'Stripe', 1, 1)," +
+                      "(N'BBVA', 'BBVA', 1, 1); " +
+                      "END;");
+        } catch (Exception ignored) {
+        }
+    }
 
     public List<Ingreso> listarIngresos(int idUsuario, String tipoFlujo, String estado, String fechaDesde, String fechaHasta, String categoria, String cuenta) {
         List<Ingreso> lista = new ArrayList<>();
@@ -70,7 +137,9 @@ public class IngresoDAO {
                         ing.setDescripcion(rs.getString("cDescripcion"));
                         ing.setFecha(rs.getDate("dFecha"));
                         ing.setFechaFormat(rs.getString("fechaFormat"));
+                        ing.setIdCategoria(rs.getInt("idCategoria"));
                         ing.setCategoria(rs.getString("cCategoria"));
+                        ing.setIdCuentaDestino(rs.getInt("idCuentaDestino"));
                         ing.setCuentaDestino(rs.getString("cCuentaDestino"));
                         ing.setTipoFlujo(rs.getString("cTipoFlujo"));
                         ing.setEstado(rs.getString("cEstado"));
@@ -80,9 +149,10 @@ public class IngresoDAO {
                     }
                 }
             } catch (Exception exSp) {
-                // Fallback to direct query if SP execution encounters schema mismatch
+                ensureColumnsExist(conn);
                 String fallbackSql = "SELECT idIngreso, nMonto, cDescripcion, dFecha, CONVERT(VARCHAR(10), dFecha, 120) AS fechaFormat, " +
-                                     "ISNULL(cCategoria, 'Otros') AS cCategoria, ISNULL(cCuentaDestino, 'General') AS cCuentaDestino, " +
+                                     "idCategoria, ISNULL(cCategoria, 'Otros') AS cCategoria, " +
+                                     "idCuentaDestino, ISNULL(cCuentaDestino, 'General') AS cCuentaDestino, " +
                                      "ISNULL(cTipoFlujo, 'Fijo') AS cTipoFlujo, ISNULL(cEstado, 'Confirmado') AS cEstado, " +
                                      "ISNULL(lEsRecurrente, 0) AS lEsRecurrente, idUsuario " +
                                      "FROM FINANZAS.INGRESOS WHERE idUsuario = ? AND lEsActivo = 1 " +
@@ -97,7 +167,9 @@ public class IngresoDAO {
                             ing.setDescripcion(rs.getString("cDescripcion"));
                             ing.setFecha(rs.getDate("dFecha"));
                             ing.setFechaFormat(rs.getString("fechaFormat"));
+                            ing.setIdCategoria(rs.getInt("idCategoria"));
                             ing.setCategoria(rs.getString("cCategoria"));
+                            ing.setIdCuentaDestino(rs.getInt("idCuentaDestino"));
                             ing.setCuentaDestino(rs.getString("cCuentaDestino"));
                             ing.setTipoFlujo(rs.getString("cTipoFlujo"));
                             ing.setEstado(rs.getString("cEstado"));
@@ -137,19 +209,22 @@ public class IngresoDAO {
                     }
                 }
             } catch (Exception exSp) {
-                String fallbackSql = "INSERT INTO FINANZAS.INGRESOS (nMonto, cDescripcion, dFecha, cCategoria, cCuentaDestino, cTipoFlujo, cEstado, lEsRecurrente, idUsuario, lEsActivo, idUsuReg, dFecReg) " +
-                                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, GETDATE())";
+                ensureColumnsExist(conn);
+                String fallbackSql = "INSERT INTO FINANZAS.INGRESOS (nMonto, cDescripcion, dFecha, idCategoria, cCategoria, idCuentaDestino, cCuentaDestino, cTipoFlujo, cEstado, lEsRecurrente, idUsuario, lEsActivo, idUsuReg, dFecReg) " +
+                                     "VALUES (?, ?, ?, (SELECT TOP 1 idCategoria FROM FINANZAS.CATEGORIAS_INGRESOS WHERE cNombre = ?), ?, (SELECT TOP 1 idCuenta FROM FINANZAS.CUENTAS_DESTINO WHERE cNombre = ?), ?, ?, ?, ?, ?, 1, ?, GETDATE())";
                 try (PreparedStatement pStmt = conn.prepareStatement(fallbackSql)) {
                     pStmt.setDouble(1, ingreso.getMonto());
                     pStmt.setString(2, ingreso.getDescripcion());
                     pStmt.setDate(3, new Date(ingreso.getFecha().getTime()));
                     pStmt.setString(4, ingreso.getCategoria());
-                    pStmt.setString(5, ingreso.getCuentaDestino());
-                    pStmt.setString(6, ingreso.getTipoFlujo());
-                    pStmt.setString(7, ingreso.getEstado() != null ? ingreso.getEstado() : "Confirmado");
-                    pStmt.setBoolean(8, ingreso.isRecurrente());
-                    pStmt.setInt(9, ingreso.getUsuarioId());
-                    pStmt.setInt(10, ingreso.getUsuarioId());
+                    pStmt.setString(5, ingreso.getCategoria());
+                    pStmt.setString(6, ingreso.getCuentaDestino());
+                    pStmt.setString(7, ingreso.getCuentaDestino());
+                    pStmt.setString(8, ingreso.getTipoFlujo());
+                    pStmt.setString(9, ingreso.getEstado() != null ? ingreso.getEstado() : "Confirmado");
+                    pStmt.setBoolean(10, ingreso.isRecurrente());
+                    pStmt.setInt(11, ingreso.getUsuarioId());
+                    pStmt.setInt(12, ingreso.getUsuarioId());
                     pStmt.executeUpdate();
                 }
             }
@@ -162,7 +237,7 @@ public class IngresoDAO {
 
     public String actualizar(Ingreso ingreso) {
         String mensaje = "Ingreso actualizado correctamente.";
-        String sql = "{CALL CG_ActualizarIngreso_SP(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String sql = "{CALL CG_ActualizarIngreso_SP(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
         try (Connection conn = ConexionDB.getConnection()) {
             try (CallableStatement stmt = conn.prepareCall(sql)) {
@@ -183,7 +258,10 @@ public class IngresoDAO {
                     }
                 }
             } catch (Exception exSp) {
-                String fallbackSql = "UPDATE FINANZAS.INGRESOS SET nMonto = ?, cDescripcion = ?, dFecha = ?, cCategoria = ?, cCuentaDestino = ?, " +
+                ensureColumnsExist(conn);
+                String fallbackSql = "UPDATE FINANZAS.INGRESOS SET nMonto = ?, cDescripcion = ?, dFecha = ?, " +
+                                     "idCategoria = (SELECT TOP 1 idCategoria FROM FINANZAS.CATEGORIAS_INGRESOS WHERE cNombre = ?), cCategoria = ?, " +
+                                     "idCuentaDestino = (SELECT TOP 1 idCuenta FROM FINANZAS.CUENTAS_DESTINO WHERE cNombre = ?), cCuentaDestino = ?, " +
                                      "cTipoFlujo = ?, cEstado = ?, lEsRecurrente = ?, idUsuMod = ?, dFecMod = GETDATE() " +
                                      "WHERE idIngreso = ? AND idUsuario = ?";
                 try (PreparedStatement pStmt = conn.prepareStatement(fallbackSql)) {
@@ -191,13 +269,15 @@ public class IngresoDAO {
                     pStmt.setString(2, ingreso.getDescripcion());
                     pStmt.setDate(3, new Date(ingreso.getFecha().getTime()));
                     pStmt.setString(4, ingreso.getCategoria());
-                    pStmt.setString(5, ingreso.getCuentaDestino());
-                    pStmt.setString(6, ingreso.getTipoFlujo());
-                    pStmt.setString(7, ingreso.getEstado());
-                    pStmt.setBoolean(8, ingreso.isRecurrente());
-                    pStmt.setInt(9, ingreso.getUsuarioId());
-                    pStmt.setInt(10, ingreso.getId());
+                    pStmt.setString(5, ingreso.getCategoria());
+                    pStmt.setString(6, ingreso.getCuentaDestino());
+                    pStmt.setString(7, ingreso.getCuentaDestino());
+                    pStmt.setString(8, ingreso.getTipoFlujo());
+                    pStmt.setString(9, ingreso.getEstado());
+                    pStmt.setBoolean(10, ingreso.isRecurrente());
                     pStmt.setInt(11, ingreso.getUsuarioId());
+                    pStmt.setInt(12, ingreso.getId());
+                    pStmt.setInt(13, ingreso.getUsuarioId());
                     pStmt.executeUpdate();
                 }
             }
@@ -239,7 +319,8 @@ public class IngresoDAO {
 
     public Ingreso obtenerPorId(int idIngreso, int idUsuario) {
         String sql = "SELECT idIngreso, nMonto, cDescripcion, dFecha, CONVERT(VARCHAR(10), dFecha, 120) AS fechaFormat, " +
-                     "ISNULL(cCategoria, 'Otros') AS cCategoria, ISNULL(cCuentaDestino, 'General') AS cCuentaDestino, " +
+                     "idCategoria, ISNULL(cCategoria, 'Otros') AS cCategoria, " +
+                     "idCuentaDestino, ISNULL(cCuentaDestino, 'General') AS cCuentaDestino, " +
                      "ISNULL(cTipoFlujo, 'Fijo') AS cTipoFlujo, ISNULL(cEstado, 'Confirmado') AS cEstado, " +
                      "ISNULL(lEsRecurrente, 0) AS lEsRecurrente, idUsuario " +
                      "FROM FINANZAS.INGRESOS WHERE idIngreso = ? AND idUsuario = ? AND lEsActivo = 1";
@@ -257,7 +338,9 @@ public class IngresoDAO {
                     ing.setDescripcion(rs.getString("cDescripcion"));
                     ing.setFecha(rs.getDate("dFecha"));
                     ing.setFechaFormat(rs.getString("fechaFormat"));
+                    ing.setIdCategoria(rs.getInt("idCategoria"));
                     ing.setCategoria(rs.getString("cCategoria"));
+                    ing.setIdCuentaDestino(rs.getInt("idCuentaDestino"));
                     ing.setCuentaDestino(rs.getString("cCuentaDestino"));
                     ing.setTipoFlujo(rs.getString("cTipoFlujo"));
                     ing.setEstado(rs.getString("cEstado"));
@@ -456,21 +539,24 @@ public class IngresoDAO {
 
     public List<ComboItem> listarCategorias() {
         List<ComboItem> lista = new ArrayList<>();
-        String sql = "SELECT idCategoria, cDescripcion FROM MANTENEDOR.CATEGORIAS WHERE lEsActivo = 1 ORDER BY cDescripcion";
+        String sql = "SELECT idCategoria, cNombre FROM FINANZAS.CATEGORIAS_INGRESOS WHERE lEsActivo = 1 ORDER BY idCategoria";
 
-        try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                lista.add(new ComboItem(rs.getInt("idCategoria"), rs.getString("cDescripcion")));
+        try (Connection conn = ConexionDB.getConnection()) {
+            ensureColumnsExist(conn);
+            try (PreparedStatement stmt = conn.prepareStatement(sql);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(new ComboItem(rs.getInt("idCategoria"), rs.getString("cNombre")));
+                }
             }
         } catch (Exception e) {
-            // Default categories if table not filled
-            lista.add(new ComboItem(1, "Salario / Nómina Directa"));
+            lista.add(new ComboItem(1, "Salario / N\u00f3mina Directa"));
             lista.add(new ComboItem(2, "Proyectos Freelance & Tech"));
             lista.add(new ComboItem(3, "Rendimientos & Dividendos"));
-            lista.add(new ComboItem(4, "Servicios"));
-            lista.add(new ComboItem(5, "Reembolsos"));
+            lista.add(new ComboItem(4, "Consultor\u00eda & Asesor\u00eda"));
+            lista.add(new ComboItem(5, "Alquileres & Rentas"));
+            lista.add(new ComboItem(6, "Reembolsos & Bonos"));
+            lista.add(new ComboItem(7, "Otros Ingresos"));
         }
         return lista;
     }

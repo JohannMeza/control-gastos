@@ -82,8 +82,11 @@ public class SystemView extends javax.swing.JFrame {
     }
 
     public void actualizarPaginacion() {
-        int total = tblGastos.getRowCount();
-        paginationBar.updatePagination(1, total > 0 ? total : 1, 10);
+        if (controller != null) {
+            controller.mostrarPaginaGastos();
+        } else {
+            paginationBar.updatePagination(1, 0, 10);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -656,6 +659,10 @@ public class SystemView extends javax.swing.JFrame {
 
     public HeaderBar getHeaderBar() {
         return headerBar;
+    }
+
+    public view.components.PaginationBar getPaginationBar() {
+        return paginationBar;
     }
 
     public static void main(String args[]) {

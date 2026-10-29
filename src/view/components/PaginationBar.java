@@ -50,15 +50,15 @@ public class PaginationBar extends JPanel {
     private void initComponents() {
         setOpaque(false);
         setLayout(new BorderLayout(16, 0));
-        setBorder(BorderFactory.createEmptyBorder(10, 12, 10, 12));
-        setPreferredSize(new Dimension(600, 48));
+        setBorder(BorderFactory.createEmptyBorder(2, 12, 2, 12));
+        setPreferredSize(new Dimension(600, 36));
 
         lblInfo = new JLabel("Mostrando 0 a 0 de 0 transacciones");
         lblInfo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         lblInfo.setForeground(ThemeColor.TEXTO_SECUNDARIO);
         add(lblInfo, BorderLayout.WEST);
 
-        pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 4, 0));
+        pnlButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 4, 3));
         pnlButtons.setOpaque(false);
         add(pnlButtons, BorderLayout.EAST);
     }
@@ -164,9 +164,9 @@ public class PaginationBar extends JPanel {
             }
         };
 
-        btn.setPreferredSize(new Dimension(34, 30));
+        btn.setPreferredSize(new Dimension(32, 26));
         btn.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        btn.setFont(new Font("Segoe UI", isActive ? Font.BOLD : Font.PLAIN, 12));
+        btn.setFont(new Font("Segoe UI", isActive ? Font.BOLD : Font.PLAIN, 11));
         btn.setForeground(isActive ? Color.WHITE : (enabled ? ThemeColor.TEXTO_TITULO : ThemeColor.TEXTO_MUTED));
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);

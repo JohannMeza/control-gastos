@@ -11,16 +11,21 @@ import model.DeudaResumen;
 import model.Session;
 import model.Usuario;
 import service.DeudaService;
+import service.IDeudaService;
 import view.DeudasView;
 
 public final class DeudaController {
     private DeudasView view;
-    private DeudaService service;
+    private IDeudaService service;
     private javax.swing.JPanel pnlDeudasContenedor;
 
     public DeudaController(DeudasView view) {
+        this(view, new DeudaService());
+    }
+
+    public DeudaController(DeudasView view, IDeudaService service) {
         this.view = view;
-        this.service = new DeudaService();
+        this.service = service;
 
         setupContenedorDeudas();
         listarDeudasCombo();

@@ -44,6 +44,7 @@ public class DeudasView extends javax.swing.JFrame {
         });
 
         lblDebt2PayNow.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblDebt2WarningIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 12));
     }
 
     private void setupFormDates() {
@@ -469,7 +470,7 @@ public class DeudasView extends javax.swing.JFrame {
         lblDebt2Desc.setText("Visa Internacional");
         pnlDebt2.add(lblDebt2Desc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 26, 180, 14));
 
-        lblDebt2WarningIcon.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lblDebt2WarningIcon.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         lblDebt2WarningIcon.setText("⚠️");
         pnlDebt2.add(lblDebt2WarningIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 18, 18));
 

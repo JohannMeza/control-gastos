@@ -715,7 +715,7 @@
                 <Component class="javax.swing.JLabel" name="lblIconSincr">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="18" style="0"/>
+                      <Font name="Segoe UI Emoji" size="18" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="&#x1f552;"/>
                   </Properties>
@@ -810,7 +810,7 @@
                 <Component class="javax.swing.JLabel" name="lblIconMfa">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="18" style="0"/>
+                      <Font name="Segoe UI Emoji" size="18" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="&#x1f6e1;&#xfe0f;"/>
                   </Properties>
@@ -902,7 +902,7 @@
                 <Component class="javax.swing.JLabel" name="lblIconAuditoria">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="18" style="0"/>
+                      <Font name="Segoe UI Emoji" size="18" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="&#x1f512;"/>
                   </Properties>

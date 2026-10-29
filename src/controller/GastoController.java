@@ -16,6 +16,8 @@ import model.Session;
 import model.Usuario;
 import model.UsuarioCompartido;
 import service.GastoService;
+import service.IGastoService;
+import service.IUsuarioService;
 import service.UsuarioService;
 import view.SystemView;
 import java.util.Date;
@@ -27,15 +29,29 @@ import javax.swing.JOptionPane;
  */
 public final class GastoController {
     private SystemView view;
-    private GastoService service;
+    private IGastoService service;
+    private int paginaActual = 1;
+    private final int filasPorPagina = 10;
+    private List<Gasto> listaGastosActual = new java.util.ArrayList<>();
     
     public GastoController(SystemView view) {
+        this(view, new GastoService());
+    }
+
+    public GastoController(SystemView view, IGastoService service) {
         this.view = view;
-        this.service = new GastoService();
+        this.service = service;
         
         listarCategorias();
         listarTipoGastos();
         listarUsuarios();
+
+        if (view.getPaginationBar() != null) {
+            view.getPaginationBar().addPaginationListener(pagina -> {
+                this.paginaActual = pagina;
+                mostrarPaginaGastos();
+            });
+        }
 
         // Restricción RBAC para rol LECTOR
         util.RbacUtil.aplicarRestriccionBotones(view.btnAgregarGasto);
@@ -158,23 +174,12 @@ public final class GastoController {
             idUsuario = loggedInUserId;
         }
         
-        List<Gasto> lista = service.listar(fechaDesde, fechaHasta, idUsuario);
-
-        DefaultTableModel modelo = (DefaultTableModel) view.tblGastos.getModel();
-        modelo.setRowCount(0);
+        this.listaGastosActual = service.listar(fechaDesde, fechaHasta, idUsuario);
+        this.paginaActual = 1;
+        mostrarPaginaGastos();
 
         double totalExpenses = 0;
-
-        for (Gasto g : lista) {
-            modelo.addRow(new Object[]{
-                g.getIdGasto(),
-                util.DateUtil.formatLongDate(g.getFechaGastoFormat()),
-                g.getDescripcion(),
-                g.getCategoria(),
-                g.getTipoGasto(),
-                g.getMonto(),
-                g.getUsuario()
-            });
+        for (Gasto g : listaGastosActual) {
             totalExpenses += g.getMonto();
         }
 
@@ -228,6 +233,44 @@ public final class GastoController {
         String nextRecurringDate = util.DateUtil.formatLongDate(cal.getTime());
         view.jLabel29.setText(nextRecurringDate);
     }
+
+    public void mostrarPaginaGastos() {
+        DefaultTableModel modelo = (DefaultTableModel) view.tblGastos.getModel();
+        modelo.setRowCount(0);
+
+        int totalRegistros = (listaGastosActual != null) ? listaGastosActual.size() : 0;
+
+        if (totalRegistros == 0) {
+            if (view.getPaginationBar() != null) {
+                view.getPaginationBar().updatePagination(1, 0, filasPorPagina);
+            }
+            return;
+        }
+
+        int totalPaginas = (int) Math.ceil((double) totalRegistros / filasPorPagina);
+        if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+        if (paginaActual < 1) paginaActual = 1;
+
+        int inicio = (paginaActual - 1) * filasPorPagina;
+        int fin = Math.min(inicio + filasPorPagina, totalRegistros);
+
+        for (int i = inicio; i < fin; i++) {
+            Gasto g = listaGastosActual.get(i);
+            modelo.addRow(new Object[]{
+                g.getIdGasto(),
+                util.DateUtil.formatLongDate(g.getFechaGastoFormat()),
+                g.getDescripcion(),
+                g.getCategoria(),
+                g.getTipoGasto(),
+                g.getMonto(),
+                g.getUsuario()
+            });
+        }
+
+        if (view.getPaginationBar() != null) {
+            view.getPaginationBar().updatePagination(paginaActual, totalRegistros, filasPorPagina);
+        }
+    }
     
     public void listarCategorias() {
         try {
@@ -264,7 +307,7 @@ public final class GastoController {
 
             view.cbUser.addItem(new ComboItem(0, "Todos los usuarios"));
 
-            UsuarioService uService = new UsuarioService();
+            IUsuarioService uService = new UsuarioService();
             Usuario owner = uService.obtenerUsuario(loggedInUserId);
             if (owner != null) {
                 view.cbUser.addItem(new ComboItem(owner.getId(), owner.getNombre() + " (Yo)"));

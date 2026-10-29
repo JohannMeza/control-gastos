@@ -10,16 +10,17 @@ import model.ComboItem;
 import model.Session;
 import model.Usuario;
 import model.UsuarioCompartido;
+import service.IPresupuestoService;
 import service.PresupuestoService;
+import service.IUsuarioService;
 import service.UsuarioService;
-import service.GastoService;
 import view.PresupuestoView;
 import model.Presupuesto;
 import model.PresupuestoActividad;
 
 public class PresupuestoController {
     private PresupuestoView view;
-    private PresupuestoService service;
+    private IPresupuestoService service;
     
     // Filter variables
     private int idFiltradoUsuario = 0;
@@ -27,9 +28,13 @@ public class PresupuestoController {
     private int idCategoriaFiltro = 0;
     private int idEstadoFiltro = 0;
 
-    public PresupuestoController (PresupuestoView view) {
+    public PresupuestoController(PresupuestoView view) {
+        this(view, new PresupuestoService());
+    }
+
+    public PresupuestoController(PresupuestoView view, IPresupuestoService service) {
         this.view = view;
-        this.service = new PresupuestoService();
+        this.service = service;
         
         listarCategorias();
         listarPeriodos();
@@ -255,7 +260,7 @@ public class PresupuestoController {
         javax.swing.JComboBox<ComboItem> cbColab = new javax.swing.JComboBox<>();
         cbColab.addItem(new ComboItem(0, "Todos los usuarios"));
         
-        UsuarioService uService = new UsuarioService();
+        IUsuarioService uService = new UsuarioService();
         Usuario owner = uService.obtenerUsuario(idUsuarioOwner);
         if (owner != null) {
             cbColab.addItem(new ComboItem(owner.getId(), owner.getNombre() + " (Yo)"));

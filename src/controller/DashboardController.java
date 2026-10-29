@@ -10,13 +10,14 @@ import model.ComboItem;
 import model.DashboardResumen;
 import model.DashboardGraficos;
 import service.DashboardService;
+import service.IDashboardService;
 import view.DashboardView;
 import view.SystemView;
 import view.DeudasView;
 
 public final class DashboardController {
     private DashboardView view;
-    private DashboardService service;
+    private IDashboardService service;
 
     // Advanced Filter variables
     private int idCategoriaFiltro = 0;
@@ -26,8 +27,12 @@ public final class DashboardController {
     private List<DashboardGraficos> ultimoGraficoData = new ArrayList<>();
 
     public DashboardController(DashboardView view) {
+        this(view, new DashboardService());
+    }
+
+    public DashboardController(DashboardView view, IDashboardService service) {
         this.view = view;
-        this.service = new DashboardService();
+        this.service = service;
 
         popularColaboradores();
         popularPeriodos();
@@ -55,7 +60,7 @@ public final class DashboardController {
             Usuario activeUser = Session.getInstance().getUsuarioActivo();
             int idUsuarioOwner = (activeUser != null) ? activeUser.getId() : 1;
 
-            service.UsuarioService uService = new service.UsuarioService();
+            service.IUsuarioService uService = new service.UsuarioService();
             Usuario owner = uService.obtenerUsuario(idUsuarioOwner);
             if (owner != null) {
                 view.cbCollaborator.addItem(new model.ComboItem(owner.getId(), owner.getNombre() + " (Yo)"));
@@ -359,7 +364,7 @@ public final class DashboardController {
         dialog.setLocationRelativeTo(view);
 
         // Load categories and types
-        service.GastoService gService = new service.GastoService();
+        service.IGastoService gService = new service.GastoService();
         
         dialog.add(new javax.swing.JLabel("  Categoría:"));
         javax.swing.JComboBox<ComboItem> cbCat = new javax.swing.JComboBox<>();

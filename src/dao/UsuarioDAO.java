@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioDAO {
+public class UsuarioDAO implements IUsuarioDAO {
     
     public Usuario obtenerUsuario(int id) {
         Usuario usuario = null;

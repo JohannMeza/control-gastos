@@ -23,6 +23,7 @@ import model.Ingreso;
 import model.IngresoResumen;
 import model.Session;
 import model.Usuario;
+import service.IIngresoService;
 import service.IngresoService;
 import view.IngresosView;
 import view.components.ThemeColor;
@@ -30,7 +31,7 @@ import view.components.ThemeColor;
 public class IngresoController {
 
     private final IngresosView view;
-    private final IngresoService service;
+    private final IIngresoService service;
 
     // Estado del controlador
     private int idIngresoSeleccionado = 0;
@@ -51,8 +52,12 @@ public class IngresoController {
     private final SimpleDateFormat sdfDisplay = new SimpleDateFormat("dd MMM, yyyy", Locale.US);
 
     public IngresoController(IngresosView view) {
+        this(view, new IngresoService());
+    }
+
+    public IngresoController(IngresosView view, IIngresoService service) {
         this.view = view;
-        this.service = new IngresoService();
+        this.service = service;
 
         inicializarCombos();
         configurarListeners();

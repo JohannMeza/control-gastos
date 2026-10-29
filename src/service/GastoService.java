@@ -6,21 +6,23 @@
 package service;
 
 import dao.GastoDAO;
-import java.io.File;
+import dao.IGastoDAO;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.ComboItem;
 import model.Gasto;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.io.FileOutputStream;
 
-public class GastoService {
-    private GastoDAO dao = new GastoDAO();
+public class GastoService implements IGastoService {
+    private final IGastoDAO dao;
+
+    public GastoService() {
+        this(new GastoDAO());
+    }
+
+    public GastoService(IGastoDAO dao) {
+        this.dao = dao;
+    }
     
     public void guardar(Gasto gasto) {
         dao.guardar(gasto);
@@ -54,62 +56,44 @@ public class GastoService {
         return dao.obtenerPorId(idGasto);
     }
     
-    public void exportarExcel(JTable tabla) {
-        try {
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet sheet = workbook.createSheet("Gastos");
-
-            TableModel model = tabla.getModel();
-
-            // CABECERAS
-            Row headerRow = sheet.createRow(0);
-
-            for (int i = 0; i < model.getColumnCount(); i++) {
-                headerRow.createCell(i).setCellValue(
-                    model.getColumnName(i)
-                );
-            }
-
-            // DATOS
-            for (int i = 0; i < model.getRowCount(); i++) {
-
-                Row row = sheet.createRow(i + 1);
-
-                for (int j = 0; j < model.getColumnCount(); j++) {
-
-                    Object value = model.getValueAt(i, j);
-
-                    row.createCell(j).setCellValue(
-                        value != null ? value.toString() : ""
-                    );
-                }
-            }
-
-            // AUTO AJUSTAR COLUMNAS
-            for (int i = 0; i < model.getColumnCount(); i++) {
-                sheet.autoSizeColumn(i);
-            }
-
-            FileOutputStream out = new FileOutputStream("ReporteGastos.xlsx");
-
-            workbook.write(out);
-
-            out.close();
-            workbook.close();
-            File archivo = new File("ReporteGastos.xlsx");
-
-            JOptionPane.showMessageDialog(
-                null,
-                "Excel exportado correctamente"
-            );
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            JOptionPane.showMessageDialog(
-                null,
-                "Error al exportar Excel"
-            );
+    public void validarGasto(Gasto gasto) {
+        if (gasto == null) {
+            throw new IllegalArgumentException("El gasto no puede ser nulo.");
         }
+        if (gasto.getMonto() <= 0 || Double.isNaN(gasto.getMonto()) || Double.isInfinite(gasto.getMonto())) {
+            throw new IllegalArgumentException("El monto del gasto debe ser un número válido mayor a cero.");
+        }
+        if (gasto.getDescripcion() == null || gasto.getDescripcion().trim().isEmpty()) {
+            throw new IllegalArgumentException("La descripción del gasto es obligatoria.");
+        }
+        if (gasto.getIdUsuario() <= 0) {
+            throw new IllegalArgumentException("El ID de usuario asociado debe ser válido.");
+        }
+    }
+
+    public double calcularTotalGastos(List<Gasto> gastos) {
+        if (gastos == null || gastos.isEmpty()) {
+            return 0.0;
+        }
+        double total = 0.0;
+        for (Gasto g : gastos) {
+            if (g != null && g.getMonto() > 0 && !Double.isNaN(g.getMonto()) && !Double.isInfinite(g.getMonto())) {
+                total += g.getMonto();
+            }
+        }
+        return Math.round(total * 100.0) / 100.0;
+    }
+
+    public List<Gasto> filtrarPorCategoria(List<Gasto> gastos, int idCategoria) {
+        List<Gasto> resultado = new ArrayList<>();
+        if (gastos == null || gastos.isEmpty()) {
+            return resultado;
+        }
+        for (Gasto g : gastos) {
+            if (g != null && g.getIdCategoria() == idCategoria) {
+                resultado.add(g);
+            }
+        }
+        return resultado;
     }
 }

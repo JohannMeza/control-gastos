@@ -112,7 +112,7 @@ public class HeaderBar extends JPanel {
         JLabel lblUsers = crearIconoCabecera("👥");
         JLabel lblBell = crearIconoCabecera("🔔");
 
-        lblAvatar = new JLabel("👤") {
+        lblAvatar = new JLabel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -121,13 +121,20 @@ public class HeaderBar extends JPanel {
                 g2.fillOval(0, 0, getWidth() - 1, getHeight() - 1);
                 g2.setColor(ThemeColor.BORDE_CARD);
                 g2.drawOval(0, 0, getWidth() - 1, getHeight() - 1);
+
+                int cx = getWidth() / 2;
+                int cy = getHeight() / 2;
+                g2.setColor(ThemeColor.TEXTO_SECUNDARIO);
+                g2.fillOval(cx - 5, cy - 8, 10, 10);
+                g2.fillArc(cx - 9, cy + 2, 18, 14, 0, 180);
+
                 g2.dispose();
                 super.paintComponent(g);
             }
         };
         lblAvatar.setPreferredSize(new Dimension(34, 34));
         lblAvatar.setHorizontalAlignment(SwingConstants.CENTER);
-        lblAvatar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblAvatar.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 16));
         lblAvatar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         lblAvatar.addMouseListener(new MouseAdapter() {

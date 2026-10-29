@@ -9,7 +9,7 @@ import model.ComboItem;
 import model.Presupuesto;
 import util.XmlUtil;
 
-public class PresupuestoDAO {
+public class PresupuestoDAO implements IPresupuestoDAO {
     public List<ComboItem> listarCategorias() {
         List<ComboItem> lista = new ArrayList<>();
         String sql = "EXEC CG_ListaCboCategorias_SP";

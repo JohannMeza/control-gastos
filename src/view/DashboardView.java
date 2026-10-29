@@ -224,7 +224,7 @@ public class DashboardView extends javax.swing.JFrame {
         scrollContent.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         pnlMainContent.setBackground(new java.awt.Color(248, 250, 252));
-        pnlMainContent.setPreferredSize(new java.awt.Dimension(1020, 720));
+        pnlMainContent.setPreferredSize(new java.awt.Dimension(1020, 725));
         pnlMainContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cardFilters.setCornerRadius(10);
@@ -413,7 +413,7 @@ public class DashboardView extends javax.swing.JFrame {
 
         cardBudgetVsSpending.add(pnlBudgetVsSpending, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 60, 580, 395));
 
-        pnlMainContent.add(cardBudgetVsSpending, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 198, 610, 470));
+        pnlMainContent.add(cardBudgetVsSpending, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 227, 610, 470));
 
         cardQuickInsights.setCornerRadius(12);
         cardQuickInsights.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -499,7 +499,7 @@ public class DashboardView extends javax.swing.JFrame {
         btnViewScheduled.setFocusPainted(false);
         cardQuickInsights.add(btnViewScheduled, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 410, 315, 40));
 
-        pnlMainContent.add(cardQuickInsights, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 198, 345, 470));
+        pnlMainContent.add(cardQuickInsights, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 227, 345, 470));
 
         scrollContent.setViewportView(pnlMainContent);
 

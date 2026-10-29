@@ -11,7 +11,7 @@ import model.AbonoDeuda;
 import model.DeudaResumen;
 import util.XmlUtil;
 
-public class DeudaDAO {
+public class DeudaDAO implements IDeudaDAO {
 
     public List<ComboItem> listarDeudasCombo(int idUsuario) {
         List<ComboItem> lista = new ArrayList<>();

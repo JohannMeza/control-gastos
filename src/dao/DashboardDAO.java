@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import model.DashboardResumen;
 import model.DashboardGraficos;
 
-public class DashboardDAO {
+public class DashboardDAO implements IDashboardDAO {
 
     public DashboardResumen obtenerResumen(int idUsuarioOwner, int idFiltradoUsuario, String fechaInicio, String fechaFin, int idCategoria, int idTipoGasto, double montoMin, double montoMax) {
         DashboardResumen r = new DashboardResumen();

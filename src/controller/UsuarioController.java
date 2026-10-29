@@ -7,18 +7,23 @@ import model.Session;
 import model.Usuario;
 import model.UsuarioCompartido;
 import model.UsuariosResumen;
+import service.IUsuarioService;
 import service.UsuarioService;
 import view.UsuariosView;
 
 public final class UsuarioController {
     private UsuariosView view;
-    private UsuarioService service;
+    private IUsuarioService service;
     private int idEditando = 0;
     private String ultimoQuery = "";
 
     public UsuarioController(UsuariosView view) {
+        this(view, new UsuarioService());
+    }
+
+    public UsuarioController(UsuariosView view, IUsuarioService service) {
         this.view = view;
-        this.service = new UsuarioService();
+        this.service = service;
 
         listarUsuariosCompartidos();
         cargarResumen();
@@ -282,7 +287,7 @@ public final class UsuarioController {
                 String emailDesc = uc.getEmailInvitado();
                 
                 if (uc.getEstado().equalsIgnoreCase("Pendiente")) {
-                    initials = "❓";
+                    initials = "?";
                     emailDesc = "Invitado recientemente";
                 }
                 
@@ -481,7 +486,7 @@ public final class UsuarioController {
                 return prefix.toUpperCase();
             }
         }
-        return "❓";
+        return "?";
     }
 
     private String getResolvedName(UsuarioCompartido uc) {

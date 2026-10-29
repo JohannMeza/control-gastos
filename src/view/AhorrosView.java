@@ -44,6 +44,11 @@ public class AhorrosView extends javax.swing.JFrame {
             limpiarFormulario();
             txtMonto.requestFocus();
         });
+
+        lblConsejoIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lblFondoEmergenciaIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 13));
+        lblVacacionesIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 13));
+        lblAutoIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 13));
     }
 
     private void setupFormDate() {
@@ -431,7 +436,7 @@ public class AhorrosView extends javax.swing.JFrame {
         pnlConsejo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(53, 147, 63), 1, true));
         pnlConsejo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblConsejoIcon.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblConsejoIcon.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
         lblConsejoIcon.setForeground(new java.awt.Color(255, 255, 255));
         lblConsejoIcon.setText("💡");
         pnlConsejo.add(lblConsejoIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 12, 24, 24));
@@ -468,7 +473,7 @@ public class AhorrosView extends javax.swing.JFrame {
         pnlMetaFondoEmergencia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
         pnlMetaFondoEmergencia.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblFondoEmergenciaIcon.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        lblFondoEmergenciaIcon.setFont(new java.awt.Font("Segoe UI Emoji", 0, 13)); // NOI18N
         lblFondoEmergenciaIcon.setText("🛡️");
         pnlMetaFondoEmergencia.add(lblFondoEmergenciaIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, 20, 20));
 
@@ -503,7 +508,7 @@ public class AhorrosView extends javax.swing.JFrame {
         pnlMetaVacaciones.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
         pnlMetaVacaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblVacacionesIcon.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        lblVacacionesIcon.setFont(new java.awt.Font("Segoe UI Emoji", 0, 13)); // NOI18N
         lblVacacionesIcon.setText("✈️");
         pnlMetaVacaciones.add(lblVacacionesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, 20, 20));
 
@@ -538,7 +543,7 @@ public class AhorrosView extends javax.swing.JFrame {
         pnlMetaAuto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
         pnlMetaAuto.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblAutoIcon.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        lblAutoIcon.setFont(new java.awt.Font("Segoe UI Emoji", 0, 13)); // NOI18N
         lblAutoIcon.setText("🚗");
         pnlMetaAuto.add(lblAutoIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, 20, 20));
 

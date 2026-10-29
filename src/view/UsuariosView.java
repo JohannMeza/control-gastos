@@ -39,6 +39,11 @@ public class UsuariosView extends javax.swing.JFrame {
             txtCorreo.requestFocus();
             txtCorreo.selectAll();
         });
+
+        Font emojiFont = new Font("Segoe UI Emoji", Font.PLAIN, 18);
+        lblIconSincr.setFont(emojiFont);
+        lblIconMfa.setFont(emojiFont);
+        lblIconAuditoria.setFont(emojiFont);
     }
 
     private void setupTableStyle() {
@@ -62,7 +67,7 @@ public class UsuariosView extends javax.swing.JFrame {
                     String avatarBg = "#E0F2FE";
                     String avatarFg = "#0369A1";
 
-                    if (initials.equals("❓")) {
+                    if (initials.equals("?") || initials.equals("❓")) {
                         avatarBg = "#FEF3C7";
                         avatarFg = "#D97706";
                     } else if (initials.equals("MS")) {
@@ -166,10 +171,18 @@ public class UsuariosView extends javax.swing.JFrame {
                 String valStr = (value != null) ? value.toString() : "";
 
                 if (valStr.equals("SETTINGS")) {
-                    label.setText("<html><span style='font-size:14px; color:#64748B;'>&#9881;</span></html>");
+                    Font gearFont = new Font("Segoe UI Emoji", Font.PLAIN, 15);
+                    if (!gearFont.canDisplay(0x2699)) {
+                        gearFont = new Font("Segoe UI Symbol", Font.PLAIN, 15);
+                    }
+                    label.setFont(gearFont);
+                    label.setForeground(new Color(100, 116, 139));
+                    label.setText("⚙");
                 } else if (valStr.equals("CHANGE_REMOVE") || valStr.equals("RESEND_REVOKE")) {
+                    label.setFont(new Font("Segoe UI", Font.BOLD, 11));
                     label.setText("<html><a href='#' style='color:#009FE3; text-decoration:none; font-size:11px; font-weight:bold; font-family: Segoe UI;'>Opciones</a></html>");
                 } else {
+                    label.setFont(new Font("Segoe UI", Font.PLAIN, 12));
                     label.setText(valStr);
                 }
 
@@ -448,7 +461,7 @@ public class UsuariosView extends javax.swing.JFrame {
         pnlCardSincronizacion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(186, 230, 253), 1, true));
         pnlCardSincronizacion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblIconSincr.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIconSincr.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
         lblIconSincr.setText("🕒");
         pnlCardSincronizacion.add(lblIconSincr, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 24, 24));
 
@@ -473,7 +486,7 @@ public class UsuariosView extends javax.swing.JFrame {
         pnlCardMfa.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(167, 243, 208), 1, true));
         pnlCardMfa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblIconMfa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIconMfa.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
         lblIconMfa.setText("🛡️");
         pnlCardMfa.add(lblIconMfa, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 24, 24));
 
@@ -498,7 +511,7 @@ public class UsuariosView extends javax.swing.JFrame {
         pnlCardAuditoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(199, 210, 254), 1, true));
         pnlCardAuditoria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblIconAuditoria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIconAuditoria.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
         lblIconAuditoria.setText("🔒");
         pnlCardAuditoria.add(lblIconAuditoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 24, 24));
 

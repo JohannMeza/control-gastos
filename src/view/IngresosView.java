@@ -260,7 +260,7 @@ public class IngresosView extends javax.swing.JFrame {
         txtFecha.setForeground(new java.awt.Color(15, 23, 42));
         txtFecha.setText("28/10/2023");
         txtFecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 225)));
-        cardFormulario.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 72, 260, 34));
+        cardFormulario.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 72, 300, 34));
 
         lblCategoria.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lblCategoria.setForeground(new java.awt.Color(71, 85, 105));
