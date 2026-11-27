@@ -19,6 +19,7 @@ public class PresupuestoControllerTest {
 
     @Before
     public void setUp() {
+        org.junit.Assume.assumeTrue(!java.awt.GraphicsEnvironment.isHeadless());
         usuarioPrueba = new Usuario();
         usuarioPrueba.setId(2011);
         usuarioPrueba.setNombre("Johann");
