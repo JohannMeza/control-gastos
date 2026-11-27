@@ -11,6 +11,7 @@ public interface IPresupuestoService {
     List<Presupuesto> listarPresupuesto(int idUsuario, int idUsuarioOwner, int idFiltradoUsuario, String fechaInicio, String fechaFin, int idCategoria, int idEstado);
     List<PresupuestoActividad> listarPresupuestoActividades(int idUsuarioOwner, int idFiltradoUsuario, String fechaInicio, String fechaFin);
     String guardarPresupuesto(Presupuesto presupuesto);
+    String actualizarPresupuesto(Presupuesto presupuesto);
     String eliminarPresupuesto(int idPresupuesto);
     List<Integer> obtenerAniosConDatos(int idUsuario);
     double[] calcularDistribucion503020(double ingresoTotal);

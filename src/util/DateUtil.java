@@ -71,6 +71,21 @@ public class DateUtil {
         return MESES[cal.get(java.util.Calendar.MONTH)] + " " + cal.get(java.util.Calendar.YEAR);
     }
 
+    public static Date[] getPeriodDates(String selectionPeriod) {
+        String[] range = getPeriodDateRange(selectionPeriod);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return new Date[]{sdf.parse(range[0]), sdf.parse(range[1])};
+        } catch (ParseException e) {
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+            cal.set(java.util.Calendar.DAY_OF_MONTH, 1);
+            Date start = cal.getTime();
+            cal.set(java.util.Calendar.DAY_OF_MONTH, cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH));
+            Date end = cal.getTime();
+            return new Date[]{start, end};
+        }
+    }
+
     public static String[] getPeriodDateRange(String selectionPeriod) {
         if (selectionPeriod == null || selectionPeriod.trim().isEmpty()) {
             java.util.Calendar cal = java.util.Calendar.getInstance();

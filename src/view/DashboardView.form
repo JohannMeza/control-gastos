@@ -239,9 +239,9 @@
                 <Property name="colorAcento" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4d" green="ad" red="42" type="rgb"/>
                 </Property>
-                <Property name="monto" type="java.lang.String" value="S/. 12,450.00"/>
+                <Property name="monto" type="java.lang.String" value="S/ 0.00"/>
                 <Property name="titulo" type="java.lang.String" value="Ingresos Totales"/>
-                <Property name="variacion" type="java.lang.String" value="+12% vs mes anterior"/>
+                <Property name="variacion" type="java.lang.String" value="0.0% vs mes anterior"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -254,9 +254,9 @@
                 <Property name="colorAcento" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e3" green="9f" red="0" type="rgb"/>
                 </Property>
-                <Property name="monto" type="java.lang.String" value="S/. 5,230.45"/>
+                <Property name="monto" type="java.lang.String" value="S/ 0.00"/>
                 <Property name="titulo" type="java.lang.String" value="Gastos Totales"/>
-                <Property name="variacion" type="java.lang.String" value="+4% vs mes anterior"/>
+                <Property name="variacion" type="java.lang.String" value="0.0% vs mes anterior"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -269,9 +269,9 @@
                 <Property name="colorAcento" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="b" green="9e" red="f5" type="rgb"/>
                 </Property>
-                <Property name="monto" type="java.lang.String" value="S/. 2,100.00"/>
+                <Property name="monto" type="java.lang.String" value="S/ 0.00"/>
                 <Property name="titulo" type="java.lang.String" value="Ahorros Totales"/>
-                <Property name="variacion" type="java.lang.String" value="84% de la meta mensual"/>
+                <Property name="variacion" type="java.lang.String" value="0% de la meta mensual"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -284,9 +284,9 @@
                 <Property name="colorAcento" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="b8" green="a3" red="94" type="rgb"/>
                 </Property>
-                <Property name="monto" type="java.lang.String" value="S/. 34,819.55"/>
+                <Property name="monto" type="java.lang.String" value="S/ 0.00"/>
                 <Property name="titulo" type="java.lang.String" value="Balance Total"/>
-                <Property name="variacion" type="java.lang.String" value="Todas las cuentas sincronizadas"/>
+                <Property name="variacion" type="java.lang.String" value="Balance del per&#xed;odo"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

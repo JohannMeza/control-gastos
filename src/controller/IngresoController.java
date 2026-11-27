@@ -12,6 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Calendar;
 import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -35,11 +39,11 @@ public class IngresoController {
 
     // Estado del controlador
     private int idIngresoSeleccionado = 0;
-    private String periodoSeleccionado = "Oct 2023";
-    private String fechaInicio = "2023-10-01";
-    private String fechaFin = "2023-10-31";
-    private String fechaInicioPrev = "2023-09-01";
-    private String fechaFinPrev = "2023-09-30";
+    private String periodoSeleccionado = "";
+    private Date fechaInicio = null;
+    private Date fechaFin = null;
+    private Date fechaInicioPrev = null;
+    private Date fechaFinPrev = null;
     private String filtroTabActual = "Todos";
 
     private List<Ingreso> listaIngresosActual = new ArrayList<>();
@@ -59,11 +63,46 @@ public class IngresoController {
         this.view = view;
         this.service = service;
 
+        inicializarPeriodoActual();
+
         inicializarCombos();
         configurarListeners();
         inicializarFechaDefecto();
         cargarDatosCompletos();
     }
+
+    private void inicializarPeriodoActual() {
+        Date[] rangoActual = util.DateUtil.getPeriodDates(util.DateUtil.getCurrentPeriodLabel());
+        Date[] rangoPrevio = util.DateUtil.getPeriodDates(util.DateUtil.getPreviousPeriodLabel());
+
+        fechaInicio = rangoActual[0];
+        fechaFin = rangoActual[1];
+        fechaInicioPrev = rangoPrevio[0];
+        fechaFinPrev = rangoPrevio[1];
+
+        periodoSeleccionado = util.DateUtil.getCurrentPeriodLabel();
+
+        if (view.getLblBadgeCiclo() != null) {
+            view.getLblBadgeCiclo().setText("Ciclo " + periodoSeleccionado);
+        }
+        if (view.getBtnFiltroOct() != null) {
+            view.getBtnFiltroOct().setText(periodoSeleccionado);
+        }
+        if (view.getBtnFiltroSep() != null) {
+            view.getBtnFiltroSep().setText(util.DateUtil.getPreviousPeriodLabel());
+        }
+        if (view.getBtnFiltroAnual() != null) {
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+            view.getBtnFiltroAnual().setText("Anual " + year);
+        }
+        if (view.getTxtRangoDesde() != null) {
+            view.getTxtRangoDesde().setText(sdfInput.format(fechaInicio));
+        }
+        if (view.getTxtRangoHasta() != null) {
+            view.getTxtRangoHasta().setText(sdfInput.format(fechaFin));
+        }
+    }
+
 
     private void inicializarFechaDefecto() {
         view.getTxtFecha().setText(sdfInput.format(new Date()));
@@ -138,9 +177,27 @@ public class IngresoController {
         view.getBtnTabPendientes().addActionListener(e -> setTabFiltro("Pendiente", view.getBtnTabPendientes()));
 
         // Botones de período
-        view.getBtnFiltroOct().addActionListener(e -> setPeriodo("Oct 2023", "2023-10-01", "2023-10-31", "2023-09-01", "2023-09-30", view.getBtnFiltroOct()));
-        view.getBtnFiltroSep().addActionListener(e -> setPeriodo("Sep 2023", "2023-09-01", "2023-09-30", "2023-08-01", "2023-08-31", view.getBtnFiltroSep()));
-        view.getBtnFiltroAnual().addActionListener(e -> setPeriodo("Anual 2023", "2023-01-01", "2023-12-31", "2022-01-01", "2022-12-31", view.getBtnFiltroAnual()));
+        view.getBtnFiltroOct().addActionListener(e -> {
+            Date[] rAct = util.DateUtil.getPeriodDates(util.DateUtil.getCurrentPeriodLabel());
+            Date[] rPrev = util.DateUtil.getPeriodDates(util.DateUtil.getPreviousPeriodLabel());
+            setPeriodo(util.DateUtil.getCurrentPeriodLabel(), rAct[0], rAct[1], rPrev[0], rPrev[1], view.getBtnFiltroOct());
+        });
+        view.getBtnFiltroSep().addActionListener(e -> {
+            Calendar cp = Calendar.getInstance();
+            cp.add(Calendar.MONTH, -1);
+            String pLabel = util.DateUtil.MESES[cp.get(Calendar.MONTH)] + " " + cp.get(Calendar.YEAR);
+            cp.add(Calendar.MONTH, -1);
+            String ppLabel = util.DateUtil.MESES[cp.get(Calendar.MONTH)] + " " + cp.get(Calendar.YEAR);
+            Date[] rPrev = util.DateUtil.getPeriodDates(pLabel);
+            Date[] rPrevPrev = util.DateUtil.getPeriodDates(ppLabel);
+            setPeriodo(pLabel, rPrev[0], rPrev[1], rPrevPrev[0], rPrevPrev[1], view.getBtnFiltroSep());
+        });
+        view.getBtnFiltroAnual().addActionListener(e -> {
+            int y = Calendar.getInstance().get(Calendar.YEAR);
+            Date[] rAnual = util.DateUtil.getPeriodDates("Todo el año");
+            Date[] rAnualPrev = util.DateUtil.getPeriodDates("Año " + (y - 1));
+            setPeriodo("Anual " + y, rAnual[0], rAnual[1], rAnualPrev[0], rAnualPrev[1], view.getBtnFiltroAnual());
+        });
         view.getBtnAjustarVista().addActionListener(e -> ajustarVistaPersonalizada());
 
         // Filtros Rápidos
@@ -213,8 +270,8 @@ public class IngresoController {
 
             String rDesde = view.getTxtRangoDesde().getText().trim();
             String rHasta = view.getTxtRangoHasta().getText().trim();
-            String fDesde = !rDesde.isEmpty() ? normalizarFechaAFechaIso(rDesde) : fechaInicio;
-            String fHasta = !rHasta.isEmpty() ? normalizarFechaAFechaIso(rHasta) : fechaFin;
+            Date fDesde = !rDesde.isEmpty() ? parseFechaInput(rDesde) : fechaInicio;
+            Date fHasta = !rHasta.isEmpty() ? parseFechaInput(rHasta) : fechaFin;
 
             listaIngresosActual = service.listarIngresos(idUsuario, tipo, estado, fDesde, fHasta, catFiltro, ctaFiltro);
 
@@ -253,7 +310,7 @@ public class IngresoController {
         for (int i = inicio; i < fin; i++) {
             Ingreso ing = listaIngresosActual.get(i);
             String fechaTexto = formatFechaDisplay(ing.getFecha());
-            String montoTexto = "+S/. " + String.format(Locale.US, "%,.2f", ing.getMonto());
+            String montoTexto = "+S/ " + String.format(Locale.US, "%,.2f", ing.getMonto());
 
             model.addRow(new Object[]{
                 fechaTexto,
@@ -272,23 +329,23 @@ public class IngresoController {
 
     private void actualizarKpisYCards(IngresoResumen resumen) {
         // KPI 1: Ingresos Totales
-        view.getKpiTotales().setValor("S/. " + String.format(Locale.US, "%,.2f", resumen.getIngresosTotales()));
+        view.getKpiTotales().setValor("S/ " + String.format(Locale.US, "%,.2f", resumen.getIngresosTotales()));
         view.getKpiTotales().setSubtitulo(resumen.getVariacionMes());
 
         // KPI 2: Ingreso Fijo / Salario
-        view.getKpiFijo().setValor("S/. " + String.format(Locale.US, "%,.2f", resumen.getIngresoFijo()));
+        view.getKpiFijo().setValor("S/ " + String.format(Locale.US, "%,.2f", resumen.getIngresoFijo()));
         view.getKpiFijo().setSubtitulo(String.format(Locale.US, "%.1f%% del total • Garantizado", resumen.getPorcentajeFijo()));
 
         // KPI 3: Ingresos Variables / Extra
-        view.getKpiVariable().setValor("S/. " + String.format(Locale.US, "%,.2f", resumen.getIngresoVariable()));
+        view.getKpiVariable().setValor("S/ " + String.format(Locale.US, "%,.2f", resumen.getIngresoVariable()));
         view.getKpiVariable().setSubtitulo("Freelance, Dividendos y Bonos");
 
         // KPI 4: Promedio Mensual
-        view.getKpiPromedio().setValor("S/. " + String.format(Locale.US, "%,.2f", resumen.getPromedioMensual()));
+        view.getKpiPromedio().setValor("S/ " + String.format(Locale.US, "%,.2f", resumen.getPromedioMensual()));
         view.getKpiPromedio().setSubtitulo(resumen.getVariacionYoY());
 
         // Distribución de fuentes
-        view.getLblTotalDist().setText("S/. " + String.format(Locale.US, "%,.2f", resumen.getTotalDistribucion()));
+        view.getLblTotalDist().setText("S/ " + String.format(Locale.US, "%,.2f", resumen.getTotalDistribucion()));
         view.getProgressBarFuentes().limpiarSegmentos();
 
         double nomPct = resumen.getNominaPct();
@@ -299,19 +356,19 @@ public class IngresoController {
         if (freePct > 0) view.getProgressBarFuentes().agregarSegmento(freePct, ThemeColor.CIAN_ACCION);
         if (rendPct > 0) view.getProgressBarFuentes().agregarSegmento(rendPct, new Color(245, 158, 11));
 
-        view.getLblNominaVal().setText(String.format(Locale.US, "S/. %,.2f (%.1f%%)", resumen.getNominaMonto(), nomPct));
-        view.getLblFreelanceVal().setText(String.format(Locale.US, "S/. %,.2f (%.1f%%)", resumen.getFreelanceMonto(), freePct));
-        view.getLblRendVal().setText(String.format(Locale.US, "S/. %,.2f (%.1f%%)", resumen.getRendimientosMonto(), rendPct));
+        view.getLblNominaVal().setText(String.format(Locale.US, "S/ %,.2f (%.1f%%)", resumen.getNominaMonto(), nomPct));
+        view.getLblFreelanceVal().setText(String.format(Locale.US, "S/ %,.2f (%.1f%%)", resumen.getFreelanceMonto(), freePct));
+        view.getLblRendVal().setText(String.format(Locale.US, "S/ %,.2f (%.1f%%)", resumen.getRendimientosMonto(), rendPct));
 
         // Proyección Próximo Mes
-        view.getLblProyMonto().setText("S/. " + String.format(Locale.US, "%,.2f", resumen.getProyeccionMonto()));
+        view.getLblProyMonto().setText("S/ " + String.format(Locale.US, "%,.2f", resumen.getProyeccionMonto()));
         view.getLblProyBadge().setText(resumen.getProyeccionVariacion());
         view.getLblProySub().setText(resumen.getProyeccionDetalle());
 
         // Ciclo Salarial
         view.getLblCicloCobrado().setText(String.format(Locale.US, "%.0f%% Cobrado", resumen.getCicloCobradoPct()));
-        view.getLblCicloSub().setText(String.format(Locale.US, "S/. %,.2f de S/. %,.2f recibidos este mes", resumen.getCicloCobradoMonto(), resumen.getCicloTotalMonto()));
-        view.getLblCicloPendiente().setText(String.format(Locale.US, "S/. %,.2f Pendiente", resumen.getCicloPendienteMonto()));
+        view.getLblCicloSub().setText(String.format(Locale.US, "S/ %,.2f de S/ %,.2f recibidos este mes", resumen.getCicloCobradoMonto(), resumen.getCicloTotalMonto()));
+        view.getLblCicloPendiente().setText(String.format(Locale.US, "S/ %,.2f Pendiente", resumen.getCicloPendienteMonto()));
         view.getLblProxLiqFecha().setText(String.format(Locale.US, "%s (En %d días)", resumen.getProximaLiquidacionFecha(), resumen.getProximaLiquidacionDias()));
 
         // Header Badge
@@ -465,7 +522,7 @@ public class IngresoController {
         }
         int confirm = JOptionPane.showConfirmDialog(
             view,
-            "¿Está seguro de eliminar el ingreso \"" + ing.getDescripcion() + "\" de S/. " + String.format(Locale.US, "%.2f", ing.getMonto()) + "?",
+            "¿Está seguro de eliminar el ingreso \"" + ing.getDescripcion() + "\" de S/ " + String.format(Locale.US, "%.2f", ing.getMonto()) + "?",
             "Confirmar Eliminación",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE
@@ -510,22 +567,16 @@ public class IngresoController {
         cargarDatosCompletos();
     }
 
-    private void setPeriodo(String label, String fInicio, String fFin, String fInicioPrev, String fFinPrev, JButton btnActivo) {
+    private void setPeriodo(String label, Date fIni, Date fFin, Date fIniPrev, Date fFinPrev, JButton btnActivo) {
         periodoSeleccionado = label;
-        fechaInicio = fInicio;
+        fechaInicio = fIni;
         fechaFin = fFin;
-        fechaInicioPrev = fInicioPrev;
+        fechaInicioPrev = fIniPrev;
         fechaFinPrev = fFinPrev;
 
-        if ("Oct 2023".equalsIgnoreCase(label)) {
-            view.getTxtRangoDesde().setText("10/01/2023");
-            view.getTxtRangoHasta().setText("10/31/2023");
-        } else if ("Sep 2023".equalsIgnoreCase(label)) {
-            view.getTxtRangoDesde().setText("09/01/2023");
-            view.getTxtRangoHasta().setText("09/30/2023");
-        } else if ("Anual 2023".equalsIgnoreCase(label)) {
-            view.getTxtRangoDesde().setText("01/01/2023");
-            view.getTxtRangoHasta().setText("12/31/2023");
+        if (fIni != null && fFin != null) {
+            view.getTxtRangoDesde().setText(sdfInput.format(fIni));
+            view.getTxtRangoHasta().setText(sdfInput.format(fFin));
         }
 
         JButton[] pBtns = {view.getBtnFiltroOct(), view.getBtnFiltroSep(), view.getBtnFiltroAnual()};
@@ -542,7 +593,7 @@ public class IngresoController {
     private void ajustarVistaPersonalizada() {
         String input = JOptionPane.showInputDialog(
             view,
-            "Ingrese el año y mes para consultar (formato yyyy-MM, ej. 2023-10):",
+            "Ingrese el año y mes para consultar (formato yyyy-MM, ej. 2026-10):",
             "Ajustar Vista",
             JOptionPane.QUESTION_MESSAGE
         );
@@ -552,34 +603,24 @@ public class IngresoController {
             int year = Integer.parseInt(partes[0]);
             int month = Integer.parseInt(partes[1]);
 
-            java.util.Calendar cal = java.util.Calendar.getInstance();
+            Calendar cal = Calendar.getInstance();
             cal.set(year, month - 1, 1);
-            int lastDay = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
+            int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+            Date fIni = cal.getTime();
+            cal.set(year, month - 1, lastDay);
+            Date fFin = cal.getTime();
 
-            String fIni = String.format("%04d-%02d-01", year, month);
-            String fFin = String.format("%04d-%02d-%02d", year, month, lastDay);
-
-            cal.add(java.util.Calendar.MONTH, -1);
-            int prevYear = cal.get(java.util.Calendar.YEAR);
-            int prevMonth = cal.get(java.util.Calendar.MONTH) + 1;
-            int prevLastDay = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
-            String fIniPrev = String.format("%04d-%02d-01", prevYear, prevMonth);
-            String fFinPrev = String.format("%04d-%02d-%02d", prevYear, prevMonth, prevLastDay);
+            Calendar calPrev = (Calendar) cal.clone();
+            calPrev.add(Calendar.MONTH, -1);
+            calPrev.set(Calendar.DAY_OF_MONTH, 1);
+            Date fIniPrev = calPrev.getTime();
+            calPrev.set(Calendar.DAY_OF_MONTH, calPrev.getActualMaximum(Calendar.DAY_OF_MONTH));
+            Date fFinPrev = calPrev.getTime();
 
             SimpleDateFormat mesNombre = new SimpleDateFormat("MMM yyyy", Locale.US);
-            cal.set(year, month - 1, 1);
-            String label = mesNombre.format(cal.getTime());
+            String label = mesNombre.format(fIni);
 
-            periodoSeleccionado = label;
-            fechaInicio = fIni;
-            fechaFin = fFin;
-            fechaInicioPrev = fIniPrev;
-            fechaFinPrev = fFinPrev;
-
-            view.getTxtRangoDesde().setText(String.format("%02d/01/%04d", month, year));
-            view.getTxtRangoHasta().setText(String.format("%02d/%02d/%04d", month, lastDay, year));
-
-            cargarDatosCompletos();
+            setPeriodo(label, fIni, fFin, fIniPrev, fFinPrev, view.getBtnAjustarVista());
         }
     }
 
@@ -588,8 +629,7 @@ public class IngresoController {
     }
 
     private void resetearFiltros() {
-        view.getTxtRangoDesde().setText("10/01/2023");
-        view.getTxtRangoHasta().setText("10/31/2023");
+        inicializarPeriodoActual();
         if (view.getCbFiltroCategoria().getItemCount() > 0) view.getCbFiltroCategoria().setSelectedIndex(0);
         if (view.getCbFiltroCuenta().getItemCount() > 0) view.getCbFiltroCuenta().setSelectedIndex(0);
         cargarDatosCompletos();
@@ -630,8 +670,10 @@ public class IngresoController {
 
             int selectedMonth = 10;
             try {
-                if (fechaInicio != null && fechaInicio.length() >= 7) {
-                    selectedMonth = Integer.parseInt(fechaInicio.substring(5, 7));
+                if (fechaInicio != null) {
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(fechaInicio);
+                    selectedMonth = c.get(Calendar.MONTH) + 1;
                 }
             } catch (Exception ignored) {}
 
@@ -670,6 +712,16 @@ public class IngresoController {
 
     private int getActiveUserId() {
         Usuario activeUser = Session.getInstance().getUsuarioActivo();
-        return (activeUser != null) ? activeUser.getId() : 1;
+        if (activeUser != null) {
+            return activeUser.getId();
+        }
+        try (Connection conn = dao.ConexionDB.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT TOP 1 id FROM dbo.usuarios ORDER BY id ASC")) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ignored) {}
+        return 1009;
     }
 }

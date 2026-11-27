@@ -215,4 +215,27 @@ public class PresupuestoDAO implements IPresupuestoDAO {
         }
         return anios;
     }
+
+    @Override
+    public String actualizarPresupuesto(Presupuesto presupuesto) {
+        String sql = "UPDATE FINANZAS.PRESUPUESTO SET idCategoria = ?, idTipoPeriodo = ?, nLimPresuMens = ?, nUmbralAlerta = ?, dFecMod = GETDATE() WHERE idPresupuesto = ? AND idUsuReg = ?";
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, presupuesto.getIdCategoria());
+            stmt.setInt(2, presupuesto.getIdTipoPeriodo());
+            stmt.setDouble(3, presupuesto.getLimPresuMens());
+            stmt.setInt(4, presupuesto.getUmbralAlerta());
+            stmt.setInt(5, presupuesto.getIdPresupuesto());
+            stmt.setInt(6, presupuesto.getIdUsuario());
+
+            int affected = stmt.executeUpdate();
+            if (affected > 0) {
+                return "Presupuesto actualizado correctamente.";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error al actualizar presupuesto: " + e.getMessage();
+        }
+        return "No se pudo actualizar el presupuesto.";
+    }
 }

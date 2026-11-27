@@ -12,9 +12,12 @@ import model.Usuario;
 import model.UsuarioCompartido;
 import service.IPresupuestoService;
 import service.PresupuestoService;
+import service.IDashboardService;
+import service.DashboardService;
 import service.IUsuarioService;
 import service.UsuarioService;
 import view.PresupuestoView;
+import model.DashboardResumen;
 import model.Presupuesto;
 import model.PresupuestoActividad;
 
@@ -35,6 +38,10 @@ public class PresupuestoController {
     public PresupuestoController(PresupuestoView view, IPresupuestoService service) {
         this.view = view;
         this.service = service;
+        
+        Usuario activeUser = Session.getInstance().getUsuarioActivo();
+        this.idFiltradoUsuario = (activeUser != null) ? activeUser.getId() : 1;
+        this.selectionPeriod = util.DateUtil.getCurrentPeriodLabel();
         
         listarCategorias();
         listarPeriodos();
@@ -94,33 +101,58 @@ public class PresupuestoController {
                 totalGastado += g.getMontoGastado();
             }
 
-            // Compute remaining budget
-            double restante = totalPresupuesto - totalGastado;
-
-            // Set formatted text in Soles (S/.)
-            view.jLabel21.setText("S/. " + String.format("%.2f", totalPresupuesto));
-            view.jLabel23.setText("S/. " + String.format("%.2f", totalGastado));
-            view.jLabel34.setText("S/. " + String.format("%.2f", restante));
-
-            // Mark Remaining in Red if negative, Green if positive
-            if (restante < 0) {
-                view.jLabel34.setForeground(new Color(186, 26, 26)); // Red
-            } else {
-                view.jLabel34.setForeground(new Color(0, 108, 73)); // Green
+            // Fetch total income for the period dynamically
+            double totalIngresos = 0.0;
+            try {
+                IDashboardService dashService = new DashboardService();
+                DashboardResumen dashRes = dashService.obtenerResumen(
+                    idUsuarioOwner, idFiltradoUsuario, fechaInicio, fechaFin, 0, 0, 0, 9999999
+                );
+                if (dashRes != null) {
+                    totalIngresos = dashRes.getIngresosMes();
+                }
+            } catch (Exception ex) {
+                totalIngresos = 0.0;
             }
 
-            // Update sub-labels dynamically
-            view.jLabel1.setText(selectionPeriod.toUpperCase());
-            double pct = totalPresupuesto > 0 ? (totalGastado * 100.0 / totalPresupuesto) : 0.0;
-            view.jLabel32.setText(String.format("%.1f%% de total usado", pct));
+            // Card 1: PRESUPUESTO TOTAL
+            view.jLabel21.setText("S/. " + String.format("%.2f", totalPresupuesto));
             view.jLabel31.setText(lista.size() + " presupuestos activos");
 
-            // Calculate remaining days dynamically
-            Calendar cal = Calendar.getInstance();
-            int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-            int currentDay = cal.get(Calendar.DAY_OF_MONTH);
-            int daysRemaining = maxDay - currentDay;
-            view.jLabel36.setText(" Quedan " + daysRemaining + " días en el período");
+            // Card 2: INGRESO TOTAL
+            if (view.lblIngresoVal != null) {
+                view.lblIngresoVal.setText("S/. " + String.format("%.2f", totalIngresos));
+            }
+            if (view.lblIngresoSub != null) {
+                view.lblIngresoSub.setText("Ingresos del período");
+            }
+
+            // Card 3: MARGEN DISPONIBLE (Ingreso Total - Presupuesto Total)
+            double restante = totalIngresos - totalPresupuesto;
+            Color colorNaranja = new Color(217, 119, 6); // #D97706
+            Color fondoNaranja = new Color(254, 243, 199); // #FEF3C7
+
+            view.jLabel34.setText((restante < -0.01 ? "-S/. " : "S/. ") + String.format("%.2f", Math.abs(restante)));
+            view.jLabel34.setForeground(colorNaranja);
+            view.jPanel14.setBackground(fondoNaranja);
+            view.jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/brown/calendario.png")));
+
+            if (restante < -0.01) {
+                view.jLabel36.setText("FUERA DEL PRESUPUESTO");
+            } else if (Math.abs(restante) <= 0.01) {
+                view.jLabel36.setText("AL LÍMITE");
+            } else {
+                view.jLabel36.setText("DENTRO DEL PRESUPUESTO");
+            }
+            view.jLabel36.setForeground(colorNaranja);
+
+            // Card 4: GASTADO A LA FECHA
+            view.jLabel23.setText("S/. " + String.format("%.2f", totalGastado));
+            double pct = totalPresupuesto > 0 ? (totalGastado * 100.0 / totalPresupuesto) : 0.0;
+            view.jLabel32.setText(String.format("%.1f%% de total usado", pct));
+
+            // Period badge
+            view.jLabel1.setText(selectionPeriod.toUpperCase());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,14 +200,23 @@ public class PresupuestoController {
 
             javax.swing.JPanel actContainer = new javax.swing.JPanel();
             actContainer.setBackground(Color.WHITE);
-            actContainer.setLayout(new java.awt.GridLayout(0, 1, 5, 5));
 
-            int actCount = 0;
-            for (PresupuestoActividad act : activities) {
-                if (actCount >= 3) break;
-                javax.swing.JPanel actCard = crearTarjetaActividad(act);
-                actContainer.add(actCard);
-                actCount++;
+            if (activities == null || activities.isEmpty()) {
+                actContainer.setLayout(new java.awt.BorderLayout());
+                javax.swing.JLabel lblEmpty = new javax.swing.JLabel("Sin actividades recientes en este período.");
+                lblEmpty.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+                lblEmpty.setForeground(new java.awt.Color(148, 163, 184));
+                lblEmpty.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 10, 10, 10));
+                actContainer.add(lblEmpty, java.awt.BorderLayout.CENTER);
+            } else {
+                actContainer.setLayout(new java.awt.GridLayout(0, 1, 5, 5));
+                int actCount = 0;
+                for (PresupuestoActividad act : activities) {
+                    if (actCount >= 3) break;
+                    javax.swing.JPanel actCard = crearTarjetaActividad(act);
+                    actContainer.add(actCard);
+                    actCount++;
+                }
             }
 
             javax.swing.JPanel actWrapper = new javax.swing.JPanel(new java.awt.BorderLayout());
@@ -254,17 +295,20 @@ public class PresupuestoController {
 
         Usuario activeUser = Session.getInstance().getUsuarioActivo();
         int idUsuarioOwner = (activeUser != null) ? activeUser.getId() : 1;
+        if (idFiltradoUsuario == 0) {
+            idFiltradoUsuario = idUsuarioOwner;
+        }
 
         // 1. Colaborador
         dialog.add(new javax.swing.JLabel("  Colaborador:"));
         javax.swing.JComboBox<ComboItem> cbColab = new javax.swing.JComboBox<>();
-        cbColab.addItem(new ComboItem(0, "Todos los usuarios"));
         
         IUsuarioService uService = new UsuarioService();
         Usuario owner = uService.obtenerUsuario(idUsuarioOwner);
         if (owner != null) {
             cbColab.addItem(new ComboItem(owner.getId(), owner.getNombre() + " (Yo)"));
         }
+        cbColab.addItem(new ComboItem(0, "Todos los usuarios"));
         try {
             List<UsuarioCompartido> listColab = uService.listarUsuariosCompartidos(idUsuarioOwner);
             for (UsuarioCompartido uc : listColab) {
@@ -350,7 +394,7 @@ public class PresupuestoController {
         // 5. Buttons
         javax.swing.JButton btnClear = new javax.swing.JButton("Limpiar Filtros");
         btnClear.addActionListener(e -> {
-            idFiltradoUsuario = 0;
+            idFiltradoUsuario = idUsuarioOwner;
             selectionPeriod = util.DateUtil.getCurrentPeriodLabel();
             idCategoriaFiltro = 0;
             idEstadoFiltro = 0;
@@ -410,12 +454,31 @@ public class PresupuestoController {
     }
     
     public void actualizarPresupuesto() {
+        if (!util.RbacUtil.verificarPermisoEscritura(view, "guardar o modificar presupuestos")) {
+            return;
+        }
         try {
-            view.cbCategoria.removeAllItems();
-            List<ComboItem> categorias = service.listarCategorias();
-            categorias.forEach(item -> {
-                view.cbCategoria.addItem(item);
-            });
+            ComboItem categoria = (ComboItem) view.cbCategoria.getSelectedItem();
+            ComboItem periodo = (ComboItem) view.cbPeriodo.getSelectedItem();
+
+            Presupuesto presupuesto = new Presupuesto();
+            presupuesto.setIdPresupuesto(view.idPresupuestoSeleccionado);
+            presupuesto.setIdCategoria(categoria.getValue());
+            presupuesto.setIdTipoPeriodo(periodo.getValue());
+            presupuesto.setLimPresuMens(Double.parseDouble(view.txtPresupuestoMensual.getText()));
+            presupuesto.setUmbralAlerta(Integer.parseInt(view.txtUmbral.getText()));
+
+            Usuario activeUser = Session.getInstance().getUsuarioActivo();
+            presupuesto.setIdUsuario((activeUser != null) ? activeUser.getId() : 1);
+
+            String msj = service.actualizarPresupuesto(presupuesto);
+
+            JOptionPane.showMessageDialog(
+                view,
+                msj,
+                "Aviso",
+                JOptionPane.INFORMATION_MESSAGE
+            );
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(
@@ -535,19 +598,32 @@ public class PresupuestoController {
             String usuario = (activeUser != null) ? activeUser.getNombre() : "Usuario";
             String totalP = view.jLabel21.getText();
             String totalG = view.jLabel23.getText();
+            String totalI = (view.lblIngresoVal != null) ? view.lblIngresoVal.getText() : "S/. 0.00";
             String restante = view.jLabel34.getText();
 
             List<String[]> detalles = new ArrayList<>();
             DefaultTableModel model = (DefaultTableModel) view.tblPresupuestos.getModel();
             for (int i = 0; i < model.getRowCount(); i++) {
-                detalles.add(new String[]{
-                    String.valueOf(model.getValueAt(i, 1)),
-                    String.valueOf(model.getValueAt(i, 2)),
-                    String.valueOf(model.getValueAt(i, 3)),
-                    String.valueOf(model.getValueAt(i, 4))
-                });
+                String cat = String.valueOf(model.getValueAt(i, 1));
+                String asig = String.valueOf(model.getValueAt(i, 2));
+                String gast = String.valueOf(model.getValueAt(i, 3));
+                String est = String.valueOf(model.getValueAt(i, 4));
+                String prog = (model.getColumnCount() > 5 && model.getValueAt(i, 5) != null)
+                    ? String.valueOf(model.getValueAt(i, 5)) + "%"
+                    : "";
+
+                try {
+                    double dGast = Double.parseDouble(gast.replace("S/.", "").replace("S/", "").replace(",", "").trim());
+                    gast = String.format("S/ %,.2f", dGast);
+                } catch (Exception ignored) {}
+                try {
+                    double dAsig = Double.parseDouble(asig.replace("S/.", "").replace("S/", "").replace(",", "").trim());
+                    asig = String.format("S/ %,.2f", dAsig);
+                } catch (Exception ignored) {}
+
+                detalles.add(new String[]{ cat, gast, asig, prog, est });
             }
-            util.ExportUtil.exportarPdfFinanciero(view, periodo, usuario, totalP, totalG, "S/. 0.00", restante, detalles, prefijo);
+            util.ExportUtil.exportarPdfFinanciero(view, periodo, usuario, totalP, totalG, totalI, restante, detalles, prefijo);
         } else if (seleccion == 2) {
             util.ExportUtil.exportarTablaCSV(view, view.tblPresupuestos, prefijo);
         }

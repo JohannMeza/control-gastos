@@ -96,4 +96,9 @@ public class GastoService implements IGastoService {
         }
         return resultado;
     }
+
+    @Override
+    public double obtenerPromedioMensual(int idUsuario, Date fechaHasta) {
+        return dao.obtenerPromedioMensual(idUsuario, fechaHasta);
+    }
 }

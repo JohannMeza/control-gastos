@@ -233,4 +233,33 @@ public class GastoDAO implements IGastoDAO {
 
         return lista;
     }
+
+    @Override
+    public double obtenerPromedioMensual(int idUsuario, Date fechaHasta) {
+        String sql = "SELECT ISNULL(AVG(sub.mesTotal), 0) AS promedio FROM (" +
+                     "  SELECT YEAR(cFechaGasto) as anio, MONTH(cFechaGasto) as mes, SUM(nMonto) as mesTotal " +
+                     "  FROM FINANZAS.GASTOS " +
+                     "  WHERE (idUsuReg = ? OR ? = 0) " +
+                     "    AND lEsActivo = 1 " +
+                     "    AND cFechaGasto <= ? " +
+                     "  GROUP BY YEAR(cFechaGasto), MONTH(cFechaGasto)" +
+                     ") sub";
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idUsuario);
+            java.sql.Date fHasta = (fechaHasta != null) 
+                ? new java.sql.Date(fechaHasta.getTime()) 
+                : new java.sql.Date(System.currentTimeMillis());
+            stmt.setDate(3, fHasta);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("promedio");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
 }

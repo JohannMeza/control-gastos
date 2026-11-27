@@ -384,7 +384,7 @@ public class SystemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "FECHA", "DESCRIPCIÓN", "CATEGORIA", "TIPO GASTO", "MONTO", "CREADO POR"
+                "ID", "FECHA", "DESCRIPCIÓN", "CATEGORÍA", "TIPO GASTO", "MONTO", "CREADO POR"
             }
         ) {
             Class[] types = new Class [] {

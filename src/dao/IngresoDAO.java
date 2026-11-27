@@ -85,7 +85,25 @@ public class IngresoDAO implements IIngresoDAO {
         }
     }
 
+    @Override
     public List<Ingreso> listarIngresos(int idUsuario, String tipoFlujo, String estado, String fechaDesde, String fechaHasta, String categoria, String cuenta) {
+        return listarIngresos(idUsuario, tipoFlujo, estado, parseDateIso(fechaDesde), parseDateIso(fechaHasta), categoria, cuenta);
+    }
+
+    private java.util.Date parseDateIso(String str) {
+        if (str == null || str.trim().isEmpty()) return null;
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(str.trim());
+        } catch (Exception e) {
+            try {
+                return new SimpleDateFormat("dd/MM/yyyy").parse(str.trim());
+            } catch (Exception ignored) {}
+        }
+        return null;
+    }
+
+    @Override
+    public List<Ingreso> listarIngresos(int idUsuario, String tipoFlujo, String estado, java.util.Date fechaDesde, java.util.Date fechaHasta, String categoria, String cuenta) {
         List<Ingreso> lista = new ArrayList<>();
         String sql = "{CALL CG_ListaIngresosActivos_SP(?, ?, ?, ?, ?, ?, ?)}";
 
@@ -105,14 +123,14 @@ public class IngresoDAO implements IIngresoDAO {
                     stmt.setString(3, estado);
                 }
 
-                if (fechaDesde != null && !fechaDesde.trim().isEmpty()) {
-                    stmt.setDate(4, Date.valueOf(fechaDesde));
+                if (fechaDesde != null) {
+                    stmt.setDate(4, new java.sql.Date(fechaDesde.getTime()));
                 } else {
                     stmt.setNull(4, java.sql.Types.DATE);
                 }
 
-                if (fechaHasta != null && !fechaHasta.trim().isEmpty()) {
-                    stmt.setDate(5, Date.valueOf(fechaHasta));
+                if (fechaHasta != null) {
+                    stmt.setDate(5, new java.sql.Date(fechaHasta.getTime()));
                 } else {
                     stmt.setNull(5, java.sql.Types.DATE);
                 }
@@ -355,7 +373,13 @@ public class IngresoDAO implements IIngresoDAO {
         return null;
     }
 
+    @Override
     public IngresoResumen obtenerResumenKpi(int idUsuario, String fechaInicio, String fechaFin, String fechaInicioPrev, String fechaFinPrev) {
+        return obtenerResumenKpi(idUsuario, parseDateIso(fechaInicio), parseDateIso(fechaFin), parseDateIso(fechaInicioPrev), parseDateIso(fechaFinPrev));
+    }
+
+    @Override
+    public IngresoResumen obtenerResumenKpi(int idUsuario, java.util.Date fechaInicio, java.util.Date fechaFin, java.util.Date fechaInicioPrev, java.util.Date fechaFinPrev) {
         IngresoResumen res = new IngresoResumen();
 
         try (Connection conn = ConexionDB.getConnection()) {
@@ -369,8 +393,8 @@ public class IngresoDAO implements IIngresoDAO {
 
             try (PreparedStatement stmt = conn.prepareStatement(sqlActual)) {
                 stmt.setInt(1, idUsuario);
-                stmt.setDate(2, Date.valueOf(fechaInicio));
-                stmt.setDate(3, Date.valueOf(fechaFin));
+                stmt.setDate(2, fechaInicio != null ? new java.sql.Date(fechaInicio.getTime()) : null);
+                stmt.setDate(3, fechaFin != null ? new java.sql.Date(fechaFin.getTime()) : null);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         double total = rs.getDouble("total");
@@ -395,8 +419,8 @@ public class IngresoDAO implements IIngresoDAO {
                              "WHERE idUsuario = ? AND lEsActivo = 1 AND dFecha BETWEEN ? AND ?";
             try (PreparedStatement stmt = conn.prepareStatement(sqlPrev)) {
                 stmt.setInt(1, idUsuario);
-                stmt.setDate(2, Date.valueOf(fechaInicioPrev));
-                stmt.setDate(3, Date.valueOf(fechaFinPrev));
+                stmt.setDate(2, fechaInicioPrev != null ? new java.sql.Date(fechaInicioPrev.getTime()) : null);
+                stmt.setDate(3, fechaFinPrev != null ? new java.sql.Date(fechaFinPrev.getTime()) : null);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         double totalPrev = rs.getDouble("totalPrev");
@@ -445,8 +469,8 @@ public class IngresoDAO implements IIngresoDAO {
             double totalDist = 0;
             try (PreparedStatement stmt = conn.prepareStatement(sqlDist)) {
                 stmt.setInt(1, idUsuario);
-                stmt.setDate(2, Date.valueOf(fechaInicio));
-                stmt.setDate(3, Date.valueOf(fechaFin));
+                stmt.setDate(2, fechaInicio != null ? new java.sql.Date(fechaInicio.getTime()) : null);
+                stmt.setDate(3, fechaFin != null ? new java.sql.Date(fechaFin.getTime()) : null);
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         String cat = rs.getString("categoria");
@@ -483,7 +507,7 @@ public class IngresoDAO implements IIngresoDAO {
 
             // 5. Proyección de Ingresos Próximo Mes (Fijo garantizado + contratos freelance estimados)
             double proyeccion = res.getIngresoFijo() > 0 ? res.getIngresoFijo() * 1.06 + freelance * 1.1 : (res.getIngresosTotales() * 1.06);
-            res.setProyeccionMonto(proyeccion > 0 ? proyeccion : 13200.00);
+            res.setProyeccionMonto(proyeccion > 0 ? proyeccion : 0.0);
             res.setProyeccionVariacion("+6.0% estimado");
             res.setProyeccionDetalle("Basado en tu nómina fija confirmada y proyectos freelance en curso.");
 
@@ -497,8 +521,8 @@ public class IngresoDAO implements IIngresoDAO {
                               "WHERE idUsuario = ? AND lEsActivo = 1 AND cTipoFlujo = 'Fijo' AND dFecha BETWEEN ? AND ?";
             try (PreparedStatement stmt = conn.prepareStatement(sqlCiclo)) {
                 stmt.setInt(1, idUsuario);
-                stmt.setDate(2, Date.valueOf(fechaInicio));
-                stmt.setDate(3, Date.valueOf(fechaFin));
+                stmt.setDate(2, fechaInicio != null ? new java.sql.Date(fechaInicio.getTime()) : null);
+                stmt.setDate(3, fechaFin != null ? new java.sql.Date(fechaFin.getTime()) : null);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         fijoCobrado = rs.getDouble("cobrado");

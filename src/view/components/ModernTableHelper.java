@@ -22,7 +22,7 @@ import javax.swing.table.TableColumnModel;
  */
 public final class ModernTableHelper {
 
-    private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("'S/.' #,##0.00", new DecimalFormatSymbols(Locale.US));
+    private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("'S/' #,##0.00", new DecimalFormatSymbols(Locale.US));
 
     private ModernTableHelper() {}
 

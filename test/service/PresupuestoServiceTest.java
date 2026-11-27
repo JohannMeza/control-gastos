@@ -164,6 +164,11 @@ public class PresupuestoServiceTest {
         }
 
         @Override
+        public String actualizarPresupuesto(Presupuesto presupuesto) {
+            return "PRESUPUESTO_ACTUALIZADO_OK";
+        }
+
+        @Override
         public List<Integer> obtenerAniosConDatos(int idUsuario) {
             return new ArrayList<>();
         }

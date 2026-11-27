@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -54,21 +55,42 @@ public class SidebarPanel extends JPanel {
         pnlHeader.setLayout(new BoxLayout(pnlHeader, BoxLayout.Y_AXIS));
         pnlHeader.setBorder(BorderFactory.createEmptyBorder(24, 20, 20, 20));
 
-        JPanel pnlLogoRow = new JPanel(new BorderLayout(10, 0));
+        JPanel pnlLogoRow = new JPanel(new BorderLayout(12, 0));
         pnlLogoRow.setOpaque(false);
+
+        JPanel pnlLogoBadge = new JPanel(new GridBagLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                int size = Math.min(getWidth(), getHeight());
+                int x = (getWidth() - size) / 2;
+                int y = (getHeight() - size) / 2;
+                g2.setColor(Color.WHITE);
+                g2.fillRoundRect(x, y, size, size, 10, 10);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        pnlLogoBadge.setOpaque(false);
+        pnlLogoBadge.setPreferredSize(new Dimension(40, 40));
+        pnlLogoBadge.setMinimumSize(new Dimension(40, 40));
+        pnlLogoBadge.setMaximumSize(new Dimension(40, 40));
 
         JLabel lblLogoIcon = new JLabel();
         try {
             java.awt.Image img = javax.imageio.ImageIO.read(getClass().getResource("/images/finandes_mountain.png"));
             if (img != null) {
-                lblLogoIcon.setIcon(new ImageIcon(img.getScaledInstance(28, 28, java.awt.Image.SCALE_SMOOTH)));
+                lblLogoIcon.setIcon(new ImageIcon(img.getScaledInstance(32, 28, java.awt.Image.SCALE_SMOOTH)));
             }
         } catch (Exception ex) {
             lblLogoIcon.setText("▲");
             lblLogoIcon.setFont(new Font("Segoe UI", Font.BOLD, 22));
-            lblLogoIcon.setForeground(Color.WHITE);
+            lblLogoIcon.setForeground(ThemeColor.VERDE_PRIMARIO);
         }
         lblLogoIcon.setHorizontalAlignment(SwingConstants.CENTER);
+        lblLogoIcon.setVerticalAlignment(SwingConstants.CENTER);
+        pnlLogoBadge.add(lblLogoIcon);
 
         JPanel pnlBrandText = new JPanel();
         pnlBrandText.setOpaque(false);
@@ -86,7 +108,7 @@ public class SidebarPanel extends JPanel {
         pnlBrandText.add(Box.createVerticalStrut(2));
         pnlBrandText.add(lblBrandSub);
 
-        pnlLogoRow.add(lblLogoIcon, BorderLayout.WEST);
+        pnlLogoRow.add(pnlLogoBadge, BorderLayout.WEST);
         pnlLogoRow.add(pnlBrandText, BorderLayout.CENTER);
 
         pnlHeader.add(pnlLogoRow);

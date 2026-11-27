@@ -69,13 +69,13 @@ public class PdfGenerator {
         content.append("BT\n");
         content.append("/F1 10 Tf\n");
         content.append("40 655 Td\n");
-        content.append("(Periodo de Tiempo: " + escapePdf(periodName) + ") Tj\n");
+        content.append("(" + escapePdf("Período de Tiempo: " + (periodName != null ? periodName : "")) + ") Tj\n");
         content.append("ET\n");
 
         content.append("BT\n");
         content.append("/F1 10 Tf\n");
         content.append("40 640 Td\n");
-        content.append("(Colaborador: " + escapePdf(collaboratorName) + ") Tj\n");
+        content.append("(" + escapePdf("Colaborador: " + (collaboratorName != null ? collaboratorName : "")) + ") Tj\n");
         content.append("ET\n");
 
         content.append("BT\n");
@@ -83,7 +83,7 @@ public class PdfGenerator {
         content.append("350 655 Td\n");
         java.text.SimpleDateFormat timeSdf = new java.text.SimpleDateFormat("HH:mm:ss");
         String formattedEmissionDate = util.DateUtil.formatLongDate(new java.util.Date()) + " " + timeSdf.format(new java.util.Date());
-        content.append("(Fecha de Emision: " + escapePdf(formattedEmissionDate) + ") Tj\n");
+        content.append("(" + escapePdf("Fecha de Emisión: " + formattedEmissionDate) + ") Tj\n");
         content.append("ET\n");
 
         // 4. Financial Cards Section (Y = 590)
@@ -158,7 +158,7 @@ public class PdfGenerator {
         content.append("BT\n");
         content.append("/F2 11 Tf\n");
         content.append("40 460 Td\n");
-        content.append("(PRESUPUESTO VS GASTOS POR CATEGORIA) Tj\n");
+        content.append("(" + escapePdf("PRESUPUESTO VS GASTOS POR CATEGORÍA") + ") Tj\n");
         content.append("ET\n");
 
         content.append("40 450 m 555 450 l S\n");
@@ -167,7 +167,7 @@ public class PdfGenerator {
         content.append("BT\n");
         content.append("/F2 10 Tf\n");
         content.append("40 430 Td\n");
-        content.append("(Categoria) Tj\n");
+        content.append("(" + escapePdf("Categoría") + ") Tj\n");
         content.append("ET\n");
 
         content.append("BT\n");
@@ -199,11 +199,11 @@ public class PdfGenerator {
         // Write budgetDetails table contents (Vivienda, Comida, Transporte)
         int tableY = 405;
         for (String[] detail : budgetDetails) {
-            String cat = detail[0];
-            String spent = detail[1];
-            String limit = detail[2];
-            String pct = detail[3];
-            String status = detail[4];
+            String cat = (detail != null && detail.length > 0 && detail[0] != null) ? detail[0] : "";
+            String spent = (detail != null && detail.length > 1 && detail[1] != null) ? detail[1] : "";
+            String limit = (detail != null && detail.length > 2 && detail[2] != null) ? detail[2] : "";
+            String pct = (detail != null && detail.length > 3 && detail[3] != null) ? detail[3] : "";
+            String status = (detail != null && detail.length > 4 && detail[4] != null) ? detail[4] : "";
 
             content.append("BT\n");
             content.append("/F1 10 Tf\n");
@@ -255,13 +255,13 @@ public class PdfGenerator {
         content.append("BT\n");
         content.append("/F1 8 Tf\n");
         content.append("40 45 Td\n");
-        content.append("(Este documento es un reporte generado de forma automatica por ControlGastos y sirve como resumen total financiero.) Tj\n");
+        content.append("(" + escapePdf("Este documento es un reporte generado de forma automática por ControlGastos y sirve como resumen total financiero.") + ") Tj\n");
         content.append("ET\n");
 
         content.append("BT\n");
         content.append("/F1 8 Tf\n");
         content.append("510 45 Td\n");
-        content.append("(Pagina 1/1) Tj\n");
+        content.append("(" + escapePdf("Página 1/1") + ") Tj\n");
         content.append("ET\n");
 
         byte[] contentBytes = content.toString().getBytes(StandardCharsets.UTF_8);
@@ -280,7 +280,7 @@ public class PdfGenerator {
 
         // Font F1 (Helvetica - Regular)
         startObject(4);
-        write("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n");
+        write("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>\nendobj\n");
 
         // Content Stream
         startObject(5);
@@ -290,7 +290,7 @@ public class PdfGenerator {
 
         // Font F2 (Helvetica - Bold)
         startObject(6);
-        write("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>\nendobj\n");
+        write("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>\nendobj\n");
 
         // Xref Table
         long xrefOffset = bos.size();
@@ -319,14 +319,58 @@ public class PdfGenerator {
 
     private String escapePdf(String s) {
         if (s == null) return "";
+        s = cleanEncoding(s);
         StringBuilder sb = new StringBuilder();
         for (char c : s.toCharArray()) {
             if (c == '(' || c == ')' || c == '\\') {
                 sb.append('\\').append(c);
-            } else {
+            } else if (c >= 32 && c <= 126) {
                 sb.append(c);
+            } else if (c == '\r') {
+                sb.append("\\r");
+            } else if (c == '\n') {
+                sb.append("\\n");
+            } else if (c == '\t') {
+                sb.append("\\t");
+            } else {
+                try {
+                    byte[] bytes = String.valueOf(c).getBytes(java.nio.charset.Charset.forName("windows-1252"));
+                    for (byte b : bytes) {
+                        sb.append(String.format("\\%03o", b & 0xFF));
+                    }
+                } catch (Exception e) {
+                    sb.append('?');
+                }
             }
         }
         return sb.toString();
+    }
+
+    private String cleanEncoding(String text) {
+        if (text == null) return null;
+        return text.replace("\u00c3\u00b3", "ó")
+                   .replace("Ã³", "ó")
+                   .replace("\u00c3\u00a1", "á")
+                   .replace("Ã¡", "á")
+                   .replace("\u00c3\u00a9", "é")
+                   .replace("Ã©", "é")
+                   .replace("\u00c3\u00ad", "í")
+                   .replace("Ã\u00ad", "í")
+                   .replace("\u00c3\u00ba", "ú")
+                   .replace("Ãº", "ú")
+                   .replace("\u00c3\u00b1", "ñ")
+                   .replace("Ã±", "ñ")
+                   .replace("\u00c3\u0093", "Ó")
+                   .replace("Ã“", "Ó")
+                   .replace("\u00c3\u0081", "Á")
+                   .replace("Ã\u0081", "Á")
+                   .replace("\u00c3\u0089", "É")
+                   .replace("Ã\u0089", "É")
+                   .replace("\u00c3\u008d", "Í")
+                   .replace("Ã\u008d", "Í")
+                   .replace("\u00c3\u009a", "Ú")
+                   .replace("Ã\u009a", "Ú")
+                   .replace("\u00c3\u0091", "Ñ")
+                   .replace("Ã\u0091", "Ñ");
     }
 }

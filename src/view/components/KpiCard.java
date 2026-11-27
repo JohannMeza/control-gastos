@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 public class KpiCard extends JPanel {
 
     private String titulo = "Ingresos Totales";
-    private String monto = "S/. 0.00";
+    private String monto = "S/ 0.00";
     private String variacion = "+0.0% vs mes anterior";
     private String subtexto = "";
     private Color colorAcento = ThemeColor.CIAN_ACCION;

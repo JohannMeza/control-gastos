@@ -236,81 +236,89 @@ public final class AhorroController {
 
             pnlMetasContenedor.removeAll();
 
-            for (MetaAhorro m : metas) {
-                int percent = (m.getMontoObjetivo() > 0) ? (int) ((m.getMontoActual() * 100.0) / m.getMontoObjetivo()) : 0;
-                String progressText = "S/. " + String.format("%.0f", m.getMontoActual()) + " / S/. " + String.format("%.0f", m.getMontoObjetivo());
-                
-                // Calculate projection
-                double faltante = m.getMontoObjetivo() - m.getMontoActual();
-                String proyeccionText = "Sin asignación";
-                if (m.getAsignacionMensual() > 0) {
-                    double mesesEstimados = Math.ceil(faltante / m.getAsignacionMensual());
-                    if (mesesEstimados <= 0) {
-                        proyeccionText = "Meta cumplida";
-                    } else {
-                        int anios = (int) (mesesEstimados / 12);
-                        int meses = (int) (mesesEstimados % 12);
-                        if (anios > 0) {
-                            proyeccionText = "Meta en " + anios + (anios == 1 ? " año" : " años");
-                            if (meses > 0) {
-                                proyeccionText += " y " + meses + (meses == 1 ? " mes" : " meses");
-                            }
+            if (metas == null || metas.isEmpty()) {
+                javax.swing.JLabel lblEmpty = new javax.swing.JLabel("No tienes metas de ahorro registradas. Haz clic en '+ Nueva Meta' para comenzar.");
+                lblEmpty.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+                lblEmpty.setForeground(new java.awt.Color(148, 163, 184));
+                lblEmpty.setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 10, 10, 10));
+                pnlMetasContenedor.add(lblEmpty);
+            } else {
+                for (MetaAhorro m : metas) {
+                    int percent = (m.getMontoObjetivo() > 0) ? (int) ((m.getMontoActual() * 100.0) / m.getMontoObjetivo()) : 0;
+                    String progressText = "S/. " + String.format("%.0f", m.getMontoActual()) + " / S/. " + String.format("%.0f", m.getMontoObjetivo());
+                    
+                    // Calculate projection
+                    double faltante = m.getMontoObjetivo() - m.getMontoActual();
+                    String proyeccionText = "Sin asignación";
+                    if (m.getAsignacionMensual() > 0) {
+                        double mesesEstimados = Math.ceil(faltante / m.getAsignacionMensual());
+                        if (mesesEstimados <= 0) {
+                            proyeccionText = "Meta cumplida";
                         } else {
-                            proyeccionText = "Meta en " + meses + (meses == 1 ? " mes" : " meses");
+                            int anios = (int) (mesesEstimados / 12);
+                            int meses = (int) (mesesEstimados % 12);
+                            if (anios > 0) {
+                                proyeccionText = "Meta en " + anios + (anios == 1 ? " año" : " años");
+                                if (meses > 0) {
+                                    proyeccionText += " y " + meses + (meses == 1 ? " mes" : " meses");
+                                }
+                            } else {
+                                proyeccionText = "Meta en " + meses + (meses == 1 ? " mes" : " meses");
+                            }
                         }
                     }
+
+                    // Build card panel
+                    javax.swing.JPanel card = new javax.swing.JPanel();
+                    card.setPreferredSize(new java.awt.Dimension(180, 95));
+                    card.setBackground(new java.awt.Color(248, 250, 252));
+                    card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
+                    card.setLayout(null);
+
+                    // Goal Name
+                    javax.swing.JLabel lblName = new javax.swing.JLabel(m.getDescripcion());
+                    lblName.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 11));
+                    lblName.setForeground(new java.awt.Color(11, 28, 48));
+                    lblName.setBounds(12, 10, 120, 16);
+                    card.add(lblName);
+
+                    // Percent Label
+                    javax.swing.JLabel lblPercent = new javax.swing.JLabel(percent + "%");
+                    lblPercent.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 9));
+                    lblPercent.setForeground(new java.awt.Color(71, 85, 105));
+                    lblPercent.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+                    lblPercent.setBounds(135, 10, 35, 16);
+                    card.add(lblPercent);
+
+                    // Progress Subtext
+                    javax.swing.JLabel lblProg = new javax.swing.JLabel(progressText);
+                    lblProg.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
+                    lblProg.setForeground(new java.awt.Color(71, 85, 105));
+                    lblProg.setBounds(12, 32, 155, 16);
+                    card.add(lblProg);
+
+                    // Progress Bar
+                    javax.swing.JProgressBar pb = new javax.swing.JProgressBar();
+                    pb.setBackground(new java.awt.Color(226, 232, 240));
+                    if (percent >= 100) {
+                        pb.setForeground(new java.awt.Color(34, 197, 94)); // Emerald green
+                    } else {
+                        pb.setForeground(new java.awt.Color(37, 99, 235)); // Royal blue
+                    }
+                    pb.setValue(Math.min(percent, 100));
+                    pb.setBorderPainted(false);
+                    pb.setBounds(12, 54, 155, 4);
+                    card.add(pb);
+
+                    // Monthly allocation and Time projection Label
+                    javax.swing.JLabel lblEst = new javax.swing.JLabel(proyeccionText + " (" + String.format("%.0f", m.getAsignacionMensual()) + "/m)");
+                    lblEst.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 9));
+                    lblEst.setForeground(new java.awt.Color(100, 116, 139));
+                    lblEst.setBounds(12, 65, 155, 16);
+                    card.add(lblEst);
+
+                    pnlMetasContenedor.add(card);
                 }
-
-                // Build card panel
-                javax.swing.JPanel card = new javax.swing.JPanel();
-                card.setPreferredSize(new java.awt.Dimension(180, 95));
-                card.setBackground(new java.awt.Color(248, 250, 252));
-                card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(234, 241, 255), 1, true));
-                card.setLayout(null);
-
-                // Goal Name
-                javax.swing.JLabel lblName = new javax.swing.JLabel(m.getDescripcion());
-                lblName.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 11));
-                lblName.setForeground(new java.awt.Color(11, 28, 48));
-                lblName.setBounds(12, 10, 120, 16);
-                card.add(lblName);
-
-                // Percent Label
-                javax.swing.JLabel lblPercent = new javax.swing.JLabel(percent + "%");
-                lblPercent.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 9));
-                lblPercent.setForeground(new java.awt.Color(71, 85, 105));
-                lblPercent.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-                lblPercent.setBounds(135, 10, 35, 16);
-                card.add(lblPercent);
-
-                // Progress Subtext
-                javax.swing.JLabel lblProg = new javax.swing.JLabel(progressText);
-                lblProg.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
-                lblProg.setForeground(new java.awt.Color(71, 85, 105));
-                lblProg.setBounds(12, 32, 155, 16);
-                card.add(lblProg);
-
-                // Progress Bar
-                javax.swing.JProgressBar pb = new javax.swing.JProgressBar();
-                pb.setBackground(new java.awt.Color(226, 232, 240));
-                if (percent >= 100) {
-                    pb.setForeground(new java.awt.Color(34, 197, 94)); // Emerald green
-                } else {
-                    pb.setForeground(new java.awt.Color(37, 99, 235)); // Royal blue
-                }
-                pb.setValue(Math.min(percent, 100));
-                pb.setBorderPainted(false);
-                pb.setBounds(12, 54, 155, 4);
-                card.add(pb);
-
-                // Monthly allocation and Time projection Label
-                javax.swing.JLabel lblEst = new javax.swing.JLabel(proyeccionText + " (" + String.format("%.0f", m.getAsignacionMensual()) + "/m)");
-                lblEst.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 9));
-                lblEst.setForeground(new java.awt.Color(100, 116, 139));
-                lblEst.setBounds(12, 65, 155, 16);
-                card.add(lblEst);
-
-                pnlMetasContenedor.add(card);
             }
 
             pnlMetasContenedor.revalidate();
