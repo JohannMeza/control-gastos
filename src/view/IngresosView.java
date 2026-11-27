@@ -163,7 +163,7 @@ public class IngresosView extends javax.swing.JFrame {
         lblBadgeCiclo.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblBadgeCiclo.setForeground(new java.awt.Color(4, 120, 87));
         lblBadgeCiclo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBadgeCiclo.setText("Ciclo Octubre 2023");
+        lblBadgeCiclo.setText("Ciclo Actual");
         lblBadgeCiclo.setOpaque(true);
         pnlMainContent.add(lblBadgeCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 130, 22));
 
@@ -175,7 +175,7 @@ public class IngresosView extends javax.swing.JFrame {
         btnFiltroOct.setBackground(new java.awt.Color(0, 159, 227));
         btnFiltroOct.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btnFiltroOct.setForeground(new java.awt.Color(255, 255, 255));
-        btnFiltroOct.setText("Oct 2023");
+        btnFiltroOct.setText("Mes Actual");
         btnFiltroOct.setBorderPainted(false);
         btnFiltroOct.setFocusPainted(false);
         pnlMainContent.add(btnFiltroOct, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 16, 82, 30));
@@ -183,7 +183,7 @@ public class IngresosView extends javax.swing.JFrame {
         btnFiltroSep.setBackground(new java.awt.Color(255, 255, 255));
         btnFiltroSep.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnFiltroSep.setForeground(new java.awt.Color(71, 85, 105));
-        btnFiltroSep.setText("Sep 2023");
+        btnFiltroSep.setText("Mes Anterior");
         btnFiltroSep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240)));
         btnFiltroSep.setFocusPainted(false);
         pnlMainContent.add(btnFiltroSep, new org.netbeans.lib.awtextra.AbsoluteConstraints(756, 16, 80, 30));
@@ -191,7 +191,7 @@ public class IngresosView extends javax.swing.JFrame {
         btnFiltroAnual.setBackground(new java.awt.Color(255, 255, 255));
         btnFiltroAnual.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnFiltroAnual.setForeground(new java.awt.Color(71, 85, 105));
-        btnFiltroAnual.setText("Anual 2023");
+        btnFiltroAnual.setText("Anual");
         btnFiltroAnual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240)));
         btnFiltroAnual.setFocusPainted(false);
         pnlMainContent.add(btnFiltroAnual, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 16, 82, 30));
@@ -340,12 +340,12 @@ public class IngresosView extends javax.swing.JFrame {
         cardFiltroRapido.add(lblResetFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 16, 90, 20));
 
         txtRangoDesde.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        txtRangoDesde.setText("10/01/2023");
+        txtRangoDesde.setText("");
         txtRangoDesde.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 225)));
         cardFiltroRapido.add(txtRangoDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 44, 145, 30));
 
         txtRangoHasta.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        txtRangoHasta.setText("10/31/2023");
+        txtRangoHasta.setText("");
         txtRangoHasta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 225)));
         cardFiltroRapido.add(txtRangoHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 44, 145, 30));
 
