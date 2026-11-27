@@ -17,9 +17,23 @@ public class PresupuestoControllerTest {
 
     private Usuario usuarioPrueba;
 
+    private static boolean isDatabaseAvailable() {
+        try {
+            java.sql.Connection conn = dao.ConexionDB.getConnection();
+            if (conn != null) {
+                conn.close();
+                return true;
+            }
+        } catch (Throwable t) {
+            return false;
+        }
+        return false;
+    }
+
     @Before
     public void setUp() {
         org.junit.Assume.assumeTrue(!java.awt.GraphicsEnvironment.isHeadless());
+        org.junit.Assume.assumeTrue(isDatabaseAvailable());
         usuarioPrueba = new Usuario();
         usuarioPrueba.setId(2011);
         usuarioPrueba.setNombre("Johann");
