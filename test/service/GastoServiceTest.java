@@ -208,5 +208,10 @@ public class GastoServiceTest {
             g.setMonto(100.0);
             return g;
         }
+
+        @Override
+        public double obtenerPromedioMensual(int idUsuario, Date fechaHasta) {
+            return 1243.75;
+        }
     }
 }

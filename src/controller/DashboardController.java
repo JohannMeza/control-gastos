@@ -43,9 +43,22 @@ public final class DashboardController {
     private void popularPeriodos() {
         try {
             view.cbTimePeriod.removeAllItems();
-            view.cbTimePeriod.addItem(util.DateUtil.getCurrentPeriodLabel());
-            view.cbTimePeriod.addItem(util.DateUtil.getPreviousPeriodLabel());
+            
+            // 12 meses hacia atrás desde el mes actual
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+            for (int i = 0; i < 12; i++) {
+                String mes = util.DateUtil.MESES[cal.get(java.util.Calendar.MONTH)];
+                int year = cal.get(java.util.Calendar.YEAR);
+                view.cbTimePeriod.addItem(mes + " " + year);
+                cal.add(java.util.Calendar.MONTH, -1);
+            }
+            
+            // Opción Todo el año
+            view.cbTimePeriod.addItem("Todo el año");
+            
+            // Opción Todo el tiempo
             view.cbTimePeriod.addItem("Todo el tiempo");
+            
             view.cbTimePeriod.setSelectedIndex(0);
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,8 +70,7 @@ public final class DashboardController {
             view.cbCollaborator.removeAllItems();
             view.cbCollaborator.addItem(new model.ComboItem(0, "Todos los usuarios"));
 
-            Usuario activeUser = Session.getInstance().getUsuarioActivo();
-            int idUsuarioOwner = (activeUser != null) ? activeUser.getId() : 1;
+            int idUsuarioOwner = getActiveUserId();
 
             service.IUsuarioService uService = new service.UsuarioService();
             Usuario owner = uService.obtenerUsuario(idUsuarioOwner);
@@ -79,8 +91,7 @@ public final class DashboardController {
 
     public void cargarDatos() {
         try {
-            Usuario activeUser = Session.getInstance().getUsuarioActivo();
-            int idUsuarioOwner = (activeUser != null) ? activeUser.getId() : 1;
+            int idUsuarioOwner = getActiveUserId();
 
             // Get selected collaborator
             int idFiltradoUsuario = 0;
@@ -109,41 +120,27 @@ public final class DashboardController {
             double sav = r.getAhorrosMes();
             double bal = r.getBalanceMes();
 
-            if (inc == 0.0 && exp == 0.0 && sav == 0.0 && bal == 0.0) {
-                view.lblCardIncomeValue.setText("S/. 12,450.00");
-                view.lblCardIncomeChange.setText("+12% vs mes anterior");
+            view.lblCardIncomeValue.setText(String.format("S/ %,.2f", inc));
+            view.lblCardIncomeChange.setText(r.getIngresosCambio() != null && !r.getIngresosCambio().isEmpty() ? r.getIngresosCambio() : "0.0% vs mes anterior");
 
-                view.lblCardExpensesValue.setText("S/. 5,230.45");
-                view.lblCardExpensesChange.setText("+4% vs mes anterior");
+            view.lblCardExpensesValue.setText(String.format("S/ %,.2f", exp));
+            view.lblCardExpensesChange.setText(r.getGastosCambio() != null && !r.getGastosCambio().isEmpty() ? r.getGastosCambio() : "0.0% vs mes anterior");
 
-                view.lblCardSavingsValue.setText("S/. 2,100.00");
-                view.lblCardSavingsChange.setText("84% de la meta mensual");
+            view.lblCardSavingsValue.setText(String.format("S/ %,.2f", sav));
+            view.lblCardSavingsChange.setText(r.getAhorrosCambio() != null && !r.getAhorrosCambio().isEmpty() ? r.getAhorrosCambio() : "0% de la meta mensual");
 
-                view.lblCardBalanceValue.setText("S/. 34,819.55");
-                view.lblCardBalanceChange.setText("Todas las cuentas sincronizadas");
-            } else {
-                view.lblCardIncomeValue.setText(String.format("S/. %,.2f", inc));
-                view.lblCardIncomeChange.setText(r.getIngresosCambio() != null && !r.getIngresosCambio().isEmpty() ? r.getIngresosCambio() : "+12% vs mes anterior");
-
-                view.lblCardExpensesValue.setText(String.format("S/. %,.2f", exp));
-                view.lblCardExpensesChange.setText(r.getGastosCambio() != null && !r.getGastosCambio().isEmpty() ? r.getGastosCambio() : "+4% vs mes anterior");
-
-                view.lblCardSavingsValue.setText(String.format("S/. %,.2f", sav));
-                view.lblCardSavingsChange.setText(r.getAhorrosCambio() != null && !r.getAhorrosCambio().isEmpty() ? r.getAhorrosCambio() : "84% de la meta mensual");
-
-                view.lblCardBalanceValue.setText(String.format("S/. %,.2f", bal));
-                view.lblCardBalanceChange.setText(r.getBalanceCambio() != null && !r.getBalanceCambio().isEmpty() ? r.getBalanceCambio() : "Todas las cuentas sincronizadas");
-            }
+            view.lblCardBalanceValue.setText(String.format("S/ %,.2f", bal));
+            view.lblCardBalanceChange.setText(r.getBalanceCambio() != null && !r.getBalanceCambio().isEmpty() ? r.getBalanceCambio() : "Todas las cuentas sincronizadas");
 
             if (r.getBannerTitle() != null && !r.getBannerTitle().isEmpty()) {
                 view.lblSavingsBannerTitle.setText(cleanEncoding(r.getBannerTitle()));
             } else {
-                view.lblSavingsBannerTitle.setText("Potencial de Ahorro");
+                view.lblSavingsBannerTitle.setText("Consejo Financiero");
             }
             if (r.getBannerDesc() != null && !r.getBannerDesc().isEmpty()) {
                 view.lblSavingsBannerDesc.setText(cleanEncoding(r.getBannerDesc()));
             } else {
-                view.lblSavingsBannerDesc.setText("<html>Gastaste un 25% más en comer fuera esta semana. Reducir una comida podría ahorrarte S/. 45.</html>");
+                view.lblSavingsBannerDesc.setText("<html>Registra tus presupuestos e ingresos para recibir recomendaciones de ahorro personalizadas.</html>");
             }
             
             // 2. Cargar Próximos Pagos Dinámicamente
@@ -151,21 +148,15 @@ public final class DashboardController {
             view.pnlPaymentsList.setLayout(new javax.swing.BoxLayout(view.pnlPaymentsList, javax.swing.BoxLayout.Y_AXIS));
             List<model.PagoProgramado> pagos = service.obtenerProximosPagos(idUsuarioOwner);
             if (pagos == null || pagos.isEmpty()) {
-                pagos = new ArrayList<>();
-                model.PagoProgramado p1 = new model.PagoProgramado();
-                p1.setConcepto("Proveedor de Internet");
-                p1.setFechaVencimiento("24 Oct");
-                p1.setMonto(79.99);
-                pagos.add(p1);
-
-                model.PagoProgramado p2 = new model.PagoProgramado();
-                p2.setConcepto("Seguro Médico");
-                p2.setFechaVencimiento("26 Oct");
-                p2.setMonto(212.00);
-                pagos.add(p2);
-            }
-
-            for (model.PagoProgramado p : pagos) {
+                javax.swing.JLabel lblEmpty = new javax.swing.JLabel("<html><center>No tienes pagos programados pendientes.<br><span style='color:#94a3b8; font-size:10px;'>Ve al módulo Deudas para registrar cuotas</span></center></html>");
+                lblEmpty.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+                lblEmpty.setForeground(new java.awt.Color(148, 163, 184));
+                lblEmpty.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+                lblEmpty.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                lblEmpty.setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 10, 25, 10));
+                view.pnlPaymentsList.add(lblEmpty);
+            } else {
+                for (model.PagoProgramado p : pagos) {
                 javax.swing.JPanel card = new javax.swing.JPanel(new java.awt.BorderLayout(10, 0));
                 card.setBackground(new java.awt.Color(248, 250, 252));
                 card.setBorder(javax.swing.BorderFactory.createCompoundBorder(
@@ -191,7 +182,7 @@ public final class DashboardController {
                 pnlText.add(lblFecha);
 
                 // Right Label: Amount
-                javax.swing.JLabel lblMonto = new javax.swing.JLabel(String.format("S/. %,.2f", p.getMonto()), javax.swing.SwingConstants.RIGHT);
+                javax.swing.JLabel lblMonto = new javax.swing.JLabel(String.format("S/ %,.2f", p.getMonto()), javax.swing.SwingConstants.RIGHT);
                 lblMonto.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
                 lblMonto.setForeground(new java.awt.Color(15, 23, 42));
 
@@ -201,6 +192,7 @@ public final class DashboardController {
                 view.pnlPaymentsList.add(card);
                 view.pnlPaymentsList.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 4)));
             }
+            }
             view.pnlPaymentsList.revalidate();
             view.pnlPaymentsList.repaint();
 
@@ -209,6 +201,45 @@ public final class DashboardController {
                 idUsuarioOwner, idFiltradoUsuario, fechaInicio, fechaFin,
                 idCategoriaFiltro, idTipoGastoFiltro, montoMinFiltro, montoMaxFiltro
             );
+
+            // Always hide static labels from the NetBeans designer
+            view.lblHousingTitle.setVisible(false);
+            view.lblHousingDesc.setVisible(false);
+            view.lblHousingValue.setVisible(false);
+            view.pbHousing.setVisible(false);
+            view.lblHousingStatus.setVisible(false);
+            view.lblHousingPercent.setVisible(false);
+            
+            view.lblFoodTitle.setVisible(false);
+            view.lblFoodDesc.setVisible(false);
+            view.lblFoodValue.setVisible(false);
+            view.pbFood.setVisible(false);
+            view.lblFoodStatus.setVisible(false);
+            view.lblFoodExcess.setVisible(false);
+            
+            view.lblTransportTitle.setVisible(false);
+            view.lblTransportDesc.setVisible(false);
+            view.lblTransportValue.setVisible(false);
+            view.pbTransport.setVisible(false);
+            view.lblTransportStatus.setVisible(false);
+            view.lblTransportPercent.setVisible(false);
+
+            // Find or create scroll container
+            javax.swing.JScrollPane scrollPane = null;
+            for (java.awt.Component comp : view.pnlBudgetVsSpending.getComponents()) {
+                if (comp instanceof javax.swing.JScrollPane) {
+                    scrollPane = (javax.swing.JScrollPane) comp;
+                    break;
+                }
+            }
+            if (scrollPane == null) {
+                scrollPane = new javax.swing.JScrollPane();
+                scrollPane.setBorder(null);
+                scrollPane.setBackground(Color.WHITE);
+                scrollPane.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                scrollPane.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                view.pnlBudgetVsSpending.add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 50, 560, 305));
+            }
 
             if (listGraficos != null && !listGraficos.isEmpty()) {
                 listGraficos.sort((g1, g2) -> {
@@ -226,45 +257,6 @@ public final class DashboardController {
                     }
                 });
                 ultimoGraficoData = listGraficos;
-
-                // Hide the hardcoded static labels only if dynamic data exists
-                view.lblHousingTitle.setVisible(false);
-                view.lblHousingDesc.setVisible(false);
-                view.lblHousingValue.setVisible(false);
-                view.pbHousing.setVisible(false);
-                view.lblHousingStatus.setVisible(false);
-                view.lblHousingPercent.setVisible(false);
-                
-                view.lblFoodTitle.setVisible(false);
-                view.lblFoodDesc.setVisible(false);
-                view.lblFoodValue.setVisible(false);
-                view.pbFood.setVisible(false);
-                view.lblFoodStatus.setVisible(false);
-                view.lblFoodExcess.setVisible(false);
-                
-                view.lblTransportTitle.setVisible(false);
-                view.lblTransportDesc.setVisible(false);
-                view.lblTransportValue.setVisible(false);
-                view.pbTransport.setVisible(false);
-                view.lblTransportStatus.setVisible(false);
-                view.lblTransportPercent.setVisible(false);
-
-                // Find or create scroll container
-                javax.swing.JScrollPane scrollPane = null;
-                for (java.awt.Component comp : view.pnlBudgetVsSpending.getComponents()) {
-                    if (comp instanceof javax.swing.JScrollPane) {
-                        scrollPane = (javax.swing.JScrollPane) comp;
-                        break;
-                    }
-                }
-                if (scrollPane == null) {
-                    scrollPane = new javax.swing.JScrollPane();
-                    scrollPane.setBorder(null);
-                    scrollPane.setBackground(Color.WHITE);
-                    scrollPane.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                    scrollPane.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                    view.pnlBudgetVsSpending.add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 50, 560, 305));
-                }
 
                 javax.swing.JPanel containerPanel = new javax.swing.JPanel();
                 containerPanel.setBackground(Color.WHITE);
@@ -287,27 +279,18 @@ public final class DashboardController {
                 scrollPane.setViewportView(wrapperPanel);
                 scrollPane.setVisible(true);
             } else {
-                // Si aún no hay datos dinámicos, mostrar las 3 categorías originales del diseño
-                view.lblHousingTitle.setVisible(true);
-                view.lblHousingDesc.setVisible(true);
-                view.lblHousingValue.setVisible(true);
-                view.pbHousing.setVisible(true);
-                view.lblHousingStatus.setVisible(true);
-                view.lblHousingPercent.setVisible(true);
-                
-                view.lblFoodTitle.setVisible(true);
-                view.lblFoodDesc.setVisible(true);
-                view.lblFoodValue.setVisible(true);
-                view.pbFood.setVisible(true);
-                view.lblFoodStatus.setVisible(true);
-                view.lblFoodExcess.setVisible(true);
-                
-                view.lblTransportTitle.setVisible(true);
-                view.lblTransportDesc.setVisible(true);
-                view.lblTransportValue.setVisible(true);
-                view.pbTransport.setVisible(true);
-                view.lblTransportStatus.setVisible(true);
-                view.lblTransportPercent.setVisible(true);
+                ultimoGraficoData = java.util.Collections.emptyList();
+                javax.swing.JPanel emptyPanel = new javax.swing.JPanel(new java.awt.GridBagLayout());
+                emptyPanel.setBackground(Color.WHITE);
+
+                javax.swing.JLabel lblEmpty = new javax.swing.JLabel("<html><center><b>No tienes presupuestos configurados para este período.</b><br><span style='color:#94a3b8; font-size:11px;'>Ve al módulo Presupuestos para agregar tus límites mensuales.</span></center></html>");
+                lblEmpty.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 13));
+                lblEmpty.setForeground(new java.awt.Color(100, 116, 139));
+                lblEmpty.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                emptyPanel.add(lblEmpty);
+
+                scrollPane.setViewportView(emptyPanel);
+                scrollPane.setVisible(true);
             }
             view.pnlBudgetVsSpending.revalidate();
             view.pnlBudgetVsSpending.repaint();
@@ -448,12 +431,22 @@ public final class DashboardController {
         List<String[]> budgetDetails = new ArrayList<>();
         
         for (DashboardGraficos g : ultimoGraficoData) {
-            int percent = (g.getLimite() > 0) ? (int)((g.getGasto() * 100) / g.getLimite()) : 0;
-            String status = percent >= 100 ? "Excedido" : "Al dia";
+            double gasto = g.getGasto();
+            double limite = g.getLimite();
+            int percent = (limite > 0) ? (int)((gasto * 100) / limite) : 0;
+            double diff = gasto - limite;
+            String status;
+            if (diff > 0.009) {
+                status = "Excedido";
+            } else if (Math.abs(diff) <= 0.009 && limite > 0) {
+                status = "Límite alcanzado";
+            } else {
+                status = "Al día";
+            }
             budgetDetails.add(new String[]{
                 g.getCategoria(),
-                String.format("S/. %,.2f", g.getGasto()),
-                String.format("S/. %,.2f", g.getLimite()),
+                String.format("S/ %,.2f", g.getGasto()),
+                String.format("S/ %,.2f", g.getLimite()),
                 percent + "%",
                 status
             });
@@ -509,7 +502,7 @@ public final class DashboardController {
         card.add(lblDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 23, 300, 15));
 
         // Spent / Limit Value - Right Aligned
-        javax.swing.JLabel lblVal = new javax.swing.JLabel(String.format("S/. %,.2f", gItem.getGasto()) + " / " + String.format("S/. %,.2f", gItem.getLimite()));
+        javax.swing.JLabel lblVal = new javax.swing.JLabel(String.format("S/ %,.2f", gItem.getGasto()) + " / " + String.format("S/ %,.2f", gItem.getLimite()));
         lblVal.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         lblVal.setForeground(new Color(15, 23, 42));
         lblVal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -518,24 +511,38 @@ public final class DashboardController {
         // Progress Bar - Fills the middle width
         javax.swing.JProgressBar pb = new javax.swing.JProgressBar();
         pb.setBackground(new java.awt.Color(234, 241, 255));
-        int percent = (gItem.getLimite() > 0) ? (int)((gItem.getGasto() * 100) / gItem.getLimite()) : 0;
+        double gasto = gItem.getGasto();
+        double limite = gItem.getLimite();
+        int percent = (limite > 0) ? (int)((gasto * 100) / limite) : 0;
+        double diff = gasto - limite;
+
+        String statusText;
+        java.awt.Color statusColor;
+        java.awt.Color barColor;
+
+        if (diff > 0.009) {
+            statusText = "EXCEDIDO";
+            statusColor = new java.awt.Color(186, 26, 26); // Rojo
+            barColor = new java.awt.Color(186, 26, 26);
+        } else if (Math.abs(diff) <= 0.009 && limite > 0) {
+            statusText = "LÍMITE ALCANZADO";
+            statusColor = new java.awt.Color(217, 119, 6); // Ámbar / Naranja (#D97706)
+            barColor = new java.awt.Color(217, 119, 6);
+        } else {
+            statusText = "AL DIA";
+            statusColor = new java.awt.Color(0, 108, 73);  // Verde
+            barColor = new java.awt.Color(37, 99, 235);    // Azul
+        }
+
         pb.setValue(Math.min(percent, 100));
         pb.setBorderPainted(false);
-        if (percent >= 100) {
-            pb.setForeground(new java.awt.Color(186, 26, 26)); // Red
-        } else {
-            pb.setForeground(new java.awt.Color(37, 99, 235)); // Blue
-        }
+        pb.setForeground(barColor);
         card.add(pb, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 43, 520, 8));
 
         // Status - Left Aligned Bottom
-        javax.swing.JLabel lblStatus = new javax.swing.JLabel(percent >= 100 ? "EXCEDIDO" : "AL DIA");
+        javax.swing.JLabel lblStatus = new javax.swing.JLabel(statusText);
         lblStatus.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 9));
-        if (percent >= 100) {
-            lblStatus.setForeground(new java.awt.Color(186, 26, 26));
-        } else {
-            lblStatus.setForeground(new java.awt.Color(0, 108, 73));
-        }
+        lblStatus.setForeground(statusColor);
         card.add(lblStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 55, 150, 15));
 
         // Percent - Right Aligned Bottom
@@ -546,6 +553,21 @@ public final class DashboardController {
         card.add(lblPct, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 55, 205, 15));
 
         return card;
+    }
+
+    private int getActiveUserId() {
+        Usuario activeUser = Session.getInstance().getUsuarioActivo();
+        if (activeUser != null) {
+            return activeUser.getId();
+        }
+        try (java.sql.Connection conn = dao.ConexionDB.getConnection();
+             java.sql.Statement stmt = conn.createStatement();
+             java.sql.ResultSet rs = stmt.executeQuery("SELECT TOP 1 id FROM dbo.usuarios ORDER BY id ASC")) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ignored) {}
+        return 1009;
     }
 
     private String cleanEncoding(String text) {

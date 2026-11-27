@@ -17,4 +17,5 @@ public interface IGastoService {
     void validarGasto(Gasto gasto);
     double calcularTotalGastos(List<Gasto> gastos);
     List<Gasto> filtrarPorCategoria(List<Gasto> gastos, int idCategoria);
+    double obtenerPromedioMensual(int idUsuario, Date fechaHasta);
 }

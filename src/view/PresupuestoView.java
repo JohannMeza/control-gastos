@@ -135,6 +135,9 @@ public class PresupuestoView extends javax.swing.JFrame {
                         String catNombre = tblPresupuestos.getValueAt(fila, 1).toString();
                         Object valAsig = tblPresupuestos.getValueAt(fila, 2);
                         txtPresupuestoMensual.setText(valAsig != null ? valAsig.toString() : "");
+                        if (txtUmbral.getText().trim().isEmpty()) {
+                            txtUmbral.setText("80");
+                        }
 
                         lblRegistro.setText("EDITAR PRESUPUESTO");
                         btnAgregarEditarPresupuesto.setText("Actualizar Presupuesto");
@@ -146,6 +149,8 @@ public class PresupuestoView extends javax.swing.JFrame {
                             }
                         }
                     } catch (Exception e) {}
+                } else {
+                    limpiarFormularioGasto();
                 }
             }
         });
@@ -157,19 +162,19 @@ public class PresupuestoView extends javax.swing.JFrame {
         if (cbCategoria.getItemCount() > 0) cbCategoria.setSelectedIndex(0);
         if (cbPeriodo.getItemCount() > 0) cbPeriodo.setSelectedIndex(0);
         idPresupuestoSeleccionado = 0;
-        lblRegistro.setText("EDITAR PRESUPUESTO");
-        btnAgregarEditarPresupuesto.setText("Actualizar Presupuesto");
+        lblRegistro.setText("NUEVO PRESUPUESTO");
+        btnAgregarEditarPresupuesto.setText("Agregar Presupuesto");
+        tblPresupuestos.clearSelection();
     }
 
     private void guardarGasto() {
         controller.guardarPresupuesto();
+        limpiarFormularioGasto();
     }
 
     private void actualizarGasto() {
         controller.actualizarPresupuesto();
-        idPresupuestoSeleccionado = 0;
-        lblRegistro.setText("EDITAR PRESUPUESTO");
-        btnAgregarEditarPresupuesto.setText("Actualizar Presupuesto");
+        limpiarFormularioGasto();
     }
 
     @SuppressWarnings("unchecked")
@@ -283,24 +288,84 @@ public class PresupuestoView extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/blue/presupuesto.png"))); // NOI18N
         jPanel6.add(jLabel8, "card2");
 
-        jPanelTotalGastos.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 22, 50, 50));
+        jPanelTotalGastos.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 22, 46, 46));
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(100, 116, 139));
         jLabel20.setText("PRESUPUESTO TOTAL");
-        jPanelTotalGastos.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 18, 225, 16));
+        jPanelTotalGastos.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 16, 155, 16));
 
-        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(15, 23, 42));
         jLabel21.setText("S/. 0.00");
-        jPanelTotalGastos.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 38, 225, 26));
+        jPanelTotalGastos.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 36, 155, 26));
 
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(4, 120, 87));
         jLabel31.setText("0 presupuestos activos");
-        jPanelTotalGastos.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 66, 225, 16));
+        jPanelTotalGastos.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 64, 155, 16));
 
-        pnlMainContent.add(jPanelTotalGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 66, 315, 95));
+        pnlMainContent.add(jPanelTotalGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 66, 233, 95));
+
+        jPanelCardIngreso = new javax.swing.JPanel();
+        jPanelCardIngreso.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelCardIngreso.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        jPanelCardIngreso.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        javax.swing.JPanel pnlIconIngreso = new javax.swing.JPanel(new java.awt.CardLayout());
+        pnlIconIngreso.setBackground(new java.awt.Color(209, 250, 229));
+        javax.swing.JLabel lblIconIngreso = new javax.swing.JLabel();
+        lblIconIngreso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconIngreso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
+        pnlIconIngreso.add(lblIconIngreso, "card2");
+        jPanelCardIngreso.add(pnlIconIngreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 22, 46, 46));
+
+        lblIngresoTitle = new javax.swing.JLabel("INGRESO TOTAL");
+        lblIngresoTitle.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblIngresoTitle.setForeground(new java.awt.Color(100, 116, 139));
+        jPanelCardIngreso.add(lblIngresoTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 16, 155, 16));
+
+        lblIngresoVal = new javax.swing.JLabel("S/. 0.00");
+        lblIngresoVal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblIngresoVal.setForeground(new java.awt.Color(0, 108, 73));
+        jPanelCardIngreso.add(lblIngresoVal, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 36, 155, 26));
+
+        lblIngresoSub = new javax.swing.JLabel("Ingresos del período");
+        lblIngresoSub.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblIngresoSub.setForeground(new java.awt.Color(100, 116, 139));
+        jPanelCardIngreso.add(lblIngresoSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 64, 155, 16));
+
+        pnlMainContent.add(jPanelCardIngreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 66, 233, 95));
+
+        jPanelTotalGastos2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelTotalGastos2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
+        jPanelTotalGastos2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel14.setBackground(new java.awt.Color(254, 243, 199));
+        jPanel14.setLayout(new java.awt.CardLayout());
+
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/brown/calendario.png"))); // NOI18N
+        jPanel14.add(jLabel35, "card2");
+
+        jPanelTotalGastos2.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 22, 46, 46));
+
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(100, 116, 139));
+        jLabel33.setText("MARGEN DISPONIBLE");
+        jPanelTotalGastos2.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 16, 160, 16));
+
+        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(217, 119, 6));
+        jLabel34.setText("S/. 0.00");
+        jPanelTotalGastos2.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 36, 160, 26));
+
+        jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(217, 119, 6));
+        jLabel36.setText("DENTRO DEL PRESUPUESTO");
+        jPanelTotalGastos2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 64, 160, 16));
+
+        pnlMainContent.add(jPanelTotalGastos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 66, 233, 95));
 
         jPanelTotalGastos1.setBackground(new java.awt.Color(255, 255, 255));
         jPanelTotalGastos1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
@@ -313,54 +378,24 @@ public class PresupuestoView extends javax.swing.JFrame {
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/red/chat-flecha-abajo.png"))); // NOI18N
         jPanel12.add(jLabel19, "card2");
 
-        jPanelTotalGastos1.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 22, 50, 50));
+        jPanelTotalGastos1.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 22, 46, 46));
 
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(100, 116, 139));
         jLabel22.setText("GASTADO A LA FECHA");
-        jPanelTotalGastos1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 18, 225, 16));
+        jPanelTotalGastos1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 16, 155, 16));
 
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(15, 23, 42));
         jLabel23.setText("S/. 0.00");
-        jPanelTotalGastos1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 38, 225, 26));
+        jPanelTotalGastos1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 36, 155, 26));
 
-        jLabel32.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(239, 68, 68));
         jLabel32.setText("0.0% de total usado");
-        jPanelTotalGastos1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 66, 225, 16));
+        jPanelTotalGastos1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 64, 155, 16));
 
-        pnlMainContent.add(jPanelTotalGastos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 66, 315, 95));
-
-        jPanelTotalGastos2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelTotalGastos2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
-        jPanelTotalGastos2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel14.setBackground(new java.awt.Color(209, 250, 229));
-        jPanel14.setLayout(new java.awt.CardLayout());
-
-        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/green/controlar.png"))); // NOI18N
-        jPanel14.add(jLabel35, "card2");
-
-        jPanelTotalGastos2.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 22, 50, 50));
-
-        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(100, 116, 139));
-        jLabel33.setText("RESTANTE");
-        jPanelTotalGastos2.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 18, 225, 16));
-
-        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(0, 108, 73));
-        jLabel34.setText("S/. 0.00");
-        jPanelTotalGastos2.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 38, 225, 26));
-
-        jLabel36.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(100, 116, 139));
-        jLabel36.setText("Quedan días en el período");
-        jPanelTotalGastos2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 66, 225, 16));
-
-        pnlMainContent.add(jPanelTotalGastos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 66, 315, 95));
+        pnlMainContent.add(jPanelTotalGastos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 66, 235, 95));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(226, 232, 240), 1, true));
@@ -386,7 +421,7 @@ public class PresupuestoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "CATEGORIA", "ASIGNADO", "GASTADO", "ESTADO", "CONSUMO"
+                "ID", "CATEGORÍA", "ASIGNADO", "GASTADO", "ESTADO", "CONSUMO"
             }
         ) {
             Class[] types = new Class [] {
@@ -431,7 +466,7 @@ public class PresupuestoView extends javax.swing.JFrame {
 
         lblRegistro.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         lblRegistro.setForeground(new java.awt.Color(15, 23, 42));
-        lblRegistro.setText("EDITAR PRESUPUESTO");
+        lblRegistro.setText("NUEVO PRESUPUESTO");
         jPanel2.add(lblRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 12, 190, 20));
 
         lblBadgeForm.setBackground(new java.awt.Color(239, 246, 255));
@@ -486,7 +521,7 @@ public class PresupuestoView extends javax.swing.JFrame {
         btnAgregarEditarPresupuesto.setBackground(new java.awt.Color(0, 159, 227));
         btnAgregarEditarPresupuesto.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btnAgregarEditarPresupuesto.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarEditarPresupuesto.setText("Actualizar Presupuesto");
+        btnAgregarEditarPresupuesto.setText("Agregar Presupuesto");
         btnAgregarEditarPresupuesto.setBorderPainted(false);
         btnAgregarEditarPresupuesto.setFocusPainted(false);
         btnAgregarEditarPresupuesto.addActionListener(new java.awt.event.ActionListener() {
@@ -686,9 +721,9 @@ public class PresupuestoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel31;
     public javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
+    public javax.swing.JLabel jLabel33;
     public javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
+    public javax.swing.JLabel jLabel35;
     public javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
@@ -698,10 +733,14 @@ public class PresupuestoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel14;
+    public javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    public javax.swing.JPanel jPanelCardIngreso;
+    public javax.swing.JLabel lblIngresoTitle;
+    public javax.swing.JLabel lblIngresoVal;
+    public javax.swing.JLabel lblIngresoSub;
     public javax.swing.JPanel jPanelPeriodoSiguiente1;
     public javax.swing.JPanel jPanelStatus;
     public javax.swing.JPanel jPanelTotalGastos;

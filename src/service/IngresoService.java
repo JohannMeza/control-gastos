@@ -19,6 +19,10 @@ public class IngresoService implements IIngresoService {
         this.dao = dao;
     }
 
+    public List<Ingreso> listarIngresos(int idUsuario, String tipoFlujo, String estado, java.util.Date fechaDesde, java.util.Date fechaHasta, String categoria, String cuenta) {
+        return dao.listarIngresos(idUsuario, tipoFlujo, estado, fechaDesde, fechaHasta, categoria, cuenta);
+    }
+
     public List<Ingreso> listarIngresos(int idUsuario, String tipoFlujo, String estado, String fechaDesde, String fechaHasta, String categoria, String cuenta) {
         return dao.listarIngresos(idUsuario, tipoFlujo, estado, fechaDesde, fechaHasta, categoria, cuenta);
     }
@@ -64,6 +68,10 @@ public class IngresoService implements IIngresoService {
 
     public Ingreso obtenerPorId(int idIngreso, int idUsuario) {
         return dao.obtenerPorId(idIngreso, idUsuario);
+    }
+
+    public IngresoResumen obtenerResumenKpi(int idUsuario, java.util.Date fechaInicio, java.util.Date fechaFin, java.util.Date fechaInicioPrev, java.util.Date fechaFinPrev) {
+        return dao.obtenerResumenKpi(idUsuario, fechaInicio, fechaFin, fechaInicioPrev, fechaFinPrev);
     }
 
     public IngresoResumen obtenerResumenKpi(int idUsuario, String fechaInicio, String fechaFin, String fechaInicioPrev, String fechaFinPrev) {

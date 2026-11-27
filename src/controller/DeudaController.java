@@ -90,7 +90,8 @@ public final class DeudaController {
 
             DeudaResumen r = service.obtenerResumen(idUsuario);
             view.lblCardDeudaTotalValue.setText("S/. " + String.format("%.2f", r.getTotalDeuda()));
-            view.lblCardProximoVencimientoValue.setText(util.DateUtil.formatLongDate(r.getProximoVencimiento()));
+            String proxVenc = util.DateUtil.formatLongDate(r.getProximoVencimiento());
+            view.lblCardProximoVencimientoValue.setText(proxVenc != null && !proxVenc.trim().isEmpty() ? proxVenc : "Sin vencimientos");
             view.lblCardTotalPagadoValue.setText("S/. " + String.format("%.2f", r.getTotalPagadoEsteMes()));
 
             List<Deuda> deudas = service.listarDeudas(idUsuario);
@@ -98,7 +99,14 @@ public final class DeudaController {
 
             pnlDeudasContenedor.removeAll();
 
-            for (Deuda d : deudas) {
+            if (deudas == null || deudas.isEmpty()) {
+                javax.swing.JLabel lblEmpty = new javax.swing.JLabel("No tienes deudas activas registradas.");
+                lblEmpty.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+                lblEmpty.setForeground(new java.awt.Color(148, 163, 184));
+                lblEmpty.setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 10, 10, 10));
+                pnlDeudasContenedor.add(lblEmpty);
+            } else {
+                for (Deuda d : deudas) {
                 // Calculate next due date
                 java.util.Calendar dueCal = java.util.Calendar.getInstance();
                 if (d.getFechaInicio() != null) {
@@ -250,6 +258,7 @@ public final class DeudaController {
 
                 pnlDeudasContenedor.add(card);
                 pnlDeudasContenedor.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8)));
+            }
             }
 
             view.lblDeudasActivasSubtitle.setText(size + (size == 1 ? " Deuda en curso" : " Deudas en curso"));

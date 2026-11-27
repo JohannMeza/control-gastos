@@ -14,4 +14,5 @@ public interface IGastoDAO {
     List<ComboItem> listarCategorias();
     List<ComboItem> listarTipoGastos();
     List<ComboItem> listarUsuarios();
+    double obtenerPromedioMensual(int idUsuario, Date fechaHasta);
 }

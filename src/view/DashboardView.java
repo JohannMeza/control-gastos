@@ -269,27 +269,27 @@ public class DashboardView extends javax.swing.JFrame {
         pnlMainContent.add(cardFilters, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 14, 970, 66));
 
         kpiIngresos.setColorAcento(new java.awt.Color(66, 173, 77));
-        kpiIngresos.setMonto("S/. 12,450.00");
+        kpiIngresos.setMonto("S/ 0.00");
         kpiIngresos.setTitulo("Ingresos Totales");
-        kpiIngresos.setVariacion("+12% vs mes anterior");
+        kpiIngresos.setVariacion("0.0% vs mes anterior");
         pnlMainContent.add(kpiIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 92, 235, 115));
 
         kpiGastos.setColorAcento(new java.awt.Color(0, 159, 227));
-        kpiGastos.setMonto("S/. 5,230.45");
+        kpiGastos.setMonto("S/ 0.00");
         kpiGastos.setTitulo("Gastos Totales");
-        kpiGastos.setVariacion("+4% vs mes anterior");
+        kpiGastos.setVariacion("0.0% vs mes anterior");
         pnlMainContent.add(kpiGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 92, 235, 115));
 
         kpiAhorros.setColorAcento(new java.awt.Color(245, 158, 11));
-        kpiAhorros.setMonto("S/. 2,100.00");
+        kpiAhorros.setMonto("S/ 0.00");
         kpiAhorros.setTitulo("Ahorros Totales");
-        kpiAhorros.setVariacion("84% de la meta mensual");
+        kpiAhorros.setVariacion("0% de la meta mensual");
         pnlMainContent.add(kpiAhorros, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 92, 235, 115));
 
         kpiBalance.setColorAcento(new java.awt.Color(148, 163, 184));
-        kpiBalance.setMonto("S/. 34,819.55");
+        kpiBalance.setMonto("S/ 0.00");
         kpiBalance.setTitulo("Balance Total");
-        kpiBalance.setVariacion("Todas las cuentas sincronizadas");
+        kpiBalance.setVariacion("Balance del período");
         pnlMainContent.add(kpiBalance, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 92, 235, 115));
 
         cardBudgetVsSpending.setCornerRadius(12);

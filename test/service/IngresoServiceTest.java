@@ -146,6 +146,11 @@ public class IngresoServiceTest {
 
     private static class MockIngresoDAO implements IIngresoDAO {
         @Override
+        public List<Ingreso> listarIngresos(int idUsuario, String tipoFlujo, String estado, java.util.Date fechaDesde, java.util.Date fechaHasta, String categoria, String cuenta) {
+            return new ArrayList<>();
+        }
+
+        @Override
         public List<Ingreso> listarIngresos(int idUsuario, String tipoFlujo, String estado, String fechaDesde, String fechaHasta, String categoria, String cuenta) {
             return new ArrayList<>();
         }
@@ -168,6 +173,11 @@ public class IngresoServiceTest {
         @Override
         public Ingreso obtenerPorId(int idIngreso, int idUsuario) {
             return new Ingreso();
+        }
+
+        @Override
+        public IngresoResumen obtenerResumenKpi(int idUsuario, java.util.Date fechaInicio, java.util.Date fechaFin, java.util.Date fechaInicioPrev, java.util.Date fechaFinPrev) {
+            return new IngresoResumen();
         }
 
         @Override

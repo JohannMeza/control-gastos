@@ -38,6 +38,10 @@ public class PresupuestoService implements IPresupuestoService {
     public String guardarPresupuesto(Presupuesto presupuesto) {
         return dao.guardarPresupuesto(presupuesto);
     }
+
+    public String actualizarPresupuesto(Presupuesto presupuesto) {
+        return dao.actualizarPresupuesto(presupuesto);
+    }
     
     public String eliminarPresupuesto(int idPresupuesto) {
         return dao.eliminarPresupuesto(idPresupuesto);

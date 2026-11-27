@@ -183,15 +183,10 @@ public final class GastoController {
             totalExpenses += g.getMonto();
         }
 
-        // Compute Monthly Average
-        double monthlyAverage = totalExpenses;
-        if (fechaDesde != null && fechaHasta != null) {
-            long diffInMillies = Math.abs(fechaHasta.getTime() - fechaDesde.getTime());
-            long diffInDays = java.util.concurrent.TimeUnit.DAYS.convert(diffInMillies, java.util.concurrent.TimeUnit.MILLISECONDS);
-            double months = diffInDays / 30.0;
-            if (months > 0.05) {
-                monthlyAverage = totalExpenses / months;
-            }
+        // Compute dynamic real historical monthly average from DB
+        double monthlyAverage = service.obtenerPromedioMensual(idUsuario, fechaHasta);
+        if (monthlyAverage <= 0) {
+            monthlyAverage = totalExpenses;
         }
 
         // Set labels dynamically in Soles (S/.)
